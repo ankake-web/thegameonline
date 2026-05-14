@@ -81,6 +81,7 @@ button:disabled{opacity:.45}
 #toast.back10{background:#8b6500;color:#fff;box-shadow:0 0 32px #ffd166aa}
 #toast.combo{background:#3b0764;box-shadow:0 0 32px #c084fcaa}
 #toast.turn{background:#1249b5;box-shadow:0 0 32px #66a3ffaa}
+#toast.miss{background:#7f1d1d;box-shadow:0 0 32px #fb7185aa}
 .modalOverlay,#resultOverlay{
   position:fixed;inset:0;z-index:99;display:none;align-items:center;justify-content:center;text-align:center;padding:22px;background:#000c
 }
@@ -105,6 +106,71 @@ button:disabled{opacity:.45}
 @keyframes flashWin{50%{filter:brightness(1.7)}}
 .shake{animation:shake .35s linear 3}
 @keyframes shake{25%{transform:translateX(-5px)}50%{transform:translateX(5px)}75%{transform:translateX(-3px)}}
+
+.homeHero{
+  margin:10px 0 14px;
+  padding:18px 12px;
+  border-radius:26px;
+  background:
+    radial-gradient(circle at 20% 0%, #ffd16644, transparent 32%),
+    radial-gradient(circle at 90% 20%, #4f8cff44, transparent 28%),
+    linear-gradient(160deg,#171c2a,#0b0d13);
+  border:1px solid #ffffff22;
+  box-shadow:0 16px 50px #0007;
+}
+.logoMark{
+  text-align:center;
+  font-size:54px;
+  font-weight:1000;
+  letter-spacing:.04em;
+  line-height:1;
+  color:#fff;
+  text-shadow:0 0 28px #4f8cff88;
+}
+.logoMark span{
+  color:var(--gold);
+  text-shadow:0 0 32px #ffd166aa;
+}
+.tagline{
+  text-align:center;
+  color:#d8deee;
+  font-weight:800;
+  margin:10px 0 16px;
+}
+.homeCards{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:10px;
+  margin:12px 0;
+}
+.homeCard{
+  min-height:108px;
+  border-radius:22px;
+  padding:16px 12px;
+  text-align:left;
+  border:1px solid #ffffff22;
+  box-shadow:0 10px 26px #0005;
+}
+.homeCard b{
+  display:block;
+  font-size:20px;
+  margin-bottom:8px;
+}
+.homeCard small{
+  color:#eef2ff;
+  line-height:1.4;
+}
+.homeCard.solo{
+  background:linear-gradient(145deg,#1d4ed8,#111827);
+}
+.homeCard.coop{
+  background:linear-gradient(145deg,#168c43,#111827);
+}
+.homePanel{
+  margin-top:12px;
+  background:#111722cc;
+}
+
 @media (max-width:520px){
   main{padding:8px;padding-bottom:92px}
   .box{padding:10px;border-radius:16px;margin:8px 0}
@@ -117,41 +183,60 @@ button:disabled{opacity:.45}
   .scoreBox,.resultGrid{grid-template-columns:1fr 1fr}
   .actionInner{grid-template-columns:1.15fr 1fr 48px}
   .turnBanner{font-size:21px;padding:10px}
+  .logoMark{font-size:44px}
+  .homeCards{grid-template-columns:1fr}
+  .homeCard{min-height:88px}
 }
 </style>
 </head>
 <body>
 <header>
   <h1>BACK10</h1>
-  <div class="small">協力型スコアアタック数字パズル</div>
+  <div class="small">Score Attack Number Puzzle</div>
 </header>
 
 <main>
-  <div id="setup" class="box">
-    <div class="row">
-      <select id="modeSelect">
-        <option value="solo" selected>SOLO RANKED</option>
-        <option value="multi">CO-OP CASUAL</option>
-      </select>
-      <select id="playerCount">
-        <option value="1" selected>1人</option>
-        <option value="2">2人</option>
-        <option value="3">3人</option>
-        <option value="4">4人</option>
-        <option value="5">5人</option>
-      </select>
-      <input id="roomInput" placeholder="部屋ID 任意">
-      <input id="nameInput" placeholder="名前">
+  <div id="setup" class="homeHero">
+    <div class="logoMark">BACK<span>10</span></div>
+    <div class="tagline">数字を捌け。10で流れを変えろ。</div>
+
+    <div class="homeCards">
+      <button class="homeCard solo" onclick="quickSolo()">
+        <b>SOLO RANKED</b>
+        <small>1人で6000点突破を狙う</small>
+      </button>
+      <button class="homeCard coop" onclick="selectCoop()">
+        <b>CO-OP CASUAL</b>
+        <small>複数スマホで協力プレイ</small>
+      </button>
     </div>
-    <div class="row" style="margin-top:10px">
-      <button class="primary" onclick="createRoom()">部屋を作る</button>
-      <button class="good" onclick="joinRoom()">部屋に入る</button>
-      <button onclick="startSoloLocal()">この端末でソロ</button>
-      <button onclick="openRankings()">ランキング</button>
+
+    <div class="box homePanel">
+      <div class="row">
+        <select id="modeSelect">
+          <option value="solo" selected>SOLO RANKED</option>
+          <option value="multi">CO-OP CASUAL</option>
+        </select>
+        <select id="playerCount">
+          <option value="1" selected>1人</option>
+          <option value="2">2人</option>
+          <option value="3">3人</option>
+          <option value="4">4人</option>
+          <option value="5">5人</option>
+        </select>
+        <input id="roomInput" placeholder="部屋ID 任意">
+        <input id="nameInput" placeholder="名前">
+      </div>
+      <div class="row" style="margin-top:10px">
+        <button class="primary" onclick="createRoom()">部屋を作る</button>
+        <button class="good" onclick="joinRoom()">部屋に入る</button>
+        <button onclick="startSoloLocal()">この端末でソロ</button>
+        <button onclick="openRankings()">ランキング</button>
+      </div>
+      <p class="small">
+        6000点以上でCLEAR。MISSは-10点。SOLOとCO-OPでランキングは分離。
+      </p>
     </div>
-    <p class="small">
-      SOLO RANKEDはランキング対象。CO-OP CASUALは複数スマホで遊べます。クリア条件は6000点以上。
-    </p>
   </div>
 
   <div id="lobby" class="box" style="display:none">
@@ -215,6 +300,7 @@ button:disabled{opacity:.45}
       <li>BACK10は1回+100点。</li>
       <li>終了時の残り枚数＝手札＋山札。0枚+10000、1〜4枚+8000、5〜9枚+5000。</li>
       <li>6000点以上でCLEAR。</li>
+      <li>出せない場を選ぶとMISS。ブー音が鳴り、-10点。</li>
       <li>SOLOとCO-OPでランキングは分離します。</li>
     </ul>
     <div style="text-align:center"><button class="primary" onclick="closeModal('rulesModal')">戻る</button></div>
@@ -260,7 +346,7 @@ button:disabled{opacity:.45}
       <div class="metric">MAX COMBO<b id="resCombo">0</b></div>
     </div>
     <div id="playerStats" class="playerStats"></div>
-    <button onclick="closeResult()">閉じる</button>
+    <button onclick="goHome()">トップへ戻る</button>
     <button class="primary" onclick="resetSameRoom()">もう一回</button>
   </div>
 </div>
@@ -290,8 +376,8 @@ let roomId="", myId="", unsub=null, game=null, selectedIndex=null, bgmOn=false, 
 let localMode=false;
 
 Object.assign(window,{
-  createRoom,joinRoom,startOnlineGame,startSoloLocal,selectCard,playPile,endTurn,toggleBgm,showRules,openSettings,
-  forceGiveUp,closeResult,resetSameRoom,copyRoom,leaveLocal,closeModal,openRankings,loadRankings
+  createRoom,joinRoom,startOnlineGame,startSoloLocal,quickSolo,selectCoop,selectCard,playPile,endTurn,toggleBgm,showRules,openSettings,
+  forceGiveUp,closeResult,resetSameRoom,copyRoom,leaveLocal,closeModal,openRankings,loadRankings,goHome
 });
 
 function uid(){ return "p_" + Math.random().toString(36).slice(2,8); }
@@ -307,6 +393,17 @@ function isBack10(card,pile){ return pile.type==="up" ? card===pile.value-10 : c
 function legalExists(g,pid){ return (g.hands[pid]||[]).some(c => g.piles.some(p => canPlay(c,p))); }
 function isMyTurn(){ return game && game.currentPlayer === myId && game.status==="playing"; }
 function getMode(){ return document.getElementById("modeSelect").value; }
+
+function quickSolo(){
+  document.getElementById("modeSelect").value="solo";
+  document.getElementById("playerCount").value="1";
+  startSoloLocal();
+}
+function selectCoop(){
+  document.getElementById("modeSelect").value="multi";
+  document.getElementById("playerCount").value="2";
+  document.getElementById("roomInput").focus();
+}
 
 function getEndBonus(rem){
   if(rem===0) return 10000;
@@ -444,7 +541,18 @@ async function playPile(i){
   if(selectedIndex===null) return;
   const card = game.hands[myId][selectedIndex];
   const pileBefore = game.piles[i];
-  if(!canPlay(card, pileBefore)){ playBad(); showToast("そこには出せません"); return; }
+  if(!canPlay(card, pileBefore)){
+    const g = structuredClone(game);
+    g.scoreBase = Math.max(0, (g.scoreBase || 0) - 10);
+    if(g.stats && g.stats[myId]){
+      g.stats[myId].score = Math.max(0, (g.stats[myId].score || 0) - 10);
+      g.stats[myId].penalty = (g.stats[myId].penalty || 0) + 1;
+    }
+    playPenalty();
+    showToast("MISS -10", "miss");
+    await saveGame(g);
+    return;
+  }
 
   const back10 = isBack10(card, pileBefore);
   const g = structuredClone(game);
@@ -581,7 +689,7 @@ function showResult(result){
     const name=players[pid]?.name || pid;
     ps.innerHTML += `<div class="playerCard">
       <b>${escapeHtml(name)}</b><br>
-      出した枚数：${s.cards || 0} / BACK10：${s.back10 || 0} / 個人得点：${s.score || 0} / 最大コンボ：${s.maxCombo || 0}
+      出した枚数：${s.cards || 0} / BACK10：${s.back10 || 0} / MISS：${s.penalty || 0} / 個人得点：${s.score || 0} / 最大コンボ：${s.maxCombo || 0}
     </div>`;
   });
 
@@ -592,6 +700,17 @@ function showResult(result){
 }
 
 function closeResult(){ document.getElementById("resultOverlay").style.display="none"; }
+
+function goHome(){
+  document.getElementById("resultOverlay").style.display="none";
+  if(unsub){ unsub(); unsub=null; }
+  game=null; selectedIndex=null; localMode=false; roomId=""; myId="";
+  document.body.dataset.resultShown="";
+  document.getElementById("setup").style.display="block";
+  document.getElementById("lobby").style.display="none";
+  document.getElementById("game").style.display="none";
+  document.getElementById("actionBar").style.display="none";
+}
 
 async function resetSameRoom(){
   document.body.dataset.resultShown="";
@@ -646,9 +765,8 @@ function renderGame(){
   const pilesDiv=document.getElementById("piles"); pilesDiv.innerHTML="";
   game.piles.forEach((p,i)=>{
     const selected = selectedIndex!==null && game.hands[myId];
-    const can = selected && canPlay(game.hands[myId][selectedIndex],p) && mine && game.status==="playing";
     const div=document.createElement("div");
-    div.className="pile"+(can?" can":"");
+    div.className="pile";
     div.onclick=()=>playPile(i);
     div.innerHTML=`<div class="pile-title">${p.name}</div><div class="pile-value">${p.value}</div><div class="small">${p.type==="up"?"大きい数字へ / BACK10":"小さい数字へ / BACK10"}</div>`;
     pilesDiv.appendChild(div);
@@ -739,6 +857,7 @@ function beep(freq,dur,type="sine",vol=.08){
 }
 function playGood(){ beep(660,.08,"triangle"); setTimeout(()=>beep(880,.08,"triangle"),70); }
 function playBad(){ beep(160,.16,"sawtooth"); }
+function playPenalty(){ [120,90].forEach((f,i)=>setTimeout(()=>beep(f,.22,"sawtooth",.10),i*120)); }
 function playBack10(){ [740,990,1320].forEach((f,i)=>setTimeout(()=>beep(f,.09,"square",.07),i*60)); }
 function playTurnStart(){ [520,780].forEach((f,i)=>setTimeout(()=>beep(f,.12,"triangle",.08),i*90)); }
 function playWin(){ [523,659,784,1046].forEach((f,i)=>setTimeout(()=>beep(f,.18,"triangle",.1),i*120)); }
@@ -748,9 +867,17 @@ function toggleBgm(){
   ensureAudio();
   if(bgmOn){ clearInterval(bgmTimer); bgmOn=false; showToast("BGM OFF"); return; }
   bgmOn=true; showToast("BGM ON");
-  const notes=[262,330,392,330,294,370,440,370];
+  const melody=[
+    [392,.16],[0,.06],[494,.16],[587,.16],[659,.22],[587,.16],[494,.16],[440,.22],
+    [392,.16],[0,.06],[494,.16],[587,.16],[740,.22],[659,.16],[587,.16],[494,.22]
+  ];
   let i=0;
-  bgmTimer=setInterval(()=>{ if(!bgmOn)return; beep(notes[i%notes.length],.18,"sine",.035); i++; },420);
+  bgmTimer=setInterval(()=>{
+    if(!bgmOn)return;
+    const [freq,dur]=melody[i%melody.length];
+    if(freq>0) beep(freq,dur,"triangle",.035);
+    i++;
+  },210);
 }
 
 function copyRoom(){ navigator.clipboard?.writeText(roomId || game?.roomId || ""); showToast("部屋IDコピー"); }
