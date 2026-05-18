@@ -6,338 +6,334 @@
 <title>BACK10</title>
 <style>
 :root{
-  --bg1:#fff4cf;
-  --bg2:#ffe5eb;
-  --bg3:#e8f8ff;
-  --ink:#6c4b2f;
-  --muted:#a17b5d;
-  --line:#efcca6;
-  --line2:#e8b98a;
+  --bg1:#fff7df;
+  --bg2:#ffeaf1;
+  --bg3:#eefaff;
+  --ink:#694b32;
+  --muted:#9d7d65;
+  --line:#eccca7;
+  --shadow:#dfbc93;
+  --paper:#fffdf8;
   --panel:#fff9ef;
-  --shadow:#ddb98c;
-  --pink:#ff95ae;
-  --pink-deep:#e86687;
-  --pink-soft:#ffe3eb;
-  --green:#9fd667;
-  --green-deep:#74ae3d;
-  --green-soft:#edf8d2;
-  --blue:#9edcff;
-  --blue-deep:#68b3e2;
-  --blue-soft:#e6f7ff;
-  --yellow:#ffd769;
-  --yellow-deep:#efb93b;
-  --wood:#f5e0c4;
-  --cream:#fffef8;
-  --danger:#ff7d98;
+  --pink:#ff9bb2;
+  --pink-deep:#de6886;
+  --pink-soft:#fff0f4;
+  --green:#95cf5a;
+  --green-deep:#73a93b;
+  --green-soft:#f1fbdf;
+  --blue:#9fd8ff;
+  --blue-deep:#68acd9;
+  --yellow:#ffd469;
+  --yellow-deep:#e5b03c;
+  --danger:#ff7c97;
+  --hand:#2d405f;
+  --pile1:#e56b85;
+  --pile2:#5887d5;
+  --pile3:#ed9a1b;
+  --pile4:#70a63b;
 }
 *{box-sizing:border-box}
-html,body{margin:0;min-height:100%}
+html,body{min-height:100%;margin:0}
 body{
-  color:var(--ink);
   font-family:-apple-system,BlinkMacSystemFont,"Hiragino Sans","Yu Gothic",sans-serif;
+  color:var(--ink);
   background:
-    radial-gradient(circle at 12% 8%, #ffd6e2 0 7%, transparent 8%),
-    radial-gradient(circle at 88% 14%, #ccecff 0 8%, transparent 9%),
-    radial-gradient(circle at 80% 94%, #dff8cf 0 10%, transparent 11%),
-    linear-gradient(180deg,var(--bg1),var(--bg2) 52%,var(--bg3));
+    radial-gradient(circle at 10% 8%, #ffdce7 0 8%, transparent 9%),
+    radial-gradient(circle at 90% 14%, #d8efff 0 8%, transparent 9%),
+    radial-gradient(circle at 82% 92%, #e0f7cf 0 10%, transparent 11%),
+    linear-gradient(180deg,var(--bg1),var(--bg2) 54%,var(--bg3));
   background-attachment:fixed;
 }
 button,input,select{
   font:inherit;
-  font-size:16px;
   border:0;
   border-radius:18px;
-  padding:12px 14px;
+  font-size:16px;
+  padding:11px 14px;
 }
 button{
   font-weight:1000;
-  color:#6f4c33;
-  background:#fff7e7;
+  color:#694b32;
+  background:#fff9ee;
   border:2px solid var(--line);
   box-shadow:0 5px 0 var(--shadow);
 }
 button:active{transform:translateY(3px);box-shadow:0 2px 0 var(--shadow)}
-button.primary{background:linear-gradient(180deg,var(--blue),#b9e6ff); color:#2d5875; border-color:#9edcff; box-shadow:0 5px 0 var(--blue-deep)}
-button.good{background:linear-gradient(180deg,#b8eb86,#d8f6b8); color:#447030; border-color:#aada7b; box-shadow:0 5px 0 var(--green-deep)}
-button.pink{background:linear-gradient(180deg,#ffafc0,#ffd6df); color:#824251; border-color:#f1afbe; box-shadow:0 5px 0 var(--pink-deep)}
-button.warn{background:linear-gradient(180deg,#ff9db0,#ffc8d3); color:#7f3343; border-color:#ef93a8; box-shadow:0 5px 0 #d6637e}
-button.icon{padding:8px 12px; min-height:44px}
-button.bigCard{
-  position:relative;
-  min-height:150px;
-  text-align:left;
-  padding:18px 16px;
-  border-radius:28px;
-  overflow:hidden;
-}
-button.bigCard b{display:block;font-size:clamp(28px,5vw,42px);line-height:1.05;margin-bottom:8px}
-button.bigCard small{display:block;font-size:14px;color:#8e6b4e}
+button.primary{background:linear-gradient(180deg,var(--blue),#bfe7ff);color:#315a74;border-color:#94cff6;box-shadow:0 5px 0 var(--blue-deep)}
+button.good{background:linear-gradient(180deg,#b5e387,#def4c0);color:#40642a;border-color:#a6d372;box-shadow:0 5px 0 var(--green-deep)}
+button.warn{background:linear-gradient(180deg,#ffabbd,#ffd8e0);color:#874253;border-color:#ef9bb1;box-shadow:0 5px 0 var(--pink-deep)}
+button.softpink{background:linear-gradient(180deg,#ffb0c0,#ffe4ea);color:#8d4658;border-color:#f1afbf;box-shadow:0 5px 0 var(--pink-deep)}
+button.soft{background:#fff9ee}
 input,select{
-  background:#fff;
+  background:white;
   color:var(--ink);
   border:2px solid var(--line);
   box-shadow:0 4px 0 var(--shadow);
 }
-input::placeholder{color:#b9a18c}
-main{max-width:960px;margin:0 auto;padding:10px 10px 102px}
-.small{font-size:13px;color:var(--muted);font-weight:800;line-height:1.5}
+input::placeholder{color:#b59b84}
+main{max-width:960px;margin:0 auto;padding:10px 10px 96px}
+.small{font-size:13px;line-height:1.45;color:var(--muted);font-weight:800}
 .row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
 .screen{display:none}
 .screen.active{display:block}
 .panel{
-  position:relative;
-  background:#fffaf0ee;
+  background:#fffaf0f0;
   border:2px solid var(--line);
   border-radius:28px;
-  box-shadow:0 8px 0 var(--shadow),0 18px 30px #be8e6c22;
+  box-shadow:0 8px 0 var(--shadow),0 18px 32px #b6855a20;
 }
-.hero{
+.home{
   position:relative;
   overflow:hidden;
-  min-height:calc(100vh - 120px);
-  padding:14px 14px 18px;
+  min-height:calc(100vh - 118px);
+  padding:14px;
   background:
-    radial-gradient(circle at 14% 11%, #fff 0 5%, transparent 6%),
-    radial-gradient(circle at 82% 14%, #fff 0 4%, transparent 5%),
-    linear-gradient(180deg,#fff9ed,#fff4d9 42%,#f6ffd9);
+    radial-gradient(circle at 18% 20%, #fff 0 6%, transparent 7%),
+    radial-gradient(circle at 77% 24%, #fff 0 5%, transparent 6%),
+    linear-gradient(180deg,#fffaf0,#fff6df 42%,#f3ffd9);
 }
-.hero .hill1,.hero .hill2{
-  position:absolute;left:-8%;right:-8%;
+.home:before,.home:after{
+  content:"";position:absolute;left:-10%;right:-10%;
   border-radius:50% 50% 0 0;
 }
-.hero .hill1{height:120px;bottom:74px;background:linear-gradient(180deg,#d7f09f,#b5de6a)}
-.hero .hill2{height:90px;bottom:0;background:linear-gradient(180deg,#a9d15f,#8cc448)}
-.hero .cloud{
-  position:absolute;background:#fff;border-radius:999px;opacity:.85;
-  box-shadow:0 3px 10px #ffffff99;
-}
-.hero .cloud:before,.hero .cloud:after{content:"";position:absolute;background:#fff;border-radius:50%}
-.hero .cloud.c1{width:72px;height:24px;left:46px;top:62px}
-.hero .cloud.c1:before{width:28px;height:28px;left:8px;top:-10px}
-.hero .cloud.c1:after{width:34px;height:34px;left:34px;top:-14px}
-.hero .cloud.c2{width:62px;height:22px;right:56px;top:86px}
-.hero .cloud.c2:before{width:24px;height:24px;left:10px;top:-10px}
-.hero .cloud.c2:after{width:28px;height:28px;left:30px;top:-10px}
-.heroTop{
+.home:before{bottom:74px;height:112px;background:linear-gradient(180deg,#dff0a5,#b9dc73)}
+.home:after{bottom:0;height:88px;background:linear-gradient(180deg,#aad164,#89c04a)}
+.homeTop{
   position:relative;z-index:2;
-  display:flex;justify-content:space-between;gap:10px;align-items:flex-start;margin-bottom:4px
+  display:flex;justify-content:space-between;gap:10px;align-items:flex-start
 }
-.heroBtns{display:flex;gap:8px;flex-wrap:wrap}
-.logoWrap{position:relative;z-index:2;text-align:center;margin-top:10px}
+.homeBtns{display:flex;gap:8px;flex-wrap:wrap}
+.logoArea{
+  position:relative;z-index:2;
+  margin:12px auto 0;
+  max-width:840px;
+}
+.logoRow{
+  display:grid;grid-template-columns:120px 1fr 120px;gap:10px;align-items:center
+}
+.logoWrap{text-align:center}
 .logo{
-  font-size:clamp(54px,11vw,96px);
-  line-height:1;
-  letter-spacing:.03em;
-  font-weight:1000;
   margin:0;
-  text-shadow:0 4px 0 #fff,0 0 12px #fff;
+  font-size:clamp(58px,10vw,94px);
+  font-weight:1000;
+  letter-spacing:.03em;
+  line-height:1;
+  text-shadow:0 4px 0 #fff,0 0 10px #fff;
 }
-.logo .t1{color:#ff7f9f}
-.logo .t2{color:#ffc948}
-.logo .t3{color:#8dc84b}
-.tagline{font-size:clamp(18px,3vw,28px);font-weight:1000;color:#7a553a;margin:6px 0 0}
-.mascotTop{
-  position:absolute;z-index:1;top:108px;width:150px;height:170px;
+.logo .a{color:#ff7b9b}
+.logo .b{color:#ffca50}
+.logo .c{color:#8cc94a}
+.tagline{
+  margin-top:6px;
+  font-size:clamp(18px,2.8vw,30px);
+  font-weight:1000;
+  color:#7d5a3e;
 }
-.mascotLeft{left:18px}
-.mascotRight{right:18px}
-.heroActions{
+.mascotBox{display:flex;justify-content:center;align-items:center}
+.nameBar{
+  position:relative;z-index:2;
+  margin:12px auto 0;max-width:530px
+}
+.nameBar input{width:100%;text-align:center}
+.modeCards{
   position:relative;z-index:2;
   display:grid;grid-template-columns:1fr 1fr;gap:14px;
-  margin:18px auto 0;max-width:760px
+  max-width:760px;margin:16px auto 0
 }
-.heroActionSolo{background:linear-gradient(180deg,#fff0f4,#fff8ee)}
-.heroActionMulti{background:linear-gradient(180deg,#f4ffe8,#fff8ee)}
-.heroActionSolo .arrowBtn{background:linear-gradient(180deg,#ff90aa,#ffbdd0)}
-.heroActionMulti .arrowBtn{background:linear-gradient(180deg,#8dc84b,#addb76)}
-.cardMascot{
-  position:absolute;left:14px;bottom:12px;width:82px;height:82px;opacity:.95
+.modeCard{
+  min-height:168px;
+  border-radius:28px;border:3px solid #f1d4b4;background:white;
+  box-shadow:0 8px 0 var(--shadow);
+  padding:16px 18px;position:relative;overflow:hidden;text-align:left
 }
-.arrowBtn{
+.modeCard.solo{background:linear-gradient(180deg,#fff2f6,#fffaf2)}
+.modeCard.multi{background:linear-gradient(180deg,#f5ffe9,#fffaf2)}
+.modeCardTitle{
+  font-size:clamp(34px,5vw,46px);
+  line-height:1.02;
+  font-weight:1000;
+  color:#6e4d33;
+  margin-top:10px;
+}
+.modeCardSub{margin-top:8px;font-size:15px;font-weight:900;color:#8e6e55}
+.modeMascot{
+  position:absolute;left:14px;bottom:10px;width:82px;height:82px;display:flex;align-items:flex-end;justify-content:center;
+}
+.modeArrow{
   position:absolute;right:14px;top:50%;transform:translateY(-50%);
-  width:52px;height:52px;border-radius:50%;
-  display:flex;align-items:center;justify-content:center;
-  color:#fff;font-size:28px;font-weight:1000;
-  box-shadow:0 5px 0 #d68a8a;
+  width:54px;height:54px;border-radius:50%;display:flex;align-items:center;justify-content:center;
+  color:#fff;font-size:30px;font-weight:1000
 }
-.nameRow{position:relative;z-index:2;margin:16px auto 0;max-width:540px}
-.nameRow input{width:100%;text-align:center}
-.coopPanel{position:relative;z-index:2;margin:14px auto 0;max-width:640px;padding:14px}
-.homeFooter{
-  position:relative;z-index:2;text-align:center;margin-top:10px;
-  color:#d2ac83;font-weight:1000;font-size:16px
-}
-.lobby{
-  padding:18px
-}
-.roomCode{
-  font-size:38px;line-height:1;font-weight:1000;color:#ff7798;text-shadow:0 3px 0 #fff
-}
+.modeCard.solo .modeArrow{background:linear-gradient(180deg,#ff9fb2,#f07e99);box-shadow:0 5px 0 #dc6985}
+.modeCard.multi .modeArrow{background:linear-gradient(180deg,#9fd260,#79b240);box-shadow:0 5px 0 #6b9c39}
+.coopPanel{position:relative;z-index:2;max-width:620px;margin:14px auto 0;padding:14px}
+.coopPanel .row>*{flex:1}
+.homeFooter{position:relative;z-index:2;text-align:center;margin-top:10px;color:#c89d71;font-weight:1000}
+.lobby{padding:18px}
+.roomCode{font-size:38px;line-height:1;font-weight:1000;color:#ff7597;text-shadow:0 3px 0 #fff}
 .badge{
-  display:inline-flex;align-items:center;gap:6px;
-  background:#fff8e6;border:2px solid var(--line);border-radius:999px;
-  padding:7px 12px;margin:4px;font-weight:1000;font-size:14px
+  display:inline-flex;align-items:center;gap:6px;background:#fff9ea;border:2px solid var(--line);border-radius:999px;
+  padding:7px 12px;margin:4px;font-size:14px;font-weight:1000
 }
-.turnBanner{
-  display:flex;justify-content:center;align-items:center;gap:8px;
-  max-width:420px;margin:0 auto 10px;
-  padding:10px 18px;border-radius:999px;border:3px solid #fff;
-  color:#fff;font-size:clamp(22px,4vw,32px);font-weight:1000;
-  text-shadow:0 2px 0 #0001;box-shadow:0 8px 20px #00000015;
-}
-.turnMine{background:linear-gradient(180deg,#84d467,#71c04e)}
-.turnOther{background:linear-gradient(180deg,#97cffe,#7ec0ef)}
 .playersRow{
-  display:flex;justify-content:flex-end;gap:8px;flex-wrap:wrap;
+  display:flex;justify-content:flex-end;gap:8px;flex-wrap:wrap;margin-bottom:8px
 }
 .playerChip{
-  display:flex;flex-direction:column;align-items:center;justify-content:center;
-  width:72px;padding:5px 4px;border-radius:14px;
-  background:#fff8e6;border:2px solid var(--line);box-shadow:0 4px 0 var(--shadow);
-  font-size:11px;font-weight:1000;color:#8d6a4f
+  width:70px;border:2px solid var(--line);border-radius:14px;background:#fffaf0;box-shadow:0 4px 0 var(--shadow);
+  padding:4px 4px 6px;text-align:center;font-size:11px;font-weight:1000;color:#8f7157
 }
-.playerChip .avatar{width:34px;height:34px;margin-bottom:4px}
-.boardWrap{padding:12px;background:linear-gradient(180deg,#f7e3c5,#f3dcc0)}
-.boardTop{
-  display:grid;grid-template-columns:110px 1fr 130px;gap:12px;align-items:start
+.playerChip.active{outline:3px solid #ffe08b}
+.playerChip .avatar{width:30px;height:30px;margin:0 auto 4px}
+.turnBanner{
+  display:flex;justify-content:center;align-items:center;gap:8px;
+  width:fit-content;max-width:100%;margin:0 auto 8px;padding:9px 18px;border-radius:999px;border:3px solid #fff;
+  color:#fff;font-size:clamp(22px,4.5vw,32px);font-weight:1000;text-shadow:0 2px 0 #0001;
+  box-shadow:0 10px 20px #00000012
 }
-.boardCol,.centerBoard,.scorePanel{
-  background:#fff8eb;border:2px solid var(--line);border-radius:22px;box-shadow:0 6px 0 var(--shadow)
+.turnBanner.mine{background:linear-gradient(180deg,#8cd168,#6fbe48)}
+.turnBanner.other{background:linear-gradient(180deg,#9ccfff,#7cc0f1)}
+.playPanel{
+  padding:10px;
+  background:linear-gradient(180deg,#f7e5ca,#f0dbc0)
 }
-.boardCol{padding:10px}
-.centerBoard{padding:14px}
-.scorePanel{padding:10px}
-.menuPill{
-  display:inline-block;background:linear-gradient(180deg,#ff9fb4,#ffcad5);color:#fff;
-  border-radius:999px;padding:6px 14px;font-weight:1000;border:2px solid #fff;box-shadow:0 4px 0 #df7c96
+.playTop{
+  display:grid;grid-template-columns:70px 1fr 96px;gap:8px;align-items:start
 }
-.deckStack,.discardCard{
-  margin-top:10px;height:102px;border-radius:18px;border:3px solid var(--line);
-  display:flex;align-items:center;justify-content:center;background:#fff
+.miniCard{
+  background:#fff9ee;border:2px solid var(--line);border-radius:18px;box-shadow:0 5px 0 var(--shadow)
 }
-.deckStack{
-  position:relative;background:linear-gradient(135deg,#fff3f7,#ffe5ef)
+.leftMini{padding:8px}
+.miniLabel{font-size:11px;font-weight:1000;color:#8f7157;margin-bottom:4px}
+.stackCard,.lastCard{
+  height:74px;border:2px solid #ecd6b7;border-radius:14px;background:#fff;display:flex;align-items:center;justify-content:center;
+  font-weight:1000
 }
-.deckStack:before,.deckStack:after{
-  content:"";position:absolute;left:8px;right:8px;top:8px;bottom:8px;border-radius:14px;border:3px solid #f0d0da
+.stackCard{
+  position:relative;background:linear-gradient(180deg,#fff3f7,#ffe8ef)
 }
-.deckStack:after{left:12px;right:12px;top:12px;bottom:12px}
-.deckFace{
-  position:relative;z-index:1;width:64px;height:82px;border-radius:14px;background:#fff;border:3px solid #f2c9d5;
-  display:flex;align-items:center;justify-content:center
+.stackCard:before,.stackCard:after{
+  content:"";position:absolute;border:2px solid #edcddb;border-radius:12px;left:8px;right:8px;top:8px;bottom:8px
 }
-.tinyLabel{
-  display:inline-block;margin-top:8px;background:#93c35f;color:#fff;border-radius:999px;padding:3px 9px;font-size:12px;font-weight:1000
+.stackCard:after{left:12px;right:12px;top:12px;bottom:12px}
+.miniCount{
+  display:block;margin-top:6px;padding:2px 8px;border-radius:999px;background:#95c65e;color:#fff;font-size:11px;font-weight:1000;width:fit-content
 }
-.centerBoardInner{
-  display:grid;grid-template-columns:repeat(4,1fr);gap:12px
+.board{
+  padding:8px;background:#fff9ee;border:2px solid var(--line);border-radius:20px;box-shadow:0 5px 0 var(--shadow)
+}
+.piles{
+  display:grid;grid-template-columns:repeat(4,1fr);gap:8px
 }
 .pile{
-  display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;
-  min-height:162px;border:2px solid #eedabf;border-radius:18px;background:#fffdf7;
+  min-height:112px;border:2px solid #efdfca;border-radius:16px;background:#fffdf7;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:4px;
 }
-.pileArrow{font-size:28px;font-weight:1000;color:#7fb14b;line-height:1}
-.pileValue{font-size:60px;line-height:1;font-weight:1000}
-.pile .value1{color:#e45b76}
-.pile .value2{color:#4f7cd1}
-.pile .value3{color:#ef9e1f}
-.pile .value4{color:#6c9f2e}
-.handSection{display:flex;align-items:flex-end;gap:10px;margin-top:12px}
-.handArea{
-  flex:1;background:#fff8eb;border:2px solid var(--line);border-radius:24px;padding:10px 10px 8px;
-  box-shadow:0 6px 0 var(--shadow);position:relative;
+.pileArrow{font-size:22px;line-height:1;color:#7cab48;font-weight:1000}
+.pileValue{font-size:48px;line-height:1;font-weight:1000}
+.pileValue.p1{color:var(--pile1)} .pileValue.p2{color:var(--pile2)}
+.pileValue.p3{color:var(--pile3)} .pileValue.p4{color:var(--pile4)}
+.pileName{font-size:11px;font-weight:1000;color:#8f7157}
+.scoreBox{
+  padding:8px;background:#fff9ee;border:2px solid var(--line);border-radius:18px;box-shadow:0 5px 0 var(--shadow)
+}
+.scoreBig{font-size:36px;line-height:1;font-weight:1000;color:#ff7c97;text-align:right}
+.scoreList{margin-top:6px;font-size:12px;font-weight:1000;color:#88684c;line-height:1.6}
+.scoreList div{display:flex;justify-content:space-between;gap:6px}
+.giveupBtnTop{margin-top:8px;width:100%}
+.handWrap{
+  margin-top:8px;background:#fff9ee;border:2px solid var(--line);border-radius:22px;box-shadow:0 5px 0 var(--shadow);
+  padding:8px 8px 10px;position:relative
 }
 .handBadge{
-  position:absolute;left:10px;top:-12px;background:linear-gradient(180deg,#ff95ae,#ffc6d4);color:#fff;
-  border-radius:999px;padding:4px 12px;font-size:13px;font-weight:1000;border:2px solid #fff;box-shadow:0 4px 0 #df7c96
+  position:absolute;left:10px;top:-12px;padding:4px 12px;border-radius:999px;background:linear-gradient(180deg,#ff9eb3,#ffcfda);
+  color:#fff;font-size:12px;font-weight:1000;border:2px solid #fff;box-shadow:0 4px 0 #db728b
 }
+.hintText{margin:10px 2px 8px;padding-left:2px}
 .handCards{
-  display:grid;grid-template-columns:repeat(auto-fit,minmax(58px,1fr));gap:8px;margin-top:18px
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(42px,1fr));gap:6px
 }
 .card{
-  position:relative;height:92px;border-radius:14px;border:2px solid #efdec8;background:#fff;
-  display:flex;align-items:center;justify-content:center;font-size:26px;font-weight:1000;color:#805538;
-  box-shadow:0 4px 0 #ecd7bc;
+  height:74px;border-radius:13px;border:2px solid #efdec8;background:#fff;box-shadow:0 4px 0 #ecd7bc;
+  position:relative;display:flex;align-items:center;justify-content:center;
+  color:var(--hand);font-size:24px;font-weight:1000;
 }
-.card .corner{
-  position:absolute;left:8px;top:4px;font-size:16px;font-weight:1000;opacity:.95
-}
-.card .corner.bottom{left:auto;top:auto;right:8px;bottom:3px}
-.card.n1{color:#e45b76}.card.n2{color:#ef9e1f}.card.n3{color:#4f7cd1}.card.n4{color:#6c9f2e}.card.n5{color:#8a53bd}
-.card.selected{transform:translateY(-6px);background:#fffbe5;border-color:#f3cd7f}
-.bottomMascots{width:88px;height:112px;display:flex;align-items:flex-end;justify-content:center}
-.scorePanel .scoreNum{font-size:42px;color:#ff7d98;font-weight:1000;text-align:right;line-height:1}
-.scorePanel .scoreList{margin-top:6px;font-size:14px;font-weight:1000;color:#8d6a4f;line-height:1.8}
-.rightBtns{display:flex;flex-direction:column;gap:10px;margin-top:12px}
-.rightBtns button{width:100%}
+.card .corner{position:absolute;left:6px;top:3px;font-size:12px;font-weight:1000;color:#7d8da8}
+.card .corner.bottom{left:auto;right:6px;top:auto;bottom:3px}
+.card.selected{transform:translateY(-5px);background:#fffce8;border-color:#f2d28d}
+.card.locked{opacity:.66}
 .actionBar{
   position:fixed;left:0;right:0;bottom:0;z-index:40;
   padding:8px max(8px,env(safe-area-inset-left)) calc(8px + env(safe-area-inset-bottom)) max(8px,env(safe-area-inset-right));
   background:#fff7edee;border-top:2px solid var(--line);backdrop-filter:blur(8px)
 }
-.actionInner{max-width:960px;margin:0 auto;display:grid;grid-template-columns:1.2fr 1fr 58px 58px;gap:8px}
+.actionInner{
+  max-width:960px;margin:0 auto;display:grid;grid-template-columns:1.25fr 1fr 50px 50px;gap:8px
+}
 .actionInner button{width:100%;min-height:48px}
 #toast{
   position:fixed;left:50%;top:15%;transform:translateX(-50%);z-index:120;display:none;
-  padding:14px 18px;border-radius:999px;border:3px solid #fff;
-  background:#fff8eb;color:#7b5638;font-size:24px;font-weight:1000;
-  box-shadow:0 8px 0 var(--shadow),0 18px 30px #aa7c5b30
+  padding:13px 18px;border-radius:999px;background:#fff8ee;border:3px solid #fff;color:#7c5b3f;
+  font-size:22px;font-weight:1000;box-shadow:0 8px 0 var(--shadow),0 18px 30px #af826333
 }
-#toast.back10{background:#fff3aa;color:#936200}
-#toast.combo{background:#ecd8ff;color:#6c3bb0}
-#toast.turn{background:#dbf1ff;color:#3a6d91}
-#toast.miss{background:#ffdce5;color:#9a334e}
+#toast.back10{background:#fff3af;color:#916100}
+#toast.combo{background:#eedcff;color:#6b3ead}
+#toast.turn{background:#e0f4ff;color:#3a6c91}
+#toast.miss{background:#ffe0e8;color:#9f3650}
 .modalOverlay,#resultOverlay{
-  position:fixed;inset:0;z-index:100;display:none;align-items:center;justify-content:center;
+  position:fixed;inset:0;display:none;align-items:center;justify-content:center;z-index:100;
   padding:18px;background:#0006
 }
 .modalCard,.resultCard{
   width:min(94vw,660px);max-height:88vh;overflow:auto;padding:20px;background:#fffaf0;
-  border:3px solid var(--line);border-radius:30px;box-shadow:0 10px 0 var(--shadow),0 20px 40px #aa7c5b33
+  border:3px solid var(--line);border-radius:30px;box-shadow:0 10px 0 var(--shadow),0 20px 40px #ab7d5e33
 }
-.modalCard h2,.resultCard h2,.resultCard .title{text-align:center;margin:0 0 12px}
-.modalCard li{margin:8px 0;line-height:1.6;font-weight:900}
-.resultBig{
-  font-size:50px;font-weight:1000;text-align:center;margin:8px 0
-}
-.resultBig.clear{color:#f59d28;text-shadow:0 4px 0 #fff}
-.resultBig.fail{color:#ff7d98;text-shadow:0 4px 0 #fff}
+.modalCard h2,.resultCard .title{text-align:center;margin:0 0 12px}
+.modalCard li{margin:8px 0;line-height:1.55;font-weight:900}
+.resultBig{font-size:48px;line-height:1;font-weight:1000;text-align:center;margin:6px 0}
+.resultBig.clear{color:#f5a132;text-shadow:0 4px 0 #fff}
+.resultBig.fail{color:#ff7c97;text-shadow:0 4px 0 #fff}
 .resultGrid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
-.metric{
-  background:#fff8e6;border:2px solid var(--line);border-radius:18px;padding:8px 6px;text-align:center
-}
-.metric span{display:block;color:var(--muted);font-size:11px;font-weight:900}
-.metric b{display:block;color:#7a5438;font-size:24px;font-weight:1000}
-.playerStats{margin-top:12px}
-.playerCard{
-  margin:8px 0;background:#fff8e6;border:2px solid var(--line);border-radius:18px;padding:10px;font-weight:900
-}
+.metric{background:#fff9ea;border:2px solid var(--line);border-radius:18px;padding:8px 6px;text-align:center}
+.metric span{display:block;font-size:11px;font-weight:900;color:var(--muted)}
+.metric b{display:block;font-size:24px;font-weight:1000;color:#7c5a3d}
+.playerCard{margin:8px 0;padding:10px;background:#fff9ea;border:2px solid var(--line);border-radius:18px;font-weight:900}
 .rankingTable{width:100%;border-collapse:collapse;font-size:14px}
-.rankingTable th,.rankingTable td{padding:8px;border-bottom:1px solid #efd3b2;text-align:left}
-.confetti{position:fixed;top:-10px;width:10px;height:16px;z-index:130;animation:fall 2.7s linear forwards}
-@keyframes fall{to{transform:translateY(110vh) rotate(720deg);opacity:.1}}
-@media (max-width:780px){
-  .heroActions{grid-template-columns:1fr}
-  .hero{min-height:auto}
-  .mascotTop{display:none}
-  .boardTop{grid-template-columns:1fr}
-  .scorePanel .scoreNum{text-align:left}
-  .handSection{flex-direction:column;align-items:stretch}
-  .bottomMascots{display:none}
+.rankingTable th,.rankingTable td{padding:8px;border-bottom:1px solid #efd7ba;text-align:left}
+.confetti{position:fixed;top:-10px;width:10px;height:16px;z-index:130;animation:fall 2.6s linear forwards}
+@keyframes fall{to{transform:translateY(110vh) rotate(720deg);opacity:.15}}
+@media (max-width:720px){
+  .logoRow{grid-template-columns:74px 1fr 74px}
+  .modeCards{grid-template-columns:1fr}
+  .modeCard{min-height:138px}
+  .modeCardTitle{font-size:32px}
 }
-@media (max-width:560px){
-  main{padding:8px 8px 100px}
-  .heroTop{flex-direction:row}
-  .heroBtns{justify-content:flex-end}
-  .hero .hill1{height:94px;bottom:54px}
-  .hero .hill2{height:74px}
-  .boardWrap{padding:10px}
-  .centerBoardInner{grid-template-columns:repeat(2,1fr)}
-  .pile{min-height:132px}
-  .pileValue{font-size:52px}
-  .handCards{grid-template-columns:repeat(auto-fit,minmax(52px,1fr))}
-  .card{height:82px;font-size:24px}
-  .actionInner{grid-template-columns:1.2fr 1fr 52px 52px}
+@media (max-width:520px){
+  main{padding:8px 8px 92px}
+  .home{padding:12px}
+  .logo{font-size:52px}
+  .tagline{font-size:15px}
+  .homeTop .homeBtns button{font-size:14px;padding:9px 10px}
+  .modeCard{min-height:122px;padding:14px}
+  .modeCardTitle{font-size:30px}
+  .modeMascot{width:62px;height:62px;left:10px;bottom:8px}
+  .modeArrow{width:46px;height:46px;font-size:26px}
+  .playTop{grid-template-columns:58px 1fr 82px;gap:6px}
+  .leftMini{padding:6px}
+  .stackCard,.lastCard{height:58px;border-radius:12px}
+  .board{padding:6px}
+  .piles{gap:6px}
+  .pile{min-height:90px;padding:3px}
+  .pileValue{font-size:34px}
+  .pileArrow{font-size:18px}
+  .pileName{font-size:10px}
+  .scoreBox{padding:6px}
+  .scoreBig{font-size:28px}
+  .scoreList{font-size:11px;line-height:1.45}
+  .giveupBtnTop{display:none}
+  .handWrap{margin-top:6px;padding:8px 6px 8px}
+  .handCards{grid-template-columns:repeat(auto-fit,minmax(40px,1fr));gap:5px}
+  .card{height:62px;font-size:21px}
+  .actionInner{grid-template-columns:1.2fr 1fr 46px 46px}
   .resultGrid{grid-template-columns:repeat(2,1fr)}
 }
 </style>
@@ -345,47 +341,44 @@ main{max-width:960px;margin:0 auto;padding:10px 10px 102px}
 <body>
 <main>
   <section id="homeScreen" class="screen active">
-    <div class="panel hero">
-      <div class="cloud c1"></div>
-      <div class="cloud c2"></div>
-      <div class="hill1"></div>
-      <div class="hill2"></div>
-
-      <div class="heroTop">
-        <div class="heroBtns">
-          <button class="icon pink" onclick="toggleBgm()">🎵 BGM ON</button>
+    <div class="panel home">
+      <div class="homeTop">
+        <div class="homeBtns">
+          <button class="softpink" onclick="toggleBgm()">🎵 BGM ON</button>
         </div>
-        <div class="heroBtns">
-          <button class="icon" onclick="openRankings()">👑 ランキング</button>
-          <button class="icon" onclick="showRules()">⚙️ ルール</button>
+        <div class="homeBtns">
+          <button onclick="openRankings()">👑 ランキング</button>
+          <button onclick="showRules()">⚙️ ルール</button>
         </div>
       </div>
 
-      <div class="mascotTop mascotLeft" id="homeRabbit"></div>
-      <div class="mascotTop mascotRight" id="homeWhite"></div>
-
-      <div class="logoWrap">
-        <div class="logo"><span class="t1">BACK</span><span class="t2">1</span><span class="t3">0</span></div>
-        <div class="tagline">数字を捌け。10で流れを変えろ。</div>
+      <div class="logoArea">
+        <div class="logoRow">
+          <div class="mascotBox" id="homeMascotLeft"></div>
+          <div class="logoWrap">
+            <div class="logo"><span class="a">BACK</span><span class="b">1</span><span class="c">0</span></div>
+            <div class="tagline">数字を捌け。10で流れを変えろ。</div>
+          </div>
+          <div class="mascotBox" id="homeMascotRight"></div>
+        </div>
       </div>
 
-      <div class="nameRow">
+      <div class="nameBar">
         <input id="nameInput" placeholder="名前を入力してください" />
       </div>
 
-      <div class="heroActions">
-        <button class="bigCard heroActionSolo" onclick="quickSolo()">
-          <div class="cardMascot" id="soloRabbit"></div>
-          <b>ひとりで<br>あそぶ</b>
-          <small>6000点クリアをめざそう！</small>
-          <div class="arrowBtn">›</div>
+      <div class="modeCards">
+        <button class="modeCard solo" onclick="quickSolo()">
+          <div class="modeMascot" id="soloMascot"></div>
+          <div class="modeCardTitle">ひとりで<br>あそぶ</div>
+          <div class="modeCardSub">6000点クリアをめざそう！</div>
+          <div class="modeArrow">›</div>
         </button>
-
-        <button class="bigCard heroActionMulti" onclick="showCoopSetup()">
-          <div class="cardMascot" id="multiPair"></div>
-          <b>みんなで<br>あそぶ</b>
-          <small>協力プレイでハイスコアをめざそう！</small>
-          <div class="arrowBtn">›</div>
+        <button class="modeCard multi" onclick="showCoopSetup()">
+          <div class="modeMascot" id="multiMascot"></div>
+          <div class="modeCardTitle">みんなで<br>あそぶ</div>
+          <div class="modeCardSub">協力プレイでハイスコアをめざそう！</div>
+          <div class="modeArrow">›</div>
         </button>
       </div>
 
@@ -414,8 +407,8 @@ main{max-width:960px;margin:0 auto;padding:10px 10px 102px}
   <section id="lobbyScreen" class="screen">
     <div class="panel lobby">
       <div class="small">部屋ID</div>
-      <div class="roomCode" id="roomCodeText">----</div>
-      <div class="small" id="lobbyStatus" style="margin-top:10px"></div>
+      <div id="roomCodeText" class="roomCode">----</div>
+      <div id="lobbyStatus" class="small" style="margin-top:10px"></div>
       <div id="lobbyPlayers" style="margin-top:8px"></div>
       <div class="row" style="margin-top:14px">
         <button class="primary" id="startBtn" onclick="startOnlineGame()">ゲーム開始</button>
@@ -426,70 +419,52 @@ main{max-width:960px;margin:0 auto;padding:10px 10px 102px}
   </section>
 
   <section id="playScreen" class="screen">
-    <div class="playersRow" id="playersRow"></div>
-    <div class="turnBanner" id="turnBanner">あなたのターン！</div>
+    <div id="playersRow" class="playersRow"></div>
+    <div id="turnBanner" class="turnBanner mine">あなたのターン！</div>
 
-    <div class="panel boardWrap">
-      <div style="margin-bottom:12px">
-        <span class="menuPill">ミニメニュー</span>
-      </div>
+    <div class="panel playPanel">
+      <div class="playTop">
+        <div class="leftMini">
+          <div class="miniLabel">山札</div>
+          <div class="stackCard"></div>
+          <span class="miniCount" id="deckCount">0</span>
 
-      <div class="boardTop">
-        <div>
-          <div class="boardCol">
-            <div class="small">山札</div>
-            <div class="deckStack">
-              <div class="deckFace" id="deckMascot"></div>
-            </div>
-            <div style="text-align:center"><span class="tinyLabel">山札 <span id="deckCount">0</span></span></div>
-
-            <div class="small" style="margin-top:12px">捨て札</div>
-            <div class="discardCard" id="discardCard">-</div>
-          </div>
+          <div class="miniLabel" style="margin-top:8px">最後</div>
+          <div class="lastCard" id="lastCardNow">-</div>
         </div>
 
-        <div class="centerBoard">
-          <div class="centerBoardInner" id="piles"></div>
+        <div class="board">
+          <div id="piles" class="piles"></div>
         </div>
 
-        <div>
-          <div class="scorePanel">
-            <div class="small">スコア</div>
-            <div class="scoreNum" id="scoreNow">0</div>
-            <div class="scoreList">
-              <div>BACK10　<span style="float:right" id="back10Now">0</span></div>
-              <div>残り　<span style="float:right" id="remainNow">98</span></div>
-              <div>今ターン　<span style="float:right" id="turnPlayNow">0</span></div>
-              <div>目標　<span style="float:right">6000</span></div>
-            </div>
-
-            <div class="rightBtns">
-              <button class="warn" onclick="forceGiveUp()">🏳 投了する</button>
-              <button onclick="showRules()">❔ ルール</button>
-            </div>
+        <div class="scoreBox">
+          <div class="miniLabel">スコア</div>
+          <div id="scoreNow" class="scoreBig">0</div>
+          <div class="scoreList">
+            <div><span>BACK10</span><span id="back10Now">0</span></div>
+            <div><span>残り</span><span id="remainNow">98</span></div>
+            <div><span>今ターン</span><span id="turnPlayNow">0</span></div>
+            <div><span>目標</span><span>6000</span></div>
           </div>
+          <button class="warn giveupBtnTop" onclick="forceGiveUp()">ギブアップ</button>
         </div>
       </div>
 
-      <div class="handSection">
-        <div class="bottomMascots" id="bottomLeftMascot"></div>
-        <div class="handArea">
-          <div class="handBadge">あなたの手札</div>
-          <div class="small" id="hint" style="margin:10px 4px 0 4px"></div>
-          <div id="hand" class="handCards"></div>
-        </div>
-        <div class="bottomMascots" id="bottomRightMascot"></div>
+      <div class="handWrap">
+        <div class="handBadge">あなたの手札</div>
+        <div id="hint" class="small hintText"></div>
+        <div id="hand" class="handCards"></div>
       </div>
     </div>
   </section>
 </main>
 
-<div class="actionBar" id="actionBar" style="display:none">
+<div id="actionBar" class="actionBar" style="display:none">
   <div class="actionInner">
     <button class="primary" onclick="endTurn()">ターン終了</button>
-    <button class="warn" onclick="forceGiveUp()">投了する</button>
-    <button class="icon" onclick="showRules()">？</button>
-    <button class="icon pink" onclick="toggleBgm()">♪</button>
+    <button class="warn" onclick="forceGiveUp()">ギブアップ</button>
+    <button onclick="showRules()">？</button>
+    <button class="softpink" onclick="toggleBgm()">♪</button>
   </div>
 </div>
 
@@ -503,10 +478,10 @@ main{max-width:960px;margin:0 auto;padding:10px 10px 102px}
       <li>BACK10：昇順は「ちょうど10小さい数字」、降順は「ちょうど10大きい数字」を出せます。</li>
       <li>山札がある間は最低2枚、山札切れ後は最低1枚出します。</li>
       <li>1枚10点。1ターン2枚×1.0、3枚×1.5、4枚×2.0、5枚以上×3.0。</li>
-      <li>BACK10は1回+100点。出せない場を選ぶとMISSで-50点です。</li>
+      <li>出せない場を選ぶとMISSで-50点です。</li>
       <li>終了時の残り枚数＝手札＋山札。0枚+10000、1〜4枚+8000、5〜9枚+5000。</li>
-      <li>6000点以上でCLEAR。6000点を超えても自動終了はしません。投了するまで続けられます。</li>
-      <li>みんなであそぶモードでは、開始順はランダムです。</li>
+      <li>6000点以上でCLEAR。6000点を超えても自動終了しません。</li>
+      <li>ギブアップを押すと結果画面を表示します。</li>
     </ul>
     <div style="text-align:center"><button class="primary" onclick="closeModal('rulesModal')">とじる</button></div>
   </div>
@@ -532,16 +507,13 @@ main{max-width:960px;margin:0 auto;padding:10px 10px 102px}
     <div id="resultBig" class="resultBig">CLEAR!</div>
     <div id="resultDetail" style="text-align:center;font-size:20px;font-weight:1000"></div>
     <div id="resultMsg" class="small" style="text-align:center;margin:8px 0 16px"></div>
-
     <div class="resultGrid">
       <div class="metric"><span>SCORE</span><b id="resScore">0</b></div>
       <div class="metric"><span>REMAIN</span><b id="resRemain">0</b></div>
       <div class="metric"><span>BACK10</span><b id="resBack10">0</b></div>
       <div class="metric"><span>MAX COMBO</span><b id="resCombo">0</b></div>
     </div>
-
-    <div id="playerStats" class="playerStats"></div>
-
+    <div id="playerStats" style="margin-top:12px"></div>
     <div class="row" style="justify-content:center;margin-top:14px">
       <button onclick="goHome()">トップへ戻る</button>
       <button class="primary" onclick="resetSameRoom()">もう一回</button>
@@ -595,12 +567,8 @@ function uid(){ return "p_" + Math.random().toString(36).slice(2,9); }
 function roomCode(){ return Math.floor(1000 + Math.random()*9000).toString(); }
 function todayKey(){ return new Date().toISOString().slice(0,10); }
 function monthKey(){ return new Date().toISOString().slice(0,7); }
-function shuffle(a){
-  for(let i=a.length-1;i>0;i--){
-    const j=Math.floor(Math.random()*(i+1));
-    [a[i],a[j]]=[a[j],a[i]];
-  }
-}
+function shuffle(a){ for(let i=a.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]]; } }
+function escapeHtml(s){ return String(s).replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#039;"}[m])); }
 function getPlayerName(){ return $("nameInput").value.trim() || "Player"; }
 function handSize(n){ return n===1 ? 8 : (n===2 ? 7 : 6); }
 function minPlay(g){ return g.deck.length>0 ? 2 : 1; }
@@ -613,119 +581,104 @@ function getComboMultiplier(n){ if(n>=5) return 3.0; if(n===4) return 2.0; if(n=
 function currentTurnScore(g){
   const cards=g.turnCards||0, backs=g.turnBack10||0;
   if(cards<=0) return 0;
-  return Math.round(cards * 10 * getComboMultiplier(cards) + backs*100);
+  return Math.round(cards*10*getComboMultiplier(cards) + backs*100);
 }
 function totalScore(g){ return (g.scoreBase||0) + currentTurnScore(g) + getEndBonus(remaining(g)); }
-function clearState(g){ return totalScore(g)>=6000; }
-function escapeHtml(s){ return String(s).replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#039;"}[m])); }
 
-function showScreen(which){
-  ["homeScreen","lobbyScreen","playScreen"].forEach(id=>$(id).classList.remove("active"));
-  $(which).classList.add("active");
-  $("actionBar").style.display = which==="playScreen" && game?.status==="playing" ? "block" : "none";
+function rabbitSVG(size=88){
+  return `<svg viewBox="0 0 120 132" width="${size}" height="${Math.round(size*1.1)}" aria-hidden="true">
+    <g>
+      <ellipse cx="43" cy="20" rx="11" ry="23" fill="#ffc6d6" stroke="#eca0b4" stroke-width="3"/>
+      <ellipse cx="77" cy="20" rx="11" ry="23" fill="#ffc6d6" stroke="#eca0b4" stroke-width="3"/>
+      <ellipse cx="43" cy="22" rx="5" ry="14" fill="#ffe6ef"/>
+      <ellipse cx="77" cy="22" rx="5" ry="14" fill="#ffe6ef"/>
+      <circle cx="60" cy="61" r="36" fill="#ffd0dc" stroke="#eca0b4" stroke-width="3"/>
+      <ellipse cx="49" cy="57" rx="4" ry="5" fill="#6f4d35"/>
+      <ellipse cx="71" cy="57" rx="4" ry="5" fill="#6f4d35"/>
+      <circle cx="40" cy="68" r="5.5" fill="#ffb8c8"/>
+      <circle cx="80" cy="68" r="5.5" fill="#ffb8c8"/>
+      <ellipse cx="60" cy="69" rx="7" ry="5" fill="#f5a5b7"/>
+      <path d="M54 76 Q60 82 66 76" stroke="#7f563b" stroke-width="3" fill="none" stroke-linecap="round"/>
+      <ellipse cx="43" cy="103" rx="10" ry="14" fill="#ffd0dc" stroke="#eca0b4" stroke-width="3"/>
+      <ellipse cx="77" cy="103" rx="10" ry="14" fill="#ffd0dc" stroke="#eca0b4" stroke-width="3"/>
+      <ellipse cx="31" cy="87" rx="9" ry="15" fill="#ffd0dc" stroke="#eca0b4" stroke-width="3" transform="rotate(16 31 87)"/>
+      <ellipse cx="89" cy="87" rx="9" ry="15" fill="#ffd0dc" stroke="#eca0b4" stroke-width="3" transform="rotate(-16 89 87)"/>
+    </g></svg>`;
+}
+function bearSVG(size=88){
+  return `<svg viewBox="0 0 120 132" width="${size}" height="${Math.round(size*1.1)}" aria-hidden="true">
+    <g>
+      <circle cx="41" cy="28" r="12" fill="#fffaf4" stroke="#e5d0b8" stroke-width="3"/>
+      <circle cx="79" cy="28" r="12" fill="#fffaf4" stroke="#e5d0b8" stroke-width="3"/>
+      <circle cx="60" cy="63" r="38" fill="#fffaf4" stroke="#e5d0b8" stroke-width="3"/>
+      <ellipse cx="49" cy="58" rx="4" ry="5" fill="#6f4d35"/>
+      <ellipse cx="71" cy="58" rx="4" ry="5" fill="#6f4d35"/>
+      <circle cx="40" cy="68" r="5.5" fill="#ffd7cf"/>
+      <circle cx="80" cy="68" r="5.5" fill="#ffd7cf"/>
+      <ellipse cx="60" cy="68" rx="10" ry="8" fill="#f5e2d8"/>
+      <ellipse cx="60" cy="66" rx="4.5" ry="4" fill="#8a623f"/>
+      <path d="M54 74 Q60 80 66 74" stroke="#7f563b" stroke-width="3" fill="none" stroke-linecap="round"/>
+      <ellipse cx="43" cy="103" rx="10" ry="14" fill="#fffaf4" stroke="#e5d0b8" stroke-width="3"/>
+      <ellipse cx="77" cy="103" rx="10" ry="14" fill="#fffaf4" stroke="#e5d0b8" stroke-width="3"/>
+    </g></svg>`;
+}
+function greenBlobSVG(size=58){
+  return `<svg viewBox="0 0 92 92" width="${size}" height="${size}" aria-hidden="true">
+    <g>
+      <circle cx="46" cy="49" r="28" fill="#bfe182" stroke="#95be56" stroke-width="3"/>
+      <path d="M43 21 C40 12 49 11 47 4 C57 13 57 22 43 21 Z" fill="#72ac3c" stroke="#649739" stroke-width="2"/>
+      <ellipse cx="37" cy="46" rx="3.2" ry="4" fill="#6f4d35"/>
+      <ellipse cx="55" cy="46" rx="3.2" ry="4" fill="#6f4d35"/>
+      <ellipse cx="46" cy="53" rx="7" ry="4.5" fill="#ebd091"/>
+      <circle cx="30" cy="53" r="4.5" fill="#dff0b5"/>
+      <circle cx="62" cy="53" r="4.5" fill="#dff0b5"/>
+    </g></svg>`;
+}
+function chickSVG(size=58){
+  return `<svg viewBox="0 0 92 92" width="${size}" height="${size}" aria-hidden="true">
+    <g>
+      <circle cx="46" cy="49" r="28" fill="#ffe472" stroke="#f1c947" stroke-width="3"/>
+      <path d="M40 22 L46 14 L52 22 Z" fill="#95c553" stroke="#7ab240" stroke-width="2"/>
+      <ellipse cx="37" cy="46" rx="3.2" ry="4" fill="#6f4d35"/>
+      <ellipse cx="55" cy="46" rx="3.2" ry="4" fill="#6f4d35"/>
+      <polygon points="46,55 41,51 46,47 51,51" fill="#ec9d1e"/>
+      <circle cx="30" cy="55" r="4.5" fill="#ffd9a3"/>
+      <circle cx="62" cy="55" r="4.5" fill="#ffd9a3"/>
+    </g></svg>`;
+}
+function mountMascots(){
+  $("homeMascotLeft").innerHTML = rabbitSVG(98);
+  $("homeMascotRight").innerHTML = bearSVG(98);
+  $("soloMascot").innerHTML = rabbitSVG(64);
+  $("multiMascot").innerHTML = `<div style="display:flex;align-items:flex-end;gap:2px">${greenBlobSVG(40)}${chickSVG(40)}</div>`;
+}
+function avatarHTML(name,size=28){
+  const i=(name.codePointAt(0)||65)%4;
+  if(i===0) return rabbitSVG(size);
+  if(i===1) return bearSVG(size);
+  if(i===2) return greenBlobSVG(size);
+  return chickSVG(size);
 }
 
-function mascotRabbit(size=120){
-  return `
-  <svg viewBox="0 0 140 160" width="${size}" height="${size*1.14}" aria-hidden="true">
-    <defs>
-      <filter id="s"><feDropShadow dx="0" dy="2" stdDeviation="2" flood-color="#e5b7be" flood-opacity=".6"/></filter>
-    </defs>
-    <g filter="url(#s)">
-      <ellipse cx="52" cy="22" rx="14" ry="28" fill="#ffc7d7" stroke="#f0a6b8" stroke-width="3"/>
-      <ellipse cx="85" cy="22" rx="14" ry="28" fill="#ffc7d7" stroke="#f0a6b8" stroke-width="3"/>
-      <ellipse cx="52" cy="24" rx="7" ry="18" fill="#ffe7ef"/>
-      <ellipse cx="85" cy="24" rx="7" ry="18" fill="#ffe7ef"/>
-      <circle cx="70" cy="74" r="42" fill="#ffcad9" stroke="#f0a6b8" stroke-width="3"/>
-      <ellipse cx="57" cy="69" rx="5" ry="6" fill="#7b4f34"/>
-      <ellipse cx="83" cy="69" rx="5" ry="6" fill="#7b4f34"/>
-      <ellipse cx="70" cy="82" rx="8" ry="6" fill="#f29aad"/>
-      <path d="M62 89 Q70 96 78 89" stroke="#8a5a3d" stroke-width="3.5" fill="none" stroke-linecap="round"/>
-      <circle cx="46" cy="82" r="7" fill="#ffb3c4" opacity=".8"/>
-      <circle cx="94" cy="82" r="7" fill="#ffb3c4" opacity=".8"/>
-      <ellipse cx="48" cy="122" rx="13" ry="18" fill="#ffcad9" stroke="#f0a6b8" stroke-width="3"/>
-      <ellipse cx="92" cy="122" rx="13" ry="18" fill="#ffcad9" stroke="#f0a6b8" stroke-width="3"/>
-      <ellipse cx="37" cy="103" rx="11" ry="20" fill="#ffcad9" stroke="#f0a6b8" stroke-width="3" transform="rotate(18 37 103)"/>
-      <ellipse cx="103" cy="103" rx="11" ry="20" fill="#ffcad9" stroke="#f0a6b8" stroke-width="3" transform="rotate(-18 103 103)"/>
-    </g>
-  </svg>`;
-}
-function mascotWhite(size=120){
-  return `
-  <svg viewBox="0 0 140 160" width="${size}" height="${size*1.14}" aria-hidden="true">
-    <defs><filter id="s2"><feDropShadow dx="0" dy="2" stdDeviation="2" flood-color="#d9c7ac" flood-opacity=".6"/></filter></defs>
-    <g filter="url(#s2)">
-      <circle cx="50" cy="34" r="12" fill="#fffaf5" stroke="#e7d3bd" stroke-width="3"/>
-      <circle cx="90" cy="34" r="12" fill="#fffaf5" stroke="#e7d3bd" stroke-width="3"/>
-      <ellipse cx="70" cy="86" rx="44" ry="52" fill="#fffaf5" stroke="#e7d3bd" stroke-width="3"/>
-      <ellipse cx="57" cy="76" rx="5" ry="6" fill="#7b4f34"/>
-      <ellipse cx="83" cy="76" rx="5" ry="6" fill="#7b4f34"/>
-      <ellipse cx="70" cy="89" rx="8" ry="6" fill="#f3c0ab"/>
-      <path d="M62 96 Q70 102 78 96" stroke="#8a5a3d" stroke-width="3.5" fill="none" stroke-linecap="round"/>
-      <circle cx="46" cy="88" r="7" fill="#ffd4c9" opacity=".9"/>
-      <circle cx="94" cy="88" r="7" fill="#ffd4c9" opacity=".9"/>
-      <ellipse cx="46" cy="128" rx="13" ry="17" fill="#fffaf5" stroke="#e7d3bd" stroke-width="3"/>
-      <ellipse cx="94" cy="128" rx="13" ry="17" fill="#fffaf5" stroke="#e7d3bd" stroke-width="3"/>
-    </g>
-  </svg>`;
-}
-function mascotChick(size=90){
-  return `
-  <svg viewBox="0 0 120 120" width="${size}" height="${size}" aria-hidden="true">
-    <defs><filter id="s3"><feDropShadow dx="0" dy="2" stdDeviation="2" flood-color="#d3b060" flood-opacity=".5"/></filter></defs>
-    <g filter="url(#s3)">
-      <circle cx="60" cy="60" r="34" fill="#ffe36c" stroke="#f4c940" stroke-width="3"/>
-      <path d="M48 24 L60 10 L72 24 Z" fill="#91c34a" stroke="#77ab39" stroke-width="3"/>
-      <ellipse cx="50" cy="57" rx="4" ry="5" fill="#7b4f34"/>
-      <ellipse cx="70" cy="57" rx="4" ry="5" fill="#7b4f34"/>
-      <polygon points="60,66 54,62 60,58 66,62" fill="#ef9e1f"/>
-      <circle cx="42" cy="66" r="6" fill="#ffd9a0"/>
-      <circle cx="78" cy="66" r="6" fill="#ffd9a0"/>
-    </g>
-  </svg>`;
-}
-function mascotGreen(size=90){
-  return `
-  <svg viewBox="0 0 120 120" width="${size}" height="${size}" aria-hidden="true">
-    <defs><filter id="s4"><feDropShadow dx="0" dy="2" stdDeviation="2" flood-color="#8aa656" flood-opacity=".5"/></filter></defs>
-    <g filter="url(#s4)">
-      <circle cx="60" cy="64" r="34" fill="#bfe07b" stroke="#95bf57" stroke-width="3"/>
-      <path d="M58 26 C54 18 64 18 62 8 C74 18 74 28 58 26 Z" fill="#6cae3c" stroke="#5e9533" stroke-width="2"/>
-      <ellipse cx="50" cy="60" rx="4" ry="5" fill="#7b4f34"/>
-      <ellipse cx="70" cy="60" rx="4" ry="5" fill="#7b4f34"/>
-      <ellipse cx="60" cy="69" rx="8" ry="5" fill="#f3c97b"/>
-      <circle cx="42" cy="69" r="6" fill="#d9f0aa"/>
-      <circle cx="78" cy="69" r="6" fill="#d9f0aa"/>
-    </g>
-  </svg>`;
-}
-function mountDecor(){
-  $("homeRabbit").innerHTML = mascotRabbit(140);
-  $("homeWhite").innerHTML = mascotWhite(140);
-  $("soloRabbit").innerHTML = mascotRabbit(82);
-  $("multiPair").innerHTML = `<div style="display:flex;align-items:flex-end;gap:2px">${mascotGreen(58)}${mascotChick(58)}</div>`;
-  $("deckMascot").innerHTML = mascotWhite(44);
-  $("bottomLeftMascot").innerHTML = mascotRabbit(84);
-  $("bottomRightMascot").innerHTML = mascotWhite(84);
+function showScreen(id){
+  ["homeScreen","lobbyScreen","playScreen"].forEach(x=>$(x).classList.remove("active"));
+  $(id).classList.add("active");
+  $("actionBar").style.display = id==="playScreen" && game?.status==="playing" ? "block" : "none";
 }
 
 function quickSolo(){
-  myId = "solo";
-  const players = { solo:{ name:getPlayerName(), seat:1 } };
-  game = {
-    roomId:"solo",
-    hostId:"solo",
-    mode:"solo",
-    playerCount:1,
-    players,
+  myId="solo";
+  const players={ solo:{ name:getPlayerName(), seat:1 } };
+  game={
+    roomId:"solo", hostId:"solo", mode:"solo", playerCount:1, players,
     ...buildGame("solo",1,players)
   };
-  localMode = true;
-  document.body.dataset.resultShown = "";
+  localMode=true;
+  document.body.dataset.resultShown="";
   renderAll();
 }
 function showCoopSetup(){
-  $("coopSetup").style.display = "block";
+  $("coopSetup").style.display="block";
   $("roomInput").focus();
 }
 async function createCoopRoom(){ await createRoom(); }
@@ -762,31 +715,31 @@ async function joinRoom(){
 }
 function listen(ref){
   if(unsub) unsub();
-  localMode = false;
-  unsub = onSnapshot(ref, snap=>{
+  localMode=false;
+  unsub=onSnapshot(ref,snap=>{
     const prevPlayer = game?.currentPlayer;
     const prevStatus = game?.status;
     game = snap.data();
     selectedIndex = null;
     renderAll();
-    if(prevStatus === "playing" && game.status === "playing" && prevPlayer !== game.currentPlayer){
-      if(game.currentPlayer === myId){
+    if(prevStatus==="playing" && game.status==="playing" && prevPlayer!==game.currentPlayer){
+      if(game.currentPlayer===myId){
         showToast("あなたのターン！","turn");
         playTurnStart();
       }else{
         showToast((game.players?.[game.currentPlayer]?.name || "相手") + " が考え中…");
       }
     }
-    if(game.status === "ended" && game.result && !document.body.dataset.resultShown){
-      document.body.dataset.resultShown = "1";
+    if(game.status==="ended" && game.result && !document.body.dataset.resultShown){
+      document.body.dataset.resultShown="1";
       showResult(game.result);
     }
   });
 }
 async function startOnlineGame(){
-  if(!game || game.hostId !== myId){ showToast("部屋を作った人だけ開始できます"); return; }
+  if(!game || game.hostId!==myId){ showToast("部屋を作った人だけ開始できます"); return; }
   if(Object.keys(game.players||{}).length < game.playerCount){ showToast("まだ人数がそろっていません"); return; }
-  const next = buildGame("multi", game.playerCount, game.players);
+  const next = buildGame("multi",game.playerCount,game.players);
   await updateDoc(doc(db,"rooms",roomId), next);
 }
 function buildGame(mode,n,players){
@@ -803,111 +756,78 @@ function buildGame(mode,n,players){
   return {
     status:"playing", deck, hands,
     piles:[
-      {type:"up", value:1, name:"昇順 A"},
-      {type:"up", value:1, name:"昇順 B"},
-      {type:"down", value:100, name:"降順 C"},
-      {type:"down", value:100, name:"降順 D"}
+      {type:"up", value:1, name:"昇順A"},
+      {type:"up", value:1, name:"昇順B"},
+      {type:"down", value:100, name:"降順C"},
+      {type:"down", value:100, name:"降順D"}
     ],
     turnOrder:ids,
     currentPlayer:ids[0],
-    playedThisTurn:0,
-    turnCards:0,
-    turnBack10:0,
-    scoreBase:0,
-    back10Total:0,
-    maxCombo:0,
-    lastCard:null,
-    stats,
-    startedAtMs:Date.now(),
-    result:null,
-    updatedAt:serverTimestamp()
+    playedThisTurn:0, turnCards:0, turnBack10:0,
+    scoreBase:0, back10Total:0, maxCombo:0, lastCard:null, stats,
+    startedAtMs:Date.now(), result:null, updatedAt:serverTimestamp()
   };
 }
 async function saveGame(g){
-  game = g;
+  game=g;
   if(localMode){ renderAll(); return; }
   await updateDoc(doc(db,"rooms",roomId), { ...g, updatedAt:serverTimestamp() });
 }
-function getCardColorClass(num){
-  const v = num % 5;
-  return ["n1","n2","n3","n4","n5"][v];
-}
 function renderAll(){
-  if(!game) { showScreen("homeScreen"); return; }
-
-  if(game.status === "lobby"){
+  if(!game){ showScreen("homeScreen"); return; }
+  if(game.status==="lobby"){
     showScreen("lobbyScreen");
     $("roomCodeText").textContent = game.roomId;
     $("lobbyStatus").textContent = `${Object.keys(game.players||{}).length}/${game.playerCount}人 参加中`;
     $("lobbyPlayers").innerHTML = Object.values(game.players||{})
       .sort((a,b)=>a.seat-b.seat)
-      .map(p=>`<span class="badge">${avatarHTML(p.name,32)} ${escapeHtml(p.name)}</span>`)
-      .join("");
-    $("startBtn").disabled = game.hostId !== myId;
+      .map(p=>`<span class="badge">${avatarHTML(p.name,26)} ${escapeHtml(p.name)}</span>`).join("");
+    $("startBtn").disabled = game.hostId!==myId;
     return;
   }
-
   showScreen("playScreen");
-  $("actionBar").style.display = game.status === "playing" ? "block" : "none";
-
-  const mine = isMyTurn() || localMode;
+  const mine = (isMyTurn() || localMode) && game.status==="playing";
   const turnName = game.players?.[game.currentPlayer]?.name || "?";
-  $("turnBanner").className = "turnBanner " + (mine ? "turnMine" : "turnOther");
-  $("turnBanner").innerHTML = avatarHTML(turnName,36) + `<span>${mine ? "あなたのターン！" : escapeHtml(turnName) + " が考え中…"}</span>`;
-
+  $("turnBanner").className = "turnBanner " + (mine ? "mine" : "other");
+  $("turnBanner").innerHTML = avatarHTML(turnName,30) + `<span>${mine ? "あなたのターン！" : escapeHtml(turnName) + " が考え中…"}</span>`;
   $("playersRow").innerHTML = (game.turnOrder||[]).map(pid=>{
     const nm = game.players?.[pid]?.name || pid;
-    const active = pid === game.currentPlayer ? ' style="outline:3px solid #ffe08c"' : "";
-    return `<div class="playerChip"${active}>
-      <div class="avatar">${avatarHTML(nm,30)}</div>
-      <div>${escapeHtml(nm)}</div>
+    return `<div class="playerChip ${pid===game.currentPlayer ? 'active' : ''}">
+      <div class="avatar">${avatarHTML(nm,24)}</div><div>${escapeHtml(nm)}</div>
     </div>`;
   }).join("");
-
+  $("deckCount").textContent = game.deck.length;
+  $("lastCardNow").textContent = game.lastCard ?? "-";
   $("scoreNow").textContent = totalScore(game);
   $("back10Now").textContent = game.back10Total || 0;
   $("remainNow").textContent = remaining(game);
   $("turnPlayNow").textContent = game.playedThisTurn || 0;
-  $("deckCount").textContent = game.deck.length;
-  $("discardCard").textContent = game.lastCard ?? "-";
-  $("hint").textContent = mine
-    ? `カードを選んで、出したい場をタップ。最低${minPlay(game)}枚出したら「ターン終了」できます。`
-    : "相手のターンです。";
+  $("hint").textContent = mine ? `カードを選んで、出したい場をタップ。最低${minPlay(game)}枚出したら「ターン終了」できます。` : "相手のターンです。";
 
-  $("piles").innerHTML = game.piles.map((p,i)=>{
-    const colorClass = "value" + (i+1);
-    return `<div class="pile" onclick="playPile(${i})">
+  $("piles").innerHTML = game.piles.map((p,i)=>`
+    <div class="pile" onclick="playPile(${i})">
       <div class="pileArrow">${p.type==="up" ? "⌃" : "⌄"}</div>
-      <div class="pileValue ${colorClass}">${p.value}</div>
-      <div class="small">${escapeHtml(p.name)}</div>
-    </div>`;
-  }).join("");
+      <div class="pileValue p${i+1}">${p.value}</div>
+      <div class="pileName">${escapeHtml(p.name)}</div>
+    </div>
+  `).join("");
 
   const hand = game.hands?.[myId] || [];
-  $("hand").innerHTML = hand.map((num,i)=>`
-    <div class="card ${getCardColorClass(num)} ${selectedIndex===i ? 'selected' : ''} ${mine ? '' : 'locked'}" onclick="selectCard(${i})">
-      <div class="corner">${num}</div>
-      ${num}
-      <div class="corner bottom">${num}</div>
+  $("hand").innerHTML = hand.map((n,i)=>`
+    <div class="card ${selectedIndex===i ? 'selected' : ''} ${mine ? '' : 'locked'}" onclick="selectCard(${i})">
+      <div class="corner">${n}</div>${n}<div class="corner bottom">${n}</div>
     </div>
   `).join("");
 }
-function avatarHTML(name,size=28){
-  const c = (name.codePointAt(0) || 65) % 4;
-  if(c===0) return `<span style="display:inline-flex;width:${size}px;height:${size}px;align-items:center;justify-content:center">${mascotRabbit(size)}</span>`;
-  if(c===1) return `<span style="display:inline-flex;width:${size}px;height:${size}px;align-items:center;justify-content:center">${mascotWhite(size)}</span>`;
-  if(c===2) return `<span style="display:inline-flex;width:${size}px;height:${size}px;align-items:center;justify-content:center">${mascotGreen(size)}</span>`;
-  return `<span style="display:inline-flex;width:${size}px;height:${size}px;align-items:center;justify-content:center">${mascotChick(size)}</span>`;
-}
 function selectCard(i){
   if(!isMyTurn() && !localMode) return;
-  selectedIndex = i;
+  selectedIndex=i;
   renderAll();
 }
 async function playPile(i){
   if(!isMyTurn() && !localMode){ showToast("相手のターンです"); return; }
-  if(!game || game.status !== "playing") return;
-  if(selectedIndex === null) return;
+  if(!game || game.status!=="playing") return;
+  if(selectedIndex===null) return;
   const card = game.hands[myId][selectedIndex];
   const pileBefore = game.piles[i];
 
@@ -940,9 +860,9 @@ async function playPile(i){
   selectedIndex = null;
 
   if(back10){ showToast("BACK10 +100","back10"); playBack10(); }
-  else { playGood(); }
+  else playGood();
 
-  if(remaining(g) === 0){
+  if(remaining(g)===0){
     applyTurnScore(g,myId);
     await endGame(g,"全カード処理");
     return;
@@ -983,23 +903,24 @@ async function endTurn(){
 }
 async function forceGiveUp(){
   if(!game || game.status!=="playing") return;
-  if(!confirm("ここで投了してリザルトを表示しますか？")) return;
+  if(!confirm("ほんとにギブアップする？ 今のスコアで結果を見るよ。")) return;
   const g = structuredClone(game);
-  if(g.playedThisTurn > 0) applyTurnScore(g,myId);
-  await endGame(g,"投了");
+  if(g.playedThisTurn>0) applyTurnScore(g,myId);
+  await endGame(g,"ギブアップ");
 }
 async function endGame(g,reason){
   if(g.status==="ended") return;
   const rem = remaining(g);
   const score = (g.scoreBase||0) + getEndBonus(rem);
   const result = {
-    score, scoreBase:g.scoreBase||0, endBonus:getEndBonus(rem), clear:score>=6000, remaining:rem, reason,
-    back10Total:g.back10Total||0, maxCombo:g.maxCombo||0, stats:g.stats||{}, mode:g.mode||"multi",
+    score, scoreBase:g.scoreBase||0, endBonus:getEndBonus(rem), clear:score>=6000,
+    remaining:rem, reason, back10Total:g.back10Total||0, maxCombo:g.maxCombo||0,
+    stats:g.stats||{}, mode:g.mode||"multi",
     timeSec:Math.max(0,Math.round((Date.now()-(g.startedAtMs||Date.now()))/1000)),
     dateKey:todayKey(), monthKey:monthKey()
   };
-  g.status = "ended";
-  g.result = result;
+  g.status="ended";
+  g.result=result;
   await saveGame(g);
   await saveRanking(g,result);
   showResult(result);
@@ -1026,7 +947,7 @@ async function saveRanking(g,result){
   }
 }
 function showResult(result){
-  $("resultOverlay").style.display = "flex";
+  $("resultOverlay").style.display="flex";
   $("resultBig").textContent = result.clear ? "CLEAR!" : "TRY AGAIN";
   $("resultBig").className = "resultBig " + (result.clear ? "clear" : "fail");
   $("resultDetail").textContent = result.clear ? "6000点突破！" : `あと ${Math.max(0,6000-result.score)} 点`;
@@ -1035,33 +956,32 @@ function showResult(result){
   $("resRemain").textContent = result.remaining;
   $("resBack10").textContent = result.back10Total;
   $("resCombo").textContent = result.maxCombo;
-  const players = game?.players || {};
-  $("playerStats").innerHTML = "<div class='small' style='font-size:14px'>個人実績</div>" +
-    Object.entries(result.stats||{}).map(([pid,s])=>{
-      const nm = players[pid]?.name || pid;
-      return `<div class="playerCard"><b>${escapeHtml(nm)}</b><br>
-      出した枚数：${s.cards||0} / BACK10：${s.back10||0} / MISS：${s.penalty||0}<br>
-      個人得点：${s.score||0} / 最大コンボ：${s.maxCombo||0}</div>`;
-    }).join("");
 
-  document.body.dataset.resultShown = "1";
-  if(result.clear){ confetti(result.remaining===0?120:70); playWin(); }
-  else playLose();
+  const players = game?.players || {};
+  $("playerStats").innerHTML = Object.entries(result.stats||{}).map(([pid,s])=>{
+    const nm = players[pid]?.name || pid;
+    return `<div class="playerCard"><b>${escapeHtml(nm)}</b><br>
+    出した枚数：${s.cards||0} / BACK10：${s.back10||0} / MISS：${s.penalty||0}<br>
+    個人得点：${s.score||0} / 最大コンボ：${s.maxCombo||0}</div>`;
+  }).join("");
+
+  document.body.dataset.resultShown="1";
+  if(result.clear){ confetti(result.remaining===0 ? 120 : 70); playWin(); } else playLose();
 }
 async function resetSameRoom(){
-  document.body.dataset.resultShown = "";
-  $("resultOverlay").style.display = "none";
+  document.body.dataset.resultShown="";
+  $("resultOverlay").style.display="none";
   if(localMode){ quickSolo(); return; }
-  if(!game || game.hostId !== myId){ showToast("再開できるのは部屋を作った人だけ"); return; }
+  if(!game || game.hostId!==myId){ showToast("再開できるのは部屋を作った人だけ"); return; }
   const next = buildGame("multi", game.playerCount, game.players);
   await updateDoc(doc(db,"rooms",roomId), next);
 }
 function goHome(){
   if(unsub){ unsub(); unsub=null; }
   roomId=""; myId=""; game=null; selectedIndex=null; localMode=false;
-  document.body.dataset.resultShown = "";
-  $("resultOverlay").style.display = "none";
-  $("coopSetup").style.display = "none";
+  $("coopSetup").style.display="none";
+  $("resultOverlay").style.display="none";
+  document.body.dataset.resultShown="";
   showScreen("homeScreen");
 }
 function copyRoom(){
@@ -1071,53 +991,38 @@ function copyRoom(){
 function showRules(){ $("rulesModal").style.display="flex"; resumeAudio(); }
 function openRankings(){ $("rankingModal").style.display="flex"; loadRankings("solo","daily"); }
 function closeModal(id){ $(id).style.display="none"; resumeAudio(); }
-
 async function loadRankings(mode,period){
   const body = $("rankingBody");
-  body.innerHTML = "読み込み中...";
-  if(!db){ body.innerHTML = "Firebaseに接続できません。"; return; }
+  body.innerHTML="読み込み中...";
+  if(!db){ body.innerHTML="Firebaseに接続できません。"; return; }
   const field = period==="daily" ? "dailyKey" : "monthlyKey";
   const value = mode + "_" + (period==="daily" ? todayKey() : monthKey());
   try{
     const q = query(collection(db,"rankings"), where(field,"==",value));
     const snap = await getDocs(q);
-    const rows = [];
-    snap.forEach(d=>rows.push(d.data()));
-    rows.sort((a,b)=>{
-      if((b.score||0)!==(a.score||0)) return (b.score||0)-(a.score||0);
-      return (a.timeSec||999999)-(b.timeSec||999999);
-    });
+    const rows=[]; snap.forEach(d=>rows.push(d.data()));
+    rows.sort((a,b)=>{ if((b.score||0)!==(a.score||0)) return (b.score||0)-(a.score||0); return (a.timeSec||999999)-(b.timeSec||999999); });
     const top = rows.slice(0,10);
-    if(top.length===0){ body.innerHTML = "まだ記録がありません。1ゲーム終了すると表示されます。"; return; }
+    if(top.length===0){ body.innerHTML="まだ記録がありません。1ゲーム終了すると表示されます。"; return; }
     let html = `<div style="font-weight:1000;margin-bottom:8px">${mode==="solo"?"ひとり":"みんな"} / ${period==="daily"?"今日":"今月"}</div>`;
     html += `<table class="rankingTable"><tr><th>#</th><th>名前</th><th>Score</th><th>残り</th><th>B10</th></tr>`;
-    top.forEach((r,i)=>{
-      html += `<tr><td>${i+1}</td><td>${escapeHtml(r.playerName||"Player")}</td><td>${r.score}</td><td>${r.remaining}</td><td>${r.back10Total}</td></tr>`;
-    });
+    top.forEach((r,i)=>{ html += `<tr><td>${i+1}</td><td>${escapeHtml(r.playerName||"Player")}</td><td>${r.score}</td><td>${r.remaining}</td><td>${r.back10Total}</td></tr>`; });
     html += `</table>`;
     body.innerHTML = html;
   }catch(e){
     console.warn(e);
-    body.innerHTML = "ランキング取得に失敗しました。Firestoreルールを確認してください。";
+    body.innerHTML="ランキング取得に失敗しました。Firestoreのルールやインデックスを確認してください。";
   }
 }
 
-function ensureAudio(){
-  if(!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-  resumeAudio();
-}
+function ensureAudio(){ if(!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)(); resumeAudio(); }
 function resumeAudio(){ if(audioCtx && audioCtx.state==="suspended") audioCtx.resume(); }
 function beep(freq,dur,type="triangle",vol=.05){
   ensureAudio();
-  const o = audioCtx.createOscillator();
-  const g = audioCtx.createGain();
-  o.type = type;
-  o.frequency.value = freq;
-  g.gain.value = vol;
+  const o=audioCtx.createOscillator(), g=audioCtx.createGain();
+  o.type=type; o.frequency.value=freq; g.gain.value=vol;
   o.connect(g); g.connect(audioCtx.destination);
-  o.start();
-  g.gain.exponentialRampToValueAtTime(.001,audioCtx.currentTime+dur);
-  o.stop(audioCtx.currentTime+dur);
+  o.start(); g.gain.exponentialRampToValueAtTime(.001,audioCtx.currentTime+dur); o.stop(audioCtx.currentTime+dur);
 }
 function playGood(){ beep(660,.08,"triangle",.045); setTimeout(()=>beep(880,.08,"triangle",.045),70); }
 function playPenalty(){ [140,110].forEach((f,i)=>setTimeout(()=>beep(f,.22,"sawtooth",.09),i*120)); }
@@ -1128,51 +1033,43 @@ function playLose(){ [220,180,140].forEach((f,i)=>setTimeout(()=>beep(f,.25,"saw
 function toggleBgm(){
   ensureAudio();
   if(bgmOn){
-    clearInterval(bgmTimer);
-    bgmOn = false;
-    showToast("BGM OFF");
-    return;
+    clearInterval(bgmTimer); bgmOn=false; showToast("BGM OFF"); return;
   }
-  bgmOn = true;
-  showToast("BGM ON");
-  const melody = [
+  bgmOn=true; showToast("BGM ON");
+  const melody=[
     [523,.12],[659,.12],[784,.18],[659,.12],
     [587,.12],[659,.12],[880,.22],[659,.12],
     [523,.12],[659,.12],[784,.18],[988,.12],
     [880,.18],[784,.12],[659,.22],[0,.12]
   ];
   let i=0;
-  bgmTimer = setInterval(()=>{
+  bgmTimer=setInterval(()=>{
     if(!bgmOn) return;
-    const [freq,dur] = melody[i % melody.length];
+    const [freq,dur]=melody[i % melody.length];
     if(freq>0) beep(freq,dur,"triangle",.024);
     i++;
   },320);
 }
-
-function showToast(text, cls=""){
-  const t = $("toast");
-  t.textContent = text;
-  t.className = cls;
-  t.style.display = "block";
-  clearTimeout(t._timer);
-  t._timer = setTimeout(()=>{ t.style.display = "none"; },1300);
+function showToast(text,cls=""){
+  const t=$("toast");
+  t.textContent=text; t.className=cls; t.style.display="block";
+  clearTimeout(t._timer); t._timer=setTimeout(()=>{ t.style.display="none"; },1300);
 }
 function confetti(n){
-  const colors=["#ffd166","#9edcff","#9fd667","#ff9fb8","#fff"];
+  const colors=["#ffd166","#9ed8ff","#9fd667","#ff9fb8","#fff"];
   for(let i=0;i<n;i++){
-    const el = document.createElement("div");
-    el.className = "confetti";
-    el.style.left = Math.random()*100 + "vw";
-    el.style.background = colors[i % colors.length];
-    el.style.animationDelay = (Math.random()*0.8)+"s";
-    el.style.transform = `rotate(${Math.random()*360}deg)`;
+    const el=document.createElement("div");
+    el.className="confetti";
+    el.style.left=Math.random()*100+"vw";
+    el.style.background=colors[i % colors.length];
+    el.style.animationDelay=(Math.random()*0.8)+"s";
+    el.style.transform=`rotate(${Math.random()*360}deg)`;
     document.body.appendChild(el);
     setTimeout(()=>el.remove(),3300);
   }
 }
 
-mountDecor();
+mountMascots();
 </script>
 </body>
 </html>
