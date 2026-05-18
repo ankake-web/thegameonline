@@ -6,284 +6,490 @@
 <title>BACK10</title>
 <style>
 :root{
-  --bg:#0f1117; --panel:#1b1f2a; --panel2:#252b3a; --text:#f8fafc; --muted:#aab2c5;
-  --blue:#4f8cff; --gold:#ffd166; --green:#4ade80; --red:#fb7185; --purple:#c084fc;
+  --bg1:#fff4cf;
+  --bg2:#ffe5eb;
+  --bg3:#e8f8ff;
+  --ink:#6c4b2f;
+  --muted:#a17b5d;
+  --line:#efcca6;
+  --line2:#e8b98a;
+  --panel:#fff9ef;
+  --shadow:#ddb98c;
+  --pink:#ff95ae;
+  --pink-deep:#e86687;
+  --pink-soft:#ffe3eb;
+  --green:#9fd667;
+  --green-deep:#74ae3d;
+  --green-soft:#edf8d2;
+  --blue:#9edcff;
+  --blue-deep:#68b3e2;
+  --blue-soft:#e6f7ff;
+  --yellow:#ffd769;
+  --yellow-deep:#efb93b;
+  --wood:#f5e0c4;
+  --cream:#fffef8;
+  --danger:#ff7d98;
 }
 *{box-sizing:border-box}
-html,body{height:100%}
+html,body{margin:0;min-height:100%}
 body{
+  color:var(--ink);
+  font-family:-apple-system,BlinkMacSystemFont,"Hiragino Sans","Yu Gothic",sans-serif;
+  background:
+    radial-gradient(circle at 12% 8%, #ffd6e2 0 7%, transparent 8%),
+    radial-gradient(circle at 88% 14%, #ccecff 0 8%, transparent 9%),
+    radial-gradient(circle at 80% 94%, #dff8cf 0 10%, transparent 11%),
+    linear-gradient(180deg,var(--bg1),var(--bg2) 52%,var(--bg3));
+  background-attachment:fixed;
+}
+button,input,select{
+  font:inherit;
+  font-size:16px;
+  border:0;
+  border-radius:18px;
+  padding:12px 14px;
+}
+button{
+  font-weight:1000;
+  color:#6f4c33;
+  background:#fff7e7;
+  border:2px solid var(--line);
+  box-shadow:0 5px 0 var(--shadow);
+}
+button:active{transform:translateY(3px);box-shadow:0 2px 0 var(--shadow)}
+button.primary{background:linear-gradient(180deg,var(--blue),#b9e6ff); color:#2d5875; border-color:#9edcff; box-shadow:0 5px 0 var(--blue-deep)}
+button.good{background:linear-gradient(180deg,#b8eb86,#d8f6b8); color:#447030; border-color:#aada7b; box-shadow:0 5px 0 var(--green-deep)}
+button.pink{background:linear-gradient(180deg,#ffafc0,#ffd6df); color:#824251; border-color:#f1afbe; box-shadow:0 5px 0 var(--pink-deep)}
+button.warn{background:linear-gradient(180deg,#ff9db0,#ffc8d3); color:#7f3343; border-color:#ef93a8; box-shadow:0 5px 0 #d6637e}
+button.icon{padding:8px 12px; min-height:44px}
+button.bigCard{
+  position:relative;
+  min-height:150px;
+  text-align:left;
+  padding:18px 16px;
+  border-radius:28px;
+  overflow:hidden;
+}
+button.bigCard b{display:block;font-size:clamp(28px,5vw,42px);line-height:1.05;margin-bottom:8px}
+button.bigCard small{display:block;font-size:14px;color:#8e6b4e}
+input,select{
+  background:#fff;
+  color:var(--ink);
+  border:2px solid var(--line);
+  box-shadow:0 4px 0 var(--shadow);
+}
+input::placeholder{color:#b9a18c}
+main{max-width:960px;margin:0 auto;padding:10px 10px 102px}
+.small{font-size:13px;color:var(--muted);font-weight:800;line-height:1.5}
+.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.screen{display:none}
+.screen.active{display:block}
+.panel{
+  position:relative;
+  background:#fffaf0ee;
+  border:2px solid var(--line);
+  border-radius:28px;
+  box-shadow:0 8px 0 var(--shadow),0 18px 30px #be8e6c22;
+}
+.hero{
+  position:relative;
+  overflow:hidden;
+  min-height:calc(100vh - 120px);
+  padding:14px 14px 18px;
+  background:
+    radial-gradient(circle at 14% 11%, #fff 0 5%, transparent 6%),
+    radial-gradient(circle at 82% 14%, #fff 0 4%, transparent 5%),
+    linear-gradient(180deg,#fff9ed,#fff4d9 42%,#f6ffd9);
+}
+.hero .hill1,.hero .hill2{
+  position:absolute;left:-8%;right:-8%;
+  border-radius:50% 50% 0 0;
+}
+.hero .hill1{height:120px;bottom:74px;background:linear-gradient(180deg,#d7f09f,#b5de6a)}
+.hero .hill2{height:90px;bottom:0;background:linear-gradient(180deg,#a9d15f,#8cc448)}
+.hero .cloud{
+  position:absolute;background:#fff;border-radius:999px;opacity:.85;
+  box-shadow:0 3px 10px #ffffff99;
+}
+.hero .cloud:before,.hero .cloud:after{content:"";position:absolute;background:#fff;border-radius:50%}
+.hero .cloud.c1{width:72px;height:24px;left:46px;top:62px}
+.hero .cloud.c1:before{width:28px;height:28px;left:8px;top:-10px}
+.hero .cloud.c1:after{width:34px;height:34px;left:34px;top:-14px}
+.hero .cloud.c2{width:62px;height:22px;right:56px;top:86px}
+.hero .cloud.c2:before{width:24px;height:24px;left:10px;top:-10px}
+.hero .cloud.c2:after{width:28px;height:28px;left:30px;top:-10px}
+.heroTop{
+  position:relative;z-index:2;
+  display:flex;justify-content:space-between;gap:10px;align-items:flex-start;margin-bottom:4px
+}
+.heroBtns{display:flex;gap:8px;flex-wrap:wrap}
+.logoWrap{position:relative;z-index:2;text-align:center;margin-top:10px}
+.logo{
+  font-size:clamp(54px,11vw,96px);
+  line-height:1;
+  letter-spacing:.03em;
+  font-weight:1000;
   margin:0;
-  color:var(--text);
-  font-family:-apple-system,BlinkMacSystemFont,"Helvetica Neue",sans-serif;
-  background:radial-gradient(circle at top,#293149,#0f1117 58%);
+  text-shadow:0 4px 0 #fff,0 0 12px #fff;
 }
-header{
-  position:sticky;top:0;z-index:10;
-  padding:10px 12px;background:#0f1117ee;backdrop-filter:blur(8px);
-  border-bottom:1px solid #ffffff1c;
+.logo .t1{color:#ff7f9f}
+.logo .t2{color:#ffc948}
+.logo .t3{color:#8dc84b}
+.tagline{font-size:clamp(18px,3vw,28px);font-weight:1000;color:#7a553a;margin:6px 0 0}
+.mascotTop{
+  position:absolute;z-index:1;top:108px;width:150px;height:170px;
 }
-h1{margin:0;font-size:22px;letter-spacing:.04em}
-main{max-width:900px;margin:0 auto;padding:10px;padding-bottom:94px}
-.box{
-  background:#1b1f2ae8;border:1px solid #ffffff1b;border-radius:18px;
-  padding:12px;margin:10px 0;box-shadow:0 10px 28px #0005;
+.mascotLeft{left:18px}
+.mascotRight{right:18px}
+.heroActions{
+  position:relative;z-index:2;
+  display:grid;grid-template-columns:1fr 1fr;gap:14px;
+  margin:18px auto 0;max-width:760px
 }
-.row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
-button,input,select{font-size:16px;border-radius:12px;border:0;padding:11px 12px}
-input,select{background:#fff;color:#111;min-width:120px;max-width:100%}
-button{background:#3a4258;color:white;font-weight:800;touch-action:manipulation}
-button.primary{background:#2563eb}
-button.good{background:#168c43}
-button.warn{background:#a83232}
-button.gold{background:#a97900}
-button:disabled{opacity:.45}
-.small{font-size:13px;color:var(--muted);line-height:1.45}
-.status{font-weight:800;line-height:1.55}
-.badge{display:inline-block;background:#30384d;border:1px solid #ffffff25;border-radius:999px;padding:5px 9px;margin:2px;font-size:13px}
-.scoreBox{
-  display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px
+.heroActionSolo{background:linear-gradient(180deg,#fff0f4,#fff8ee)}
+.heroActionMulti{background:linear-gradient(180deg,#f4ffe8,#fff8ee)}
+.heroActionSolo .arrowBtn{background:linear-gradient(180deg,#ff90aa,#ffbdd0)}
+.heroActionMulti .arrowBtn{background:linear-gradient(180deg,#8dc84b,#addb76)}
+.cardMascot{
+  position:absolute;left:14px;bottom:12px;width:82px;height:82px;opacity:.95
 }
-.metric{
-  background:#111722;border:1px solid #ffffff18;border-radius:14px;padding:10px;text-align:center
+.arrowBtn{
+  position:absolute;right:14px;top:50%;transform:translateY(-50%);
+  width:52px;height:52px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  color:#fff;font-size:28px;font-weight:1000;
+  box-shadow:0 5px 0 #d68a8a;
 }
-.metric b{display:block;font-size:22px}
+.nameRow{position:relative;z-index:2;margin:16px auto 0;max-width:540px}
+.nameRow input{width:100%;text-align:center}
+.coopPanel{position:relative;z-index:2;margin:14px auto 0;max-width:640px;padding:14px}
+.homeFooter{
+  position:relative;z-index:2;text-align:center;margin-top:10px;
+  color:#d2ac83;font-weight:1000;font-size:16px
+}
+.lobby{
+  padding:18px
+}
+.roomCode{
+  font-size:38px;line-height:1;font-weight:1000;color:#ff7798;text-shadow:0 3px 0 #fff
+}
+.badge{
+  display:inline-flex;align-items:center;gap:6px;
+  background:#fff8e6;border:2px solid var(--line);border-radius:999px;
+  padding:7px 12px;margin:4px;font-weight:1000;font-size:14px
+}
 .turnBanner{
-  text-align:center;font-weight:1000;font-size:24px;letter-spacing:.05em;border-radius:16px;padding:12px;margin:8px 0;
-  background:#2b3348;border:1px solid #ffffff1d;
+  display:flex;justify-content:center;align-items:center;gap:8px;
+  max-width:420px;margin:0 auto 10px;
+  padding:10px 18px;border-radius:999px;border:3px solid #fff;
+  color:#fff;font-size:clamp(22px,4vw,32px);font-weight:1000;
+  text-shadow:0 2px 0 #0001;box-shadow:0 8px 20px #00000015;
 }
-.turnMine{background:linear-gradient(90deg,#1d4ed8,#168c43);box-shadow:0 0 24px #66a3ff66}
-.turnOther{background:#2a2d38;color:#cbd1df}
-.piles{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.pile{background:#f8f8f8;color:#111;border-radius:18px;padding:12px 8px;text-align:center;min-height:96px;border:4px solid transparent}
-.pile.can{border-color:var(--gold);box-shadow:0 0 20px #ffd16688}
-.pile-title{font-size:14px;color:#555;font-weight:800}
-.pile-value{font-size:42px;font-weight:1000;line-height:1.05}
-.hand{display:grid;grid-template-columns:repeat(auto-fit,minmax(48px,1fr));gap:8px}
+.turnMine{background:linear-gradient(180deg,#84d467,#71c04e)}
+.turnOther{background:linear-gradient(180deg,#97cffe,#7ec0ef)}
+.playersRow{
+  display:flex;justify-content:flex-end;gap:8px;flex-wrap:wrap;
+}
+.playerChip{
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  width:72px;padding:5px 4px;border-radius:14px;
+  background:#fff8e6;border:2px solid var(--line);box-shadow:0 4px 0 var(--shadow);
+  font-size:11px;font-weight:1000;color:#8d6a4f
+}
+.playerChip .avatar{width:34px;height:34px;margin-bottom:4px}
+.boardWrap{padding:12px;background:linear-gradient(180deg,#f7e3c5,#f3dcc0)}
+.boardTop{
+  display:grid;grid-template-columns:110px 1fr 130px;gap:12px;align-items:start
+}
+.boardCol,.centerBoard,.scorePanel{
+  background:#fff8eb;border:2px solid var(--line);border-radius:22px;box-shadow:0 6px 0 var(--shadow)
+}
+.boardCol{padding:10px}
+.centerBoard{padding:14px}
+.scorePanel{padding:10px}
+.menuPill{
+  display:inline-block;background:linear-gradient(180deg,#ff9fb4,#ffcad5);color:#fff;
+  border-radius:999px;padding:6px 14px;font-weight:1000;border:2px solid #fff;box-shadow:0 4px 0 #df7c96
+}
+.deckStack,.discardCard{
+  margin-top:10px;height:102px;border-radius:18px;border:3px solid var(--line);
+  display:flex;align-items:center;justify-content:center;background:#fff
+}
+.deckStack{
+  position:relative;background:linear-gradient(135deg,#fff3f7,#ffe5ef)
+}
+.deckStack:before,.deckStack:after{
+  content:"";position:absolute;left:8px;right:8px;top:8px;bottom:8px;border-radius:14px;border:3px solid #f0d0da
+}
+.deckStack:after{left:12px;right:12px;top:12px;bottom:12px}
+.deckFace{
+  position:relative;z-index:1;width:64px;height:82px;border-radius:14px;background:#fff;border:3px solid #f2c9d5;
+  display:flex;align-items:center;justify-content:center
+}
+.tinyLabel{
+  display:inline-block;margin-top:8px;background:#93c35f;color:#fff;border-radius:999px;padding:3px 9px;font-size:12px;font-weight:1000
+}
+.centerBoardInner{
+  display:grid;grid-template-columns:repeat(4,1fr);gap:12px
+}
+.pile{
+  display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;
+  min-height:162px;border:2px solid #eedabf;border-radius:18px;background:#fffdf7;
+}
+.pileArrow{font-size:28px;font-weight:1000;color:#7fb14b;line-height:1}
+.pileValue{font-size:60px;line-height:1;font-weight:1000}
+.pile .value1{color:#e45b76}
+.pile .value2{color:#4f7cd1}
+.pile .value3{color:#ef9e1f}
+.pile .value4{color:#6c9f2e}
+.handSection{display:flex;align-items:flex-end;gap:10px;margin-top:12px}
+.handArea{
+  flex:1;background:#fff8eb;border:2px solid var(--line);border-radius:24px;padding:10px 10px 8px;
+  box-shadow:0 6px 0 var(--shadow);position:relative;
+}
+.handBadge{
+  position:absolute;left:10px;top:-12px;background:linear-gradient(180deg,#ff95ae,#ffc6d4);color:#fff;
+  border-radius:999px;padding:4px 12px;font-size:13px;font-weight:1000;border:2px solid #fff;box-shadow:0 4px 0 #df7c96
+}
+.handCards{
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(58px,1fr));gap:8px;margin-top:18px
+}
 .card{
-  min-width:46px;height:72px;background:#fff;color:#111;border:3px solid #ddd;border-radius:14px;
-  display:flex;align-items:center;justify-content:center;font-size:24px;font-weight:1000;box-shadow:0 5px 0 #0005;
+  position:relative;height:92px;border-radius:14px;border:2px solid #efdec8;background:#fff;
+  display:flex;align-items:center;justify-content:center;font-size:26px;font-weight:1000;color:#805538;
+  box-shadow:0 4px 0 #ecd7bc;
 }
-.card.selected{background:var(--gold);transform:translateY(-5px);border-color:#fff}
-.card.locked{opacity:.55}
+.card .corner{
+  position:absolute;left:8px;top:4px;font-size:16px;font-weight:1000;opacity:.95
+}
+.card .corner.bottom{left:auto;top:auto;right:8px;bottom:3px}
+.card.n1{color:#e45b76}.card.n2{color:#ef9e1f}.card.n3{color:#4f7cd1}.card.n4{color:#6c9f2e}.card.n5{color:#8a53bd}
+.card.selected{transform:translateY(-6px);background:#fffbe5;border-color:#f3cd7f}
+.bottomMascots{width:88px;height:112px;display:flex;align-items:flex-end;justify-content:center}
+.scorePanel .scoreNum{font-size:42px;color:#ff7d98;font-weight:1000;text-align:right;line-height:1}
+.scorePanel .scoreList{margin-top:6px;font-size:14px;font-weight:1000;color:#8d6a4f;line-height:1.8}
+.rightBtns{display:flex;flex-direction:column;gap:10px;margin-top:12px}
+.rightBtns button{width:100%}
 .actionBar{
-  position:fixed;left:0;right:0;bottom:0;z-index:15;background:#0f1117ee;backdrop-filter:blur(8px);
-  border-top:1px solid #ffffff1d;padding:8px max(8px,env(safe-area-inset-left)) calc(8px + env(safe-area-inset-bottom)) max(8px,env(safe-area-inset-right));
+  position:fixed;left:0;right:0;bottom:0;z-index:40;
+  padding:8px max(8px,env(safe-area-inset-left)) calc(8px + env(safe-area-inset-bottom)) max(8px,env(safe-area-inset-right));
+  background:#fff7edee;border-top:2px solid var(--line);backdrop-filter:blur(8px)
 }
-.actionInner{max-width:900px;margin:0 auto;display:grid;grid-template-columns:1.2fr 1fr 54px;gap:8px}
-.actionInner button{width:100%;min-height:46px}
-.iconBtn{font-size:20px;padding:8px}
+.actionInner{max-width:960px;margin:0 auto;display:grid;grid-template-columns:1.2fr 1fr 58px 58px;gap:8px}
+.actionInner button{width:100%;min-height:48px}
 #toast{
-  position:fixed;left:50%;top:18%;transform:translateX(-50%);z-index:150;display:none;
-  padding:14px 18px;border-radius:999px;background:#000d;color:#fff;font-size:22px;font-weight:1000;
-  border:1px solid #fff4;box-shadow:0 0 30px #000;
-  white-space:nowrap;
+  position:fixed;left:50%;top:15%;transform:translateX(-50%);z-index:120;display:none;
+  padding:14px 18px;border-radius:999px;border:3px solid #fff;
+  background:#fff8eb;color:#7b5638;font-size:24px;font-weight:1000;
+  box-shadow:0 8px 0 var(--shadow),0 18px 30px #aa7c5b30
 }
-#toast.back10{background:#8b6500;color:#fff;box-shadow:0 0 32px #ffd166aa}
-#toast.combo{background:#3b0764;box-shadow:0 0 32px #c084fcaa}
-#toast.turn{background:#1249b5;box-shadow:0 0 32px #66a3ffaa}
-#toast.miss{background:#7f1d1d;box-shadow:0 0 32px #fb7185aa}
+#toast.back10{background:#fff3aa;color:#936200}
+#toast.combo{background:#ecd8ff;color:#6c3bb0}
+#toast.turn{background:#dbf1ff;color:#3a6d91}
+#toast.miss{background:#ffdce5;color:#9a334e}
 .modalOverlay,#resultOverlay{
-  position:fixed;inset:0;z-index:99;display:none;align-items:center;justify-content:center;text-align:center;padding:22px;background:#000c
+  position:fixed;inset:0;z-index:100;display:none;align-items:center;justify-content:center;
+  padding:18px;background:#0006
 }
 .modalCard,.resultCard{
-  width:min(94vw,600px);max-height:86vh;overflow:auto;border-radius:28px;padding:22px 16px;
-  background:#181d29;border:1px solid #fff3;box-shadow:0 0 60px #000;
+  width:min(94vw,660px);max-height:88vh;overflow:auto;padding:20px;background:#fffaf0;
+  border:3px solid var(--line);border-radius:30px;box-shadow:0 10px 0 var(--shadow),0 20px 40px #aa7c5b33
 }
-.modalCard{text-align:left}
-.modalCard h2{margin:0 0 10px;text-align:center}
-.modalCard li{margin:8px 0;line-height:1.45}
-.rank{font-size:42px;font-weight:1000;letter-spacing:.03em;margin:8px 0}
-.clear{color:#ffd166;text-shadow:0 0 24px #ffd166}
-.fail{color:#fb7185;text-shadow:0 0 24px #fb7185}
-.resultGrid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:12px 0}
-.playerStats{margin-top:12px;text-align:left}
-.playerCard{background:#111722;border:1px solid #ffffff18;border-radius:14px;padding:10px;margin:8px 0}
+.modalCard h2,.resultCard h2,.resultCard .title{text-align:center;margin:0 0 12px}
+.modalCard li{margin:8px 0;line-height:1.6;font-weight:900}
+.resultBig{
+  font-size:50px;font-weight:1000;text-align:center;margin:8px 0
+}
+.resultBig.clear{color:#f59d28;text-shadow:0 4px 0 #fff}
+.resultBig.fail{color:#ff7d98;text-shadow:0 4px 0 #fff}
+.resultGrid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.metric{
+  background:#fff8e6;border:2px solid var(--line);border-radius:18px;padding:8px 6px;text-align:center
+}
+.metric span{display:block;color:var(--muted);font-size:11px;font-weight:900}
+.metric b{display:block;color:#7a5438;font-size:24px;font-weight:1000}
+.playerStats{margin-top:12px}
+.playerCard{
+  margin:8px 0;background:#fff8e6;border:2px solid var(--line);border-radius:18px;padding:10px;font-weight:900
+}
 .rankingTable{width:100%;border-collapse:collapse;font-size:14px}
-.rankingTable th,.rankingTable td{padding:7px;border-bottom:1px solid #ffffff18;text-align:left}
-.confetti{position:fixed;top:-12px;width:10px;height:16px;z-index:120;animation:fall 2.6s linear forwards}
-@keyframes fall{to{transform:translateY(110vh) rotate(720deg);opacity:.2}}
-.flashWin{animation:flashWin .9s ease 2}
-@keyframes flashWin{50%{filter:brightness(1.7)}}
-.shake{animation:shake .35s linear 3}
-@keyframes shake{25%{transform:translateX(-5px)}50%{transform:translateX(5px)}75%{transform:translateX(-3px)}}
-
-.homeHero{
-  margin:10px 0 14px;
-  padding:18px 12px;
-  border-radius:26px;
-  background:
-    radial-gradient(circle at 20% 0%, #ffd16644, transparent 32%),
-    radial-gradient(circle at 90% 20%, #4f8cff44, transparent 28%),
-    linear-gradient(160deg,#171c2a,#0b0d13);
-  border:1px solid #ffffff22;
-  box-shadow:0 16px 50px #0007;
+.rankingTable th,.rankingTable td{padding:8px;border-bottom:1px solid #efd3b2;text-align:left}
+.confetti{position:fixed;top:-10px;width:10px;height:16px;z-index:130;animation:fall 2.7s linear forwards}
+@keyframes fall{to{transform:translateY(110vh) rotate(720deg);opacity:.1}}
+@media (max-width:780px){
+  .heroActions{grid-template-columns:1fr}
+  .hero{min-height:auto}
+  .mascotTop{display:none}
+  .boardTop{grid-template-columns:1fr}
+  .scorePanel .scoreNum{text-align:left}
+  .handSection{flex-direction:column;align-items:stretch}
+  .bottomMascots{display:none}
 }
-.logoMark{
-  text-align:center;
-  font-size:54px;
-  font-weight:1000;
-  letter-spacing:.04em;
-  line-height:1;
-  color:#fff;
-  text-shadow:0 0 28px #4f8cff88;
-}
-.logoMark span{
-  color:var(--gold);
-  text-shadow:0 0 32px #ffd166aa;
-}
-.tagline{
-  text-align:center;
-  color:#d8deee;
-  font-weight:800;
-  margin:10px 0 16px;
-}
-.homeCards{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:10px;
-  margin:12px 0;
-}
-.homeCard{
-  min-height:108px;
-  border-radius:22px;
-  padding:16px 12px;
-  text-align:left;
-  border:1px solid #ffffff22;
-  box-shadow:0 10px 26px #0005;
-}
-.homeCard b{
-  display:block;
-  font-size:20px;
-  margin-bottom:8px;
-}
-.homeCard small{
-  color:#eef2ff;
-  line-height:1.4;
-}
-.homeCard.solo{
-  background:linear-gradient(145deg,#1d4ed8,#111827);
-}
-.homeCard.coop{
-  background:linear-gradient(145deg,#168c43,#111827);
-}
-.homePanel{
-  margin-top:12px;
-  background:#111722cc;
-}
-
-@media (max-width:520px){
-  main{padding:8px;padding-bottom:92px}
-  .box{padding:10px;border-radius:16px;margin:8px 0}
-  .pile{min-height:86px;padding:9px 5px}
-  .pile-value{font-size:36px}
-  .hand{grid-template-columns:repeat(auto-fit,minmax(42px,1fr));gap:6px}
-  .card{height:64px;font-size:21px;border-radius:12px}
-  button,input,select{font-size:15px;padding:10px}
-  .row input,.row select{flex:1 1 140px}
-  .scoreBox,.resultGrid{grid-template-columns:1fr 1fr}
-  .actionInner{grid-template-columns:1.15fr 1fr 48px}
-  .turnBanner{font-size:21px;padding:10px}
-  .logoMark{font-size:44px}
-  .homeCards{grid-template-columns:1fr}
-  .homeCard{min-height:88px}
+@media (max-width:560px){
+  main{padding:8px 8px 100px}
+  .heroTop{flex-direction:row}
+  .heroBtns{justify-content:flex-end}
+  .hero .hill1{height:94px;bottom:54px}
+  .hero .hill2{height:74px}
+  .boardWrap{padding:10px}
+  .centerBoardInner{grid-template-columns:repeat(2,1fr)}
+  .pile{min-height:132px}
+  .pileValue{font-size:52px}
+  .handCards{grid-template-columns:repeat(auto-fit,minmax(52px,1fr))}
+  .card{height:82px;font-size:24px}
+  .actionInner{grid-template-columns:1.2fr 1fr 52px 52px}
+  .resultGrid{grid-template-columns:repeat(2,1fr)}
 }
 </style>
 </head>
 <body>
-<header>
-  <h1>BACK10</h1>
-  <div class="small">Score Attack Number Puzzle</div>
-</header>
-
 <main>
-  <div id="setup" class="homeHero">
-    <div class="logoMark">BACK<span>10</span></div>
-    <div class="tagline">数字を捌け。10で流れを変えろ。</div>
+  <section id="homeScreen" class="screen active">
+    <div class="panel hero">
+      <div class="cloud c1"></div>
+      <div class="cloud c2"></div>
+      <div class="hill1"></div>
+      <div class="hill2"></div>
 
-    <div class="homeCards">
-      <button class="homeCard solo" onclick="quickSolo()">
-        <b>SOLO RANKED</b>
-        <small>1人で6000点突破を狙う</small>
-      </button>
-      <button class="homeCard coop" onclick="selectCoop()">
-        <b>CO-OP CASUAL</b>
-        <small>複数スマホで協力プレイ</small>
-      </button>
-    </div>
-
-    <div class="box homePanel">
-      <div class="row">
-        <select id="modeSelect">
-          <option value="solo" selected>SOLO RANKED</option>
-          <option value="multi">CO-OP CASUAL</option>
-        </select>
-        <select id="playerCount">
-          <option value="1" selected>1人</option>
-          <option value="2">2人</option>
-          <option value="3">3人</option>
-          <option value="4">4人</option>
-          <option value="5">5人</option>
-        </select>
-        <input id="roomInput" placeholder="部屋ID 任意">
-        <input id="nameInput" placeholder="名前">
+      <div class="heroTop">
+        <div class="heroBtns">
+          <button class="icon pink" onclick="toggleBgm()">🎵 BGM ON</button>
+        </div>
+        <div class="heroBtns">
+          <button class="icon" onclick="openRankings()">👑 ランキング</button>
+          <button class="icon" onclick="showRules()">⚙️ ルール</button>
+        </div>
       </div>
-      <div class="row" style="margin-top:10px">
-        <button class="primary" onclick="createRoom()">部屋を作る</button>
-        <button class="good" onclick="joinRoom()">部屋に入る</button>
-        <button onclick="startSoloLocal()">この端末でソロ</button>
-        <button onclick="openRankings()">ランキング</button>
+
+      <div class="mascotTop mascotLeft" id="homeRabbit"></div>
+      <div class="mascotTop mascotRight" id="homeWhite"></div>
+
+      <div class="logoWrap">
+        <div class="logo"><span class="t1">BACK</span><span class="t2">1</span><span class="t3">0</span></div>
+        <div class="tagline">数字を捌け。10で流れを変えろ。</div>
       </div>
-      <p class="small">
-        6000点以上でCLEAR。MISSは-10点。SOLOとCO-OPでランキングは分離。
-      </p>
-    </div>
-  </div>
 
-  <div id="lobby" class="box" style="display:none">
-    <div class="status" id="lobbyStatus"></div>
-    <div id="players"></div>
-    <div class="row" style="margin-top:10px">
-      <button class="primary" id="startBtn" onclick="startOnlineGame()">ゲーム開始</button>
-      <button onclick="copyRoom()">部屋IDコピー</button>
-      <button class="warn" onclick="leaveLocal()">退出</button>
-    </div>
-  </div>
-
-  <div id="game" style="display:none">
-    <div id="turnBanner" class="turnBanner"></div>
-    <div class="box">
-      <div class="status" id="status"></div>
-      <div class="scoreBox">
-        <div class="metric">SCORE<b id="scoreNow">0</b></div>
-        <div class="metric">CLEAR LINE<b>6000</b></div>
-        <div class="metric">REMAIN<b id="remainNow">98</b></div>
-        <div class="metric">BACK10<b id="back10Now">0</b></div>
+      <div class="nameRow">
+        <input id="nameInput" placeholder="名前を入力してください" />
       </div>
-      <div class="row" style="margin-top:10px">
-        <button class="gold" onclick="toggleBgm()">BGM ON/OFF</button>
-        <button onclick="showRules()">ルール</button>
-        <button onclick="openSettings()">設定/終了</button>
+
+      <div class="heroActions">
+        <button class="bigCard heroActionSolo" onclick="quickSolo()">
+          <div class="cardMascot" id="soloRabbit"></div>
+          <b>ひとりで<br>あそぶ</b>
+          <small>6000点クリアをめざそう！</small>
+          <div class="arrowBtn">›</div>
+        </button>
+
+        <button class="bigCard heroActionMulti" onclick="showCoopSetup()">
+          <div class="cardMascot" id="multiPair"></div>
+          <b>みんなで<br>あそぶ</b>
+          <small>協力プレイでハイスコアをめざそう！</small>
+          <div class="arrowBtn">›</div>
+        </button>
       </div>
-      <div class="small" id="hint"></div>
-    </div>
 
-    <div class="box">
-      <h2 style="font-size:17px;margin:0 0 10px">場</h2>
-      <div class="piles" id="piles"></div>
-    </div>
+      <div id="coopSetup" class="panel coopPanel" style="display:none">
+        <div class="small">みんなであそぶ設定</div>
+        <div class="row" style="margin-top:8px">
+          <select id="playerCount">
+            <option value="2" selected>2人</option>
+            <option value="3">3人</option>
+            <option value="4">4人</option>
+            <option value="5">5人</option>
+          </select>
+          <input id="roomInput" placeholder="部屋ID（任意）" />
+        </div>
+        <div class="row" style="margin-top:10px">
+          <button class="primary" onclick="createCoopRoom()">部屋を作る</button>
+          <button class="good" onclick="joinCoopRoom()">部屋に入る</button>
+        </div>
+        <div class="small" style="margin-top:8px">部屋を作った人がゲーム開始できます。スタート順はランダムです。</div>
+      </div>
 
-    <div class="box">
-      <h2 id="handTitle" style="font-size:17px;margin:0 0 10px">手札</h2>
-      <div id="hand"></div>
+      <div class="homeFooter">© BACK10</div>
     </div>
-  </div>
+  </section>
+
+  <section id="lobbyScreen" class="screen">
+    <div class="panel lobby">
+      <div class="small">部屋ID</div>
+      <div class="roomCode" id="roomCodeText">----</div>
+      <div class="small" id="lobbyStatus" style="margin-top:10px"></div>
+      <div id="lobbyPlayers" style="margin-top:8px"></div>
+      <div class="row" style="margin-top:14px">
+        <button class="primary" id="startBtn" onclick="startOnlineGame()">ゲーム開始</button>
+        <button onclick="copyRoom()">部屋IDコピー</button>
+        <button class="warn" onclick="goHome()">退出</button>
+      </div>
+    </div>
+  </section>
+
+  <section id="playScreen" class="screen">
+    <div class="playersRow" id="playersRow"></div>
+    <div class="turnBanner" id="turnBanner">あなたのターン！</div>
+
+    <div class="panel boardWrap">
+      <div style="margin-bottom:12px">
+        <span class="menuPill">ミニメニュー</span>
+      </div>
+
+      <div class="boardTop">
+        <div>
+          <div class="boardCol">
+            <div class="small">山札</div>
+            <div class="deckStack">
+              <div class="deckFace" id="deckMascot"></div>
+            </div>
+            <div style="text-align:center"><span class="tinyLabel">山札 <span id="deckCount">0</span></span></div>
+
+            <div class="small" style="margin-top:12px">捨て札</div>
+            <div class="discardCard" id="discardCard">-</div>
+          </div>
+        </div>
+
+        <div class="centerBoard">
+          <div class="centerBoardInner" id="piles"></div>
+        </div>
+
+        <div>
+          <div class="scorePanel">
+            <div class="small">スコア</div>
+            <div class="scoreNum" id="scoreNow">0</div>
+            <div class="scoreList">
+              <div>BACK10　<span style="float:right" id="back10Now">0</span></div>
+              <div>残り　<span style="float:right" id="remainNow">98</span></div>
+              <div>今ターン　<span style="float:right" id="turnPlayNow">0</span></div>
+              <div>目標　<span style="float:right">6000</span></div>
+            </div>
+
+            <div class="rightBtns">
+              <button class="warn" onclick="forceGiveUp()">🏳 投了する</button>
+              <button onclick="showRules()">❔ ルール</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="handSection">
+        <div class="bottomMascots" id="bottomLeftMascot"></div>
+        <div class="handArea">
+          <div class="handBadge">あなたの手札</div>
+          <div class="small" id="hint" style="margin:10px 4px 0 4px"></div>
+          <div id="hand" class="handCards"></div>
+        </div>
+        <div class="bottomMascots" id="bottomRightMascot"></div>
+      </div>
+    </div>
+  </section>
 </main>
 
 <div class="actionBar" id="actionBar" style="display:none">
   <div class="actionInner">
     <button class="primary" onclick="endTurn()">ターン終了</button>
-    <button class="gold" onclick="toggleBgm()">BGM</button>
-    <button class="iconBtn" onclick="showRules()">?</button>
+    <button class="warn" onclick="forceGiveUp()">投了する</button>
+    <button class="icon" onclick="showRules()">？</button>
+    <button class="icon pink" onclick="toggleBgm()">♪</button>
   </div>
 </div>
 
@@ -293,29 +499,16 @@ button:disabled{opacity:.45}
   <div class="modalCard">
     <h2>BACK10 ルール</h2>
     <ul>
-      <li>昇順は大きい数字へ、降順は小さい数字へ出します。</li>
-      <li>ただしBACK10可能。昇順は「ちょうど10小さい数字」、降順は「ちょうど10大きい数字」を出せます。</li>
+      <li>昇順の場には大きい数字を、降順の場には小さい数字を出します。</li>
+      <li>BACK10：昇順は「ちょうど10小さい数字」、降順は「ちょうど10大きい数字」を出せます。</li>
       <li>山札がある間は最低2枚、山札切れ後は最低1枚出します。</li>
-      <li>カード1枚10点。1ターン2枚×1.0、3枚×1.5、4枚×2.0、5枚以上×3.0。</li>
-      <li>BACK10は1回+100点。</li>
+      <li>1枚10点。1ターン2枚×1.0、3枚×1.5、4枚×2.0、5枚以上×3.0。</li>
+      <li>BACK10は1回+100点。出せない場を選ぶとMISSで-50点です。</li>
       <li>終了時の残り枚数＝手札＋山札。0枚+10000、1〜4枚+8000、5〜9枚+5000。</li>
-      <li>6000点以上でCLEAR。</li>
-      <li>出せない場を選ぶとMISS。ブー音が鳴り、-10点。</li>
-      <li>SOLOとCO-OPでランキングは分離します。</li>
+      <li>6000点以上でCLEAR。6000点を超えても自動終了はしません。投了するまで続けられます。</li>
+      <li>みんなであそぶモードでは、開始順はランダムです。</li>
     </ul>
-    <div style="text-align:center"><button class="primary" onclick="closeModal('rulesModal')">戻る</button></div>
-  </div>
-</div>
-
-<div id="settingsModal" class="modalOverlay">
-  <div class="modalCard">
-    <h2>設定 / 終了</h2>
-    <p class="small">ギブアップは誤タップ防止のため、この画面内に移動しています。</p>
-    <div class="row" style="justify-content:center">
-      <button class="gold" onclick="toggleBgm()">BGM ON/OFF</button>
-      <button class="warn" onclick="forceGiveUp()">ギブアップして終了</button>
-      <button onclick="closeModal('settingsModal')">戻る</button>
-    </div>
+    <div style="text-align:center"><button class="primary" onclick="closeModal('rulesModal')">とじる</button></div>
   </div>
 </div>
 
@@ -323,31 +516,36 @@ button:disabled{opacity:.45}
   <div class="modalCard">
     <h2>ランキング</h2>
     <div class="row" style="justify-content:center;margin-bottom:10px">
-      <button onclick="loadRankings('solo','daily')">Solo Daily</button>
-      <button onclick="loadRankings('solo','monthly')">Solo Monthly</button>
-      <button onclick="loadRankings('multi','daily')">Co-op Daily</button>
-      <button onclick="loadRankings('multi','monthly')">Co-op Monthly</button>
+      <button onclick="loadRankings('solo','daily')">ひとり 今日</button>
+      <button onclick="loadRankings('solo','monthly')">ひとり 今月</button>
+      <button onclick="loadRankings('multi','daily')">みんな 今日</button>
+      <button onclick="loadRankings('multi','monthly')">みんな 今月</button>
     </div>
     <div id="rankingBody" class="small">ランキングを選んでください。</div>
-    <div style="text-align:center;margin-top:12px"><button class="primary" onclick="closeModal('rankingModal')">戻る</button></div>
+    <div style="text-align:center;margin-top:12px"><button class="primary" onclick="closeModal('rankingModal')">とじる</button></div>
   </div>
 </div>
 
 <div id="resultOverlay">
   <div class="resultCard">
-    <div class="small">RESULT</div>
-    <div id="rankText" class="rank"></div>
-    <div id="resultDetail" style="font-size:20px;font-weight:900"></div>
-    <div id="resultMsg" class="small" style="margin:12px 0 18px"></div>
+    <div class="small title">RESULT</div>
+    <div id="resultBig" class="resultBig">CLEAR!</div>
+    <div id="resultDetail" style="text-align:center;font-size:20px;font-weight:1000"></div>
+    <div id="resultMsg" class="small" style="text-align:center;margin:8px 0 16px"></div>
+
     <div class="resultGrid">
-      <div class="metric">SCORE<b id="resScore">0</b></div>
-      <div class="metric">REMAIN<b id="resRemain">0</b></div>
-      <div class="metric">BACK10<b id="resBack10">0</b></div>
-      <div class="metric">MAX COMBO<b id="resCombo">0</b></div>
+      <div class="metric"><span>SCORE</span><b id="resScore">0</b></div>
+      <div class="metric"><span>REMAIN</span><b id="resRemain">0</b></div>
+      <div class="metric"><span>BACK10</span><b id="resBack10">0</b></div>
+      <div class="metric"><span>MAX COMBO</span><b id="resCombo">0</b></div>
     </div>
+
     <div id="playerStats" class="playerStats"></div>
-    <button onclick="goHome()">トップへ戻る</button>
-    <button class="primary" onclick="resetSameRoom()">もう一回</button>
+
+    <div class="row" style="justify-content:center;margin-top:14px">
+      <button onclick="goHome()">トップへ戻る</button>
+      <button class="primary" onclick="resetSameRoom()">もう一回</button>
+    </div>
   </div>
 </div>
 
@@ -355,7 +553,7 @@ button:disabled{opacity:.45}
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js";
 import {
   getFirestore, doc, setDoc, getDoc, updateDoc, onSnapshot, serverTimestamp,
-  collection, addDoc, query, where, orderBy, limit, getDocs
+  collection, addDoc, query, where, getDocs
 } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore.js";
 
 const firebaseConfig = {
@@ -369,520 +567,612 @@ const firebaseConfig = {
 };
 
 let app, db;
-try{ app = initializeApp(firebaseConfig); db = getFirestore(app); }
-catch(e){ console.warn("Firebase error", e); }
+try{
+  app = initializeApp(firebaseConfig);
+  db = getFirestore(app);
+}catch(e){
+  console.warn("Firebase init error", e);
+}
 
-let roomId="", myId="", unsub=null, game=null, selectedIndex=null, bgmOn=false, audioCtx=null, bgmTimer=null;
-let localMode=false;
+let roomId = "";
+let myId = "";
+let unsub = null;
+let game = null;
+let selectedIndex = null;
+let localMode = false;
+let audioCtx = null;
+let bgmOn = false;
+let bgmTimer = null;
 
 Object.assign(window,{
-  createRoom,joinRoom,startOnlineGame,startSoloLocal,quickSolo,selectCoop,selectCard,playPile,endTurn,toggleBgm,showRules,openSettings,
-  forceGiveUp,closeResult,resetSameRoom,copyRoom,leaveLocal,closeModal,openRankings,loadRankings,goHome
+  quickSolo, showCoopSetup, createCoopRoom, joinCoopRoom,
+  startOnlineGame, selectCard, playPile, endTurn, forceGiveUp, resetSameRoom,
+  goHome, copyRoom, showRules, closeModal, openRankings, loadRankings, toggleBgm
 });
 
-function uid(){ return "p_" + Math.random().toString(36).slice(2,8); }
-function roomCode(){ return Math.floor(1000+Math.random()*9000).toString(); }
+function $(id){ return document.getElementById(id); }
+function uid(){ return "p_" + Math.random().toString(36).slice(2,9); }
+function roomCode(){ return Math.floor(1000 + Math.random()*9000).toString(); }
 function todayKey(){ return new Date().toISOString().slice(0,10); }
 function monthKey(){ return new Date().toISOString().slice(0,7); }
-function shuffle(a){ for(let i=a.length-1;i>0;i--){let j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];} }
+function shuffle(a){
+  for(let i=a.length-1;i>0;i--){
+    const j=Math.floor(Math.random()*(i+1));
+    [a[i],a[j]]=[a[j],a[i]];
+  }
+}
+function getPlayerName(){ return $("nameInput").value.trim() || "Player"; }
 function handSize(n){ return n===1 ? 8 : (n===2 ? 7 : 6); }
 function minPlay(g){ return g.deck.length>0 ? 2 : 1; }
 function remaining(g){ return g.deck.length + Object.values(g.hands||{}).reduce((s,h)=>s+h.length,0); }
 function canPlay(card,pile){ return pile.type==="up" ? (card>pile.value || card===pile.value-10) : (card<pile.value || card===pile.value+10); }
 function isBack10(card,pile){ return pile.type==="up" ? card===pile.value-10 : card===pile.value+10; }
-function legalExists(g,pid){ return (g.hands[pid]||[]).some(c => g.piles.some(p => canPlay(c,p))); }
-function isMyTurn(){ return game && game.currentPlayer === myId && game.status==="playing"; }
-function getMode(){ return document.getElementById("modeSelect").value; }
+function isMyTurn(){ return game && game.status==="playing" && game.currentPlayer===myId; }
+function getEndBonus(rem){ if(rem===0) return 10000; if(rem<=4) return 8000; if(rem<=9) return 5000; return 0; }
+function getComboMultiplier(n){ if(n>=5) return 3.0; if(n===4) return 2.0; if(n===3) return 1.5; return 1.0; }
+function currentTurnScore(g){
+  const cards=g.turnCards||0, backs=g.turnBack10||0;
+  if(cards<=0) return 0;
+  return Math.round(cards * 10 * getComboMultiplier(cards) + backs*100);
+}
+function totalScore(g){ return (g.scoreBase||0) + currentTurnScore(g) + getEndBonus(remaining(g)); }
+function clearState(g){ return totalScore(g)>=6000; }
+function escapeHtml(s){ return String(s).replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#039;"}[m])); }
+
+function showScreen(which){
+  ["homeScreen","lobbyScreen","playScreen"].forEach(id=>$(id).classList.remove("active"));
+  $(which).classList.add("active");
+  $("actionBar").style.display = which==="playScreen" && game?.status==="playing" ? "block" : "none";
+}
+
+function mascotRabbit(size=120){
+  return `
+  <svg viewBox="0 0 140 160" width="${size}" height="${size*1.14}" aria-hidden="true">
+    <defs>
+      <filter id="s"><feDropShadow dx="0" dy="2" stdDeviation="2" flood-color="#e5b7be" flood-opacity=".6"/></filter>
+    </defs>
+    <g filter="url(#s)">
+      <ellipse cx="52" cy="22" rx="14" ry="28" fill="#ffc7d7" stroke="#f0a6b8" stroke-width="3"/>
+      <ellipse cx="85" cy="22" rx="14" ry="28" fill="#ffc7d7" stroke="#f0a6b8" stroke-width="3"/>
+      <ellipse cx="52" cy="24" rx="7" ry="18" fill="#ffe7ef"/>
+      <ellipse cx="85" cy="24" rx="7" ry="18" fill="#ffe7ef"/>
+      <circle cx="70" cy="74" r="42" fill="#ffcad9" stroke="#f0a6b8" stroke-width="3"/>
+      <ellipse cx="57" cy="69" rx="5" ry="6" fill="#7b4f34"/>
+      <ellipse cx="83" cy="69" rx="5" ry="6" fill="#7b4f34"/>
+      <ellipse cx="70" cy="82" rx="8" ry="6" fill="#f29aad"/>
+      <path d="M62 89 Q70 96 78 89" stroke="#8a5a3d" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+      <circle cx="46" cy="82" r="7" fill="#ffb3c4" opacity=".8"/>
+      <circle cx="94" cy="82" r="7" fill="#ffb3c4" opacity=".8"/>
+      <ellipse cx="48" cy="122" rx="13" ry="18" fill="#ffcad9" stroke="#f0a6b8" stroke-width="3"/>
+      <ellipse cx="92" cy="122" rx="13" ry="18" fill="#ffcad9" stroke="#f0a6b8" stroke-width="3"/>
+      <ellipse cx="37" cy="103" rx="11" ry="20" fill="#ffcad9" stroke="#f0a6b8" stroke-width="3" transform="rotate(18 37 103)"/>
+      <ellipse cx="103" cy="103" rx="11" ry="20" fill="#ffcad9" stroke="#f0a6b8" stroke-width="3" transform="rotate(-18 103 103)"/>
+    </g>
+  </svg>`;
+}
+function mascotWhite(size=120){
+  return `
+  <svg viewBox="0 0 140 160" width="${size}" height="${size*1.14}" aria-hidden="true">
+    <defs><filter id="s2"><feDropShadow dx="0" dy="2" stdDeviation="2" flood-color="#d9c7ac" flood-opacity=".6"/></filter></defs>
+    <g filter="url(#s2)">
+      <circle cx="50" cy="34" r="12" fill="#fffaf5" stroke="#e7d3bd" stroke-width="3"/>
+      <circle cx="90" cy="34" r="12" fill="#fffaf5" stroke="#e7d3bd" stroke-width="3"/>
+      <ellipse cx="70" cy="86" rx="44" ry="52" fill="#fffaf5" stroke="#e7d3bd" stroke-width="3"/>
+      <ellipse cx="57" cy="76" rx="5" ry="6" fill="#7b4f34"/>
+      <ellipse cx="83" cy="76" rx="5" ry="6" fill="#7b4f34"/>
+      <ellipse cx="70" cy="89" rx="8" ry="6" fill="#f3c0ab"/>
+      <path d="M62 96 Q70 102 78 96" stroke="#8a5a3d" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+      <circle cx="46" cy="88" r="7" fill="#ffd4c9" opacity=".9"/>
+      <circle cx="94" cy="88" r="7" fill="#ffd4c9" opacity=".9"/>
+      <ellipse cx="46" cy="128" rx="13" ry="17" fill="#fffaf5" stroke="#e7d3bd" stroke-width="3"/>
+      <ellipse cx="94" cy="128" rx="13" ry="17" fill="#fffaf5" stroke="#e7d3bd" stroke-width="3"/>
+    </g>
+  </svg>`;
+}
+function mascotChick(size=90){
+  return `
+  <svg viewBox="0 0 120 120" width="${size}" height="${size}" aria-hidden="true">
+    <defs><filter id="s3"><feDropShadow dx="0" dy="2" stdDeviation="2" flood-color="#d3b060" flood-opacity=".5"/></filter></defs>
+    <g filter="url(#s3)">
+      <circle cx="60" cy="60" r="34" fill="#ffe36c" stroke="#f4c940" stroke-width="3"/>
+      <path d="M48 24 L60 10 L72 24 Z" fill="#91c34a" stroke="#77ab39" stroke-width="3"/>
+      <ellipse cx="50" cy="57" rx="4" ry="5" fill="#7b4f34"/>
+      <ellipse cx="70" cy="57" rx="4" ry="5" fill="#7b4f34"/>
+      <polygon points="60,66 54,62 60,58 66,62" fill="#ef9e1f"/>
+      <circle cx="42" cy="66" r="6" fill="#ffd9a0"/>
+      <circle cx="78" cy="66" r="6" fill="#ffd9a0"/>
+    </g>
+  </svg>`;
+}
+function mascotGreen(size=90){
+  return `
+  <svg viewBox="0 0 120 120" width="${size}" height="${size}" aria-hidden="true">
+    <defs><filter id="s4"><feDropShadow dx="0" dy="2" stdDeviation="2" flood-color="#8aa656" flood-opacity=".5"/></filter></defs>
+    <g filter="url(#s4)">
+      <circle cx="60" cy="64" r="34" fill="#bfe07b" stroke="#95bf57" stroke-width="3"/>
+      <path d="M58 26 C54 18 64 18 62 8 C74 18 74 28 58 26 Z" fill="#6cae3c" stroke="#5e9533" stroke-width="2"/>
+      <ellipse cx="50" cy="60" rx="4" ry="5" fill="#7b4f34"/>
+      <ellipse cx="70" cy="60" rx="4" ry="5" fill="#7b4f34"/>
+      <ellipse cx="60" cy="69" rx="8" ry="5" fill="#f3c97b"/>
+      <circle cx="42" cy="69" r="6" fill="#d9f0aa"/>
+      <circle cx="78" cy="69" r="6" fill="#d9f0aa"/>
+    </g>
+  </svg>`;
+}
+function mountDecor(){
+  $("homeRabbit").innerHTML = mascotRabbit(140);
+  $("homeWhite").innerHTML = mascotWhite(140);
+  $("soloRabbit").innerHTML = mascotRabbit(82);
+  $("multiPair").innerHTML = `<div style="display:flex;align-items:flex-end;gap:2px">${mascotGreen(58)}${mascotChick(58)}</div>`;
+  $("deckMascot").innerHTML = mascotWhite(44);
+  $("bottomLeftMascot").innerHTML = mascotRabbit(84);
+  $("bottomRightMascot").innerHTML = mascotWhite(84);
+}
 
 function quickSolo(){
-  document.getElementById("modeSelect").value="solo";
-  document.getElementById("playerCount").value="1";
-  startSoloLocal();
+  myId = "solo";
+  const players = { solo:{ name:getPlayerName(), seat:1 } };
+  game = {
+    roomId:"solo",
+    hostId:"solo",
+    mode:"solo",
+    playerCount:1,
+    players,
+    ...buildGame("solo",1,players)
+  };
+  localMode = true;
+  document.body.dataset.resultShown = "";
+  renderAll();
 }
-function selectCoop(){
-  document.getElementById("modeSelect").value="multi";
-  document.getElementById("playerCount").value="2";
-  document.getElementById("roomInput").focus();
+function showCoopSetup(){
+  $("coopSetup").style.display = "block";
+  $("roomInput").focus();
 }
-
-function getEndBonus(rem){
-  if(rem===0) return 10000;
-  if(rem<=4) return 8000;
-  if(rem<=9) return 5000;
-  return 0;
-}
-function getComboMultiplier(n){
-  if(n>=5) return 3.0;
-  if(n===4) return 2.0;
-  if(n===3) return 1.5;
-  return 1.0;
-}
-function totalScore(g){
-  return (g.scoreBase || 0) + getEndBonus(remaining(g));
-}
-function isClear(g){
-  return totalScore(g) >= 6000;
-}
+async function createCoopRoom(){ await createRoom(); }
+async function joinCoopRoom(){ await joinRoom(); }
 
 async function createRoom(){
-  if(!db){ showToast("Firebase設定エラー"); return; }
-  const mode = getMode();
-  const n = mode === "solo" ? 1 : Number(document.getElementById("playerCount").value);
-  roomId = document.getElementById("roomInput").value.trim() || roomCode();
+  if(!db){ showToast("Firebase接続エラー"); return; }
+  roomId = $("roomInput").value.trim() || roomCode();
   myId = uid();
-  const name = document.getElementById("nameInput").value.trim() || "Player";
+  const count = Number($("playerCount").value || 2);
   const ref = doc(db,"rooms",roomId);
   await setDoc(ref,{
-    roomId, hostId:myId, mode, playerCount:n, status:"lobby",
-    players:{[myId]:{name, seat:1}},
+    roomId, hostId:myId, mode:"multi", playerCount:count, status:"lobby",
+    players:{ [myId]:{ name:getPlayerName(), seat:1 } },
     createdAt:serverTimestamp(), updatedAt:serverTimestamp()
   });
   listen(ref);
 }
-
 async function joinRoom(){
-  if(!db){ showToast("Firebase設定エラー"); return; }
-  roomId = document.getElementById("roomInput").value.trim();
-  if(!roomId){ showToast("部屋IDを入力"); return; }
+  if(!db){ showToast("Firebase接続エラー"); return; }
+  roomId = $("roomInput").value.trim();
+  if(!roomId){ showToast("部屋IDを入力してください"); return; }
   const ref = doc(db,"rooms",roomId);
   const snap = await getDoc(ref);
   if(!snap.exists()){ showToast("部屋がありません"); return; }
   const d = snap.data();
-  if(d.status !== "lobby"){ showToast("すでに開始済み"); return; }
+  if(d.status !== "lobby"){ showToast("すでに開始済みです"); return; }
   const players = d.players || {};
   if(Object.keys(players).length >= d.playerCount){ showToast("満員です"); return; }
   myId = uid();
-  const seat = Object.keys(players).length + 1;
-  const name = document.getElementById("nameInput").value.trim() || ("P"+seat);
-  players[myId] = {name, seat};
-  await updateDoc(ref,{players, updatedAt:serverTimestamp()});
+  players[myId] = { name:getPlayerName(), seat:Object.keys(players).length + 1 };
+  await updateDoc(ref,{ players, updatedAt:serverTimestamp() });
   listen(ref);
 }
-
 function listen(ref){
   if(unsub) unsub();
-  localMode=false;
+  localMode = false;
   unsub = onSnapshot(ref, snap=>{
     const prevPlayer = game?.currentPlayer;
     const prevStatus = game?.status;
     game = snap.data();
-    selectedIndex=null;
+    selectedIndex = null;
     renderAll();
-
-    if(prevStatus === "playing" && game.status==="playing" && prevPlayer !== game.currentPlayer){
-      if(game.currentPlayer === myId){ showToast("YOUR TURN", "turn"); playTurnStart(); }
-      else { showToast((game.players?.[game.currentPlayer]?.name || "相手") + " のターン"); }
+    if(prevStatus === "playing" && game.status === "playing" && prevPlayer !== game.currentPlayer){
+      if(game.currentPlayer === myId){
+        showToast("あなたのターン！","turn");
+        playTurnStart();
+      }else{
+        showToast((game.players?.[game.currentPlayer]?.name || "相手") + " が考え中…");
+      }
     }
-    if(game && game.status==="ended" && game.result && !document.body.dataset.resultShown){
-      document.body.dataset.resultShown="1";
+    if(game.status === "ended" && game.result && !document.body.dataset.resultShown){
+      document.body.dataset.resultShown = "1";
       showResult(game.result);
     }
   });
 }
-
 async function startOnlineGame(){
-  if(!game || game.hostId !== myId){ showToast("開始できるのは部屋作成者だけ"); return; }
-  if(Object.keys(game.players).length < game.playerCount){ showToast("まだ人数が揃っていません"); return; }
-  const next = buildGame(game.mode || "multi", game.playerCount, game.players);
+  if(!game || game.hostId !== myId){ showToast("部屋を作った人だけ開始できます"); return; }
+  if(Object.keys(game.players||{}).length < game.playerCount){ showToast("まだ人数がそろっていません"); return; }
+  const next = buildGame("multi", game.playerCount, game.players);
   await updateDoc(doc(db,"rooms",roomId), next);
 }
-
-function startSoloLocal(){
-  myId="solo";
-  const players={solo:{name:document.getElementById("nameInput").value.trim() || "自分", seat:1}};
-  game = {
-    roomId:"solo", hostId:"solo", mode:"solo", playerCount:1, players,
-    ...buildGame("solo",1,players)
-  };
-  localMode=true;
-  renderAll();
-}
-
-function buildGame(mode, n, players){
+function buildGame(mode,n,players){
   const deck=[]; for(let i=2;i<=99;i++) deck.push(i); shuffle(deck);
-  const hands={};
-  const stats={};
-  const ids = Object.keys(players).sort((a,b)=>players[a].seat-players[b].seat);
+  const hands={}, stats={};
+  const ids = Object.keys(players).sort((a,b)=>players[a].seat - players[b].seat);
+  shuffle(ids);
   ids.forEach(id=>{
     hands[id]=[];
     for(let i=0;i<handSize(n);i++) hands[id].push(deck.pop());
     hands[id].sort((a,b)=>a-b);
-    stats[id]={cards:0, back10:0, score:0, maxCombo:0};
+    stats[id]={ cards:0, back10:0, penalty:0, score:0, maxCombo:0 };
   });
   return {
     status:"playing", deck, hands,
     piles:[
-      {type:"up", value:1, name:"昇順A ↑"},
-      {type:"up", value:1, name:"昇順B ↑"},
-      {type:"down", value:100, name:"降順C ↓"},
-      {type:"down", value:100, name:"降順D ↓"}
+      {type:"up", value:1, name:"昇順 A"},
+      {type:"up", value:1, name:"昇順 B"},
+      {type:"down", value:100, name:"降順 C"},
+      {type:"down", value:100, name:"降順 D"}
     ],
-    turnOrder:ids, currentPlayer:ids[0],
-    playedThisTurn:0, turnBack10:0, turnCards:0,
-    scoreBase:0, back10Total:0, maxCombo:0, stats,
-    startedAtMs: Date.now(),
-    result:null, updatedAt:serverTimestamp()
+    turnOrder:ids,
+    currentPlayer:ids[0],
+    playedThisTurn:0,
+    turnCards:0,
+    turnBack10:0,
+    scoreBase:0,
+    back10Total:0,
+    maxCombo:0,
+    lastCard:null,
+    stats,
+    startedAtMs:Date.now(),
+    result:null,
+    updatedAt:serverTimestamp()
   };
 }
-
-async function saveGame(newGame){
-  game = newGame;
+async function saveGame(g){
+  game = g;
   if(localMode){ renderAll(); return; }
-  await updateDoc(doc(db,"rooms",roomId), {...newGame, updatedAt:serverTimestamp()});
+  await updateDoc(doc(db,"rooms",roomId), { ...g, updatedAt:serverTimestamp() });
 }
+function getCardColorClass(num){
+  const v = num % 5;
+  return ["n1","n2","n3","n4","n5"][v];
+}
+function renderAll(){
+  if(!game) { showScreen("homeScreen"); return; }
 
+  if(game.status === "lobby"){
+    showScreen("lobbyScreen");
+    $("roomCodeText").textContent = game.roomId;
+    $("lobbyStatus").textContent = `${Object.keys(game.players||{}).length}/${game.playerCount}人 参加中`;
+    $("lobbyPlayers").innerHTML = Object.values(game.players||{})
+      .sort((a,b)=>a.seat-b.seat)
+      .map(p=>`<span class="badge">${avatarHTML(p.name,32)} ${escapeHtml(p.name)}</span>`)
+      .join("");
+    $("startBtn").disabled = game.hostId !== myId;
+    return;
+  }
+
+  showScreen("playScreen");
+  $("actionBar").style.display = game.status === "playing" ? "block" : "none";
+
+  const mine = isMyTurn() || localMode;
+  const turnName = game.players?.[game.currentPlayer]?.name || "?";
+  $("turnBanner").className = "turnBanner " + (mine ? "turnMine" : "turnOther");
+  $("turnBanner").innerHTML = avatarHTML(turnName,36) + `<span>${mine ? "あなたのターン！" : escapeHtml(turnName) + " が考え中…"}</span>`;
+
+  $("playersRow").innerHTML = (game.turnOrder||[]).map(pid=>{
+    const nm = game.players?.[pid]?.name || pid;
+    const active = pid === game.currentPlayer ? ' style="outline:3px solid #ffe08c"' : "";
+    return `<div class="playerChip"${active}>
+      <div class="avatar">${avatarHTML(nm,30)}</div>
+      <div>${escapeHtml(nm)}</div>
+    </div>`;
+  }).join("");
+
+  $("scoreNow").textContent = totalScore(game);
+  $("back10Now").textContent = game.back10Total || 0;
+  $("remainNow").textContent = remaining(game);
+  $("turnPlayNow").textContent = game.playedThisTurn || 0;
+  $("deckCount").textContent = game.deck.length;
+  $("discardCard").textContent = game.lastCard ?? "-";
+  $("hint").textContent = mine
+    ? `カードを選んで、出したい場をタップ。最低${minPlay(game)}枚出したら「ターン終了」できます。`
+    : "相手のターンです。";
+
+  $("piles").innerHTML = game.piles.map((p,i)=>{
+    const colorClass = "value" + (i+1);
+    return `<div class="pile" onclick="playPile(${i})">
+      <div class="pileArrow">${p.type==="up" ? "⌃" : "⌄"}</div>
+      <div class="pileValue ${colorClass}">${p.value}</div>
+      <div class="small">${escapeHtml(p.name)}</div>
+    </div>`;
+  }).join("");
+
+  const hand = game.hands?.[myId] || [];
+  $("hand").innerHTML = hand.map((num,i)=>`
+    <div class="card ${getCardColorClass(num)} ${selectedIndex===i ? 'selected' : ''} ${mine ? '' : 'locked'}" onclick="selectCard(${i})">
+      <div class="corner">${num}</div>
+      ${num}
+      <div class="corner bottom">${num}</div>
+    </div>
+  `).join("");
+}
+function avatarHTML(name,size=28){
+  const c = (name.codePointAt(0) || 65) % 4;
+  if(c===0) return `<span style="display:inline-flex;width:${size}px;height:${size}px;align-items:center;justify-content:center">${mascotRabbit(size)}</span>`;
+  if(c===1) return `<span style="display:inline-flex;width:${size}px;height:${size}px;align-items:center;justify-content:center">${mascotWhite(size)}</span>`;
+  if(c===2) return `<span style="display:inline-flex;width:${size}px;height:${size}px;align-items:center;justify-content:center">${mascotGreen(size)}</span>`;
+  return `<span style="display:inline-flex;width:${size}px;height:${size}px;align-items:center;justify-content:center">${mascotChick(size)}</span>`;
+}
 function selectCard(i){
   if(!isMyTurn() && !localMode) return;
-  selectedIndex=i; renderAll();
+  selectedIndex = i;
+  renderAll();
 }
-
 async function playPile(i){
   if(!isMyTurn() && !localMode){ showToast("相手のターンです"); return; }
-  if(selectedIndex===null) return;
+  if(!game || game.status !== "playing") return;
+  if(selectedIndex === null) return;
   const card = game.hands[myId][selectedIndex];
   const pileBefore = game.piles[i];
-  if(!canPlay(card, pileBefore)){
+
+  if(!canPlay(card,pileBefore)){
     const g = structuredClone(game);
-    g.scoreBase = Math.max(0, (g.scoreBase || 0) - 10);
-    if(g.stats && g.stats[myId]){
-      g.stats[myId].score = Math.max(0, (g.stats[myId].score || 0) - 10);
-      g.stats[myId].penalty = (g.stats[myId].penalty || 0) + 1;
+    g.scoreBase = Math.max(0,(g.scoreBase||0)-50);
+    if(g.stats?.[myId]){
+      g.stats[myId].score = Math.max(0,(g.stats[myId].score||0)-50);
+      g.stats[myId].penalty = (g.stats[myId].penalty||0)+1;
     }
     playPenalty();
-    showToast("MISS -10", "miss");
+    showToast("MISS -50","miss");
     await saveGame(g);
     return;
   }
 
-  const back10 = isBack10(card, pileBefore);
+  const back10 = isBack10(card,pileBefore);
   const g = structuredClone(game);
   g.piles[i].value = card;
   g.hands[myId].splice(selectedIndex,1);
   g.playedThisTurn++;
   g.turnCards++;
+  g.lastCard = card;
+  g.stats[myId].cards++;
   if(back10){
     g.turnBack10++;
     g.back10Total++;
     g.stats[myId].back10++;
   }
-  g.stats[myId].cards++;
-  selectedIndex=null;
+  selectedIndex = null;
 
-  if(back10){ showToast("BACK10 +100", "back10"); playBack10(); }
+  if(back10){ showToast("BACK10 +100","back10"); playBack10(); }
   else { playGood(); }
 
-  const rem = remaining(g);
-  if(rem===0){ await endGame(g, "全カード処理"); return; }
-  if(g.playedThisTurn < minPlay(g) && !legalExists(g,myId)){ await endGame(g, "必要枚数を出す前に合法手なし"); return; }
+  if(remaining(g) === 0){
+    applyTurnScore(g,myId);
+    await endGame(g,"全カード処理");
+    return;
+  }
+
   await saveGame(g);
 }
-
+function applyTurnScore(g,pid){
+  const cards = g.turnCards || g.playedThisTurn || 0;
+  const backs = g.turnBack10 || 0;
+  if(cards<=0) return;
+  const pts = Math.round(cards*10*getComboMultiplier(cards) + backs*100);
+  g.scoreBase = (g.scoreBase||0) + pts;
+  g.maxCombo = Math.max(g.maxCombo||0, cards);
+  if(g.stats?.[pid]){
+    g.stats[pid].score += pts;
+    g.stats[pid].maxCombo = Math.max(g.stats[pid].maxCombo||0, cards);
+  }
+  if(cards>=3) showToast(`${cards} COMBO +${pts}`,"combo");
+}
 async function endTurn(){
+  if(!game || game.status!=="playing") return;
   if(!isMyTurn() && !localMode){ showToast("今は自分のターンではありません"); return; }
   const need = minPlay(game);
-  if(game.playedThisTurn < need){ showToast("最低" + need + "枚出してください"); return; }
-
+  if(game.playedThisTurn < need){ showToast(`最低${need}枚出してください`); return; }
   const g = structuredClone(game);
-  applyTurnScore(g, myId);
+  applyTurnScore(g,myId);
   while(g.hands[myId].length < handSize(g.playerCount) && g.deck.length>0){
     g.hands[myId].push(g.deck.pop());
   }
   g.hands[myId].sort((a,b)=>a-b);
-
   const idx = g.turnOrder.indexOf(myId);
   g.currentPlayer = g.turnOrder[(idx+1)%g.turnOrder.length];
   g.playedThisTurn = 0;
   g.turnCards = 0;
   g.turnBack10 = 0;
-
-  if(!legalExists(g,g.currentPlayer)){ await endGame(g, "次プレイヤーに合法手なし"); return; }
   await saveGame(g);
 }
-
-function applyTurnScore(g, pid){
-  const cards = g.turnCards || g.playedThisTurn || 0;
-  const backs = g.turnBack10 || 0;
-  if(cards<=0) return;
-
-  const mult = getComboMultiplier(cards);
-  const turnScore = Math.round(cards * 10 * mult + backs * 100);
-  g.scoreBase = (g.scoreBase || 0) + turnScore;
-  g.maxCombo = Math.max(g.maxCombo || 0, cards);
-
-  g.stats[pid].score += turnScore;
-  g.stats[pid].maxCombo = Math.max(g.stats[pid].maxCombo || 0, cards);
-
-  if(cards>=3) showToast(cards + " COMBO +" + turnScore, "combo");
-}
-
 async function forceGiveUp(){
-  closeModal("settingsModal");
   if(!game || game.status!=="playing") return;
-  if(confirm("本当にギブアップして終了しますか？")){
-    const g=structuredClone(game);
-    if(g.playedThisTurn>0) applyTurnScore(g,myId);
-    await endGame(g,"ギブアップ");
-  }
+  if(!confirm("ここで投了してリザルトを表示しますか？")) return;
+  const g = structuredClone(game);
+  if(g.playedThisTurn > 0) applyTurnScore(g,myId);
+  await endGame(g,"投了");
 }
-
-async function endGame(g, reason){
+async function endGame(g,reason){
   if(g.status==="ended") return;
-  if(g.playedThisTurn>0 && g.currentPlayer===myId) applyTurnScore(g,myId);
-
-  const rem=remaining(g);
-  const score=totalScore(g);
+  const rem = remaining(g);
+  const score = (g.scoreBase||0) + getEndBonus(rem);
   const result = {
-    score, scoreBase:g.scoreBase||0, endBonus:getEndBonus(rem),
-    clear: score>=6000, remaining:rem, reason,
-    back10Total:g.back10Total||0, maxCombo:g.maxCombo||0,
-    stats:g.stats||{}, mode:g.mode||"multi",
-    timeSec: Math.max(0, Math.round((Date.now()-(g.startedAtMs||Date.now()))/1000)),
-    dateKey: todayKey(), monthKey: monthKey()
+    score, scoreBase:g.scoreBase||0, endBonus:getEndBonus(rem), clear:score>=6000, remaining:rem, reason,
+    back10Total:g.back10Total||0, maxCombo:g.maxCombo||0, stats:g.stats||{}, mode:g.mode||"multi",
+    timeSec:Math.max(0,Math.round((Date.now()-(g.startedAtMs||Date.now()))/1000)),
+    dateKey:todayKey(), monthKey:monthKey()
   };
-  g.status="ended";
-  g.result=result;
+  g.status = "ended";
+  g.result = result;
   await saveGame(g);
-  await saveRankingIfNeeded(g, result);
+  await saveRanking(g,result);
   showResult(result);
 }
-
-async function saveRankingIfNeeded(g, result){
+async function saveRanking(g,result){
   if(!db) return;
-  const name = g.mode==="solo"
-    ? (g.players?.[myId]?.name || "Player")
-    : Object.values(g.players||{}).map(p=>p.name).join(" & ");
+  const names = Object.values(g.players||{}).map(p=>p.name).join(" & ") || "Player";
   try{
     await addDoc(collection(db,"rankings"),{
       mode:g.mode||"multi",
+      dailyKey:(g.mode||"multi")+"_"+result.dateKey,
+      monthlyKey:(g.mode||"multi")+"_"+result.monthKey,
       score:result.score,
       clear:result.clear,
       remaining:result.remaining,
       back10Total:result.back10Total,
       maxCombo:result.maxCombo,
       timeSec:result.timeSec,
-      dateKey:result.dateKey,
-      monthKey:result.monthKey,
-      playerName:name,
+      playerName:names,
       createdAt:serverTimestamp()
     });
   }catch(e){
     console.warn("ranking save failed", e);
   }
 }
-
 function showResult(result){
-  const overlay=document.getElementById("resultOverlay");
-  const rankEl=document.getElementById("rankText");
-  rankEl.textContent = result.clear ? "CLEAR" : "TRY AGAIN";
-  rankEl.className = "rank " + (result.clear ? "clear" : "fail");
-  document.getElementById("resultDetail").textContent = result.clear ? "6000点突破！" : "あと " + Math.max(0,6000-result.score) + " 点";
-  document.getElementById("resultMsg").textContent = result.reason + " / 基本点 " + result.scoreBase + " + 終了ボーナス " + result.endBonus;
-  document.getElementById("resScore").textContent = result.score;
-  document.getElementById("resRemain").textContent = result.remaining;
-  document.getElementById("resBack10").textContent = result.back10Total;
-  document.getElementById("resCombo").textContent = result.maxCombo;
-
-  const ps=document.getElementById("playerStats");
-  ps.innerHTML="<b>個人実績</b>";
+  $("resultOverlay").style.display = "flex";
+  $("resultBig").textContent = result.clear ? "CLEAR!" : "TRY AGAIN";
+  $("resultBig").className = "resultBig " + (result.clear ? "clear" : "fail");
+  $("resultDetail").textContent = result.clear ? "6000点突破！" : `あと ${Math.max(0,6000-result.score)} 点`;
+  $("resultMsg").textContent = `${result.reason} / 基本点 ${result.scoreBase} + 終了ボーナス ${result.endBonus}`;
+  $("resScore").textContent = result.score;
+  $("resRemain").textContent = result.remaining;
+  $("resBack10").textContent = result.back10Total;
+  $("resCombo").textContent = result.maxCombo;
   const players = game?.players || {};
-  Object.entries(result.stats || {}).forEach(([pid,s])=>{
-    const name=players[pid]?.name || pid;
-    ps.innerHTML += `<div class="playerCard">
-      <b>${escapeHtml(name)}</b><br>
-      出した枚数：${s.cards || 0} / BACK10：${s.back10 || 0} / MISS：${s.penalty || 0} / 個人得点：${s.score || 0} / 最大コンボ：${s.maxCombo || 0}
-    </div>`;
-  });
+  $("playerStats").innerHTML = "<div class='small' style='font-size:14px'>個人実績</div>" +
+    Object.entries(result.stats||{}).map(([pid,s])=>{
+      const nm = players[pid]?.name || pid;
+      return `<div class="playerCard"><b>${escapeHtml(nm)}</b><br>
+      出した枚数：${s.cards||0} / BACK10：${s.back10||0} / MISS：${s.penalty||0}<br>
+      個人得点：${s.score||0} / 最大コンボ：${s.maxCombo||0}</div>`;
+    }).join("");
 
-  overlay.style.display="flex";
-  if(result.clear){ document.body.classList.add("flashWin"); confetti(result.remaining===0?120:70); playWin(); }
-  else { document.body.classList.add("shake"); playLose(); }
-  setTimeout(()=>{document.body.classList.remove("flashWin","shake")},1600);
+  document.body.dataset.resultShown = "1";
+  if(result.clear){ confetti(result.remaining===0?120:70); playWin(); }
+  else playLose();
 }
-
-function closeResult(){ document.getElementById("resultOverlay").style.display="none"; }
-
-function goHome(){
-  document.getElementById("resultOverlay").style.display="none";
-  if(unsub){ unsub(); unsub=null; }
-  game=null; selectedIndex=null; localMode=false; roomId=""; myId="";
-  document.body.dataset.resultShown="";
-  document.getElementById("setup").style.display="block";
-  document.getElementById("lobby").style.display="none";
-  document.getElementById("game").style.display="none";
-  document.getElementById("actionBar").style.display="none";
-}
-
 async function resetSameRoom(){
-  document.body.dataset.resultShown="";
-  closeResult();
-  if(localMode){ startSoloLocal(); return; }
-  if(game.hostId!==myId){ showToast("再開できるのは部屋作成者だけ"); return; }
-  const next = buildGame(game.mode || "multi", game.playerCount, game.players);
+  document.body.dataset.resultShown = "";
+  $("resultOverlay").style.display = "none";
+  if(localMode){ quickSolo(); return; }
+  if(!game || game.hostId !== myId){ showToast("再開できるのは部屋を作った人だけ"); return; }
+  const next = buildGame("multi", game.playerCount, game.players);
   await updateDoc(doc(db,"rooms",roomId), next);
 }
-
-function renderAll(){
-  if(!game) return;
-  document.getElementById("setup").style.display="none";
-  document.getElementById("lobby").style.display=game.status==="lobby"?"block":"none";
-  document.getElementById("game").style.display=game.status!=="lobby"?"block":"none";
-  document.getElementById("actionBar").style.display=game.status==="playing"?"block":"none";
-  renderLobby(); renderGame();
+function goHome(){
+  if(unsub){ unsub(); unsub=null; }
+  roomId=""; myId=""; game=null; selectedIndex=null; localMode=false;
+  document.body.dataset.resultShown = "";
+  $("resultOverlay").style.display = "none";
+  $("coopSetup").style.display = "none";
+  showScreen("homeScreen");
 }
-
-function renderLobby(){
-  if(!game || game.status!=="lobby") return;
-  document.getElementById("lobbyStatus").innerHTML =
-    `モード：<b>${game.mode==="solo"?"SOLO RANKED":"CO-OP CASUAL"}</b><br>`+
-    `部屋ID：<b>${game.roomId}</b> / ${Object.keys(game.players||{}).length}/${game.playerCount}人`;
-  document.getElementById("players").innerHTML = Object.values(game.players||{})
-    .sort((a,b)=>a.seat-b.seat)
-    .map(p=>`<span class="badge">P${p.seat}: ${escapeHtml(p.name)}</span>`).join("");
-  document.getElementById("startBtn").disabled = game.hostId!==myId;
+function copyRoom(){
+  navigator.clipboard?.writeText(roomId || game?.roomId || "");
+  showToast("部屋IDコピー");
 }
+function showRules(){ $("rulesModal").style.display="flex"; resumeAudio(); }
+function openRankings(){ $("rankingModal").style.display="flex"; loadRankings("solo","daily"); }
+function closeModal(id){ $(id).style.display="none"; resumeAudio(); }
 
-function renderGame(){
-  if(!game || game.status==="lobby") return;
-  const myName = game.players?.[myId]?.name || "観戦";
-  const turnName = game.players?.[game.currentPlayer]?.name || "?";
-  const need = minPlay(game);
-  const rem = remaining(game);
-  const mine = isMyTurn() || localMode;
-  const score = totalScore(game);
-
-  const banner=document.getElementById("turnBanner");
-  banner.className="turnBanner " + (mine ? "turnMine" : "turnOther");
-  banner.textContent = game.status==="ended" ? "GAME SET" : (mine ? "YOUR TURN" : `${turnName} のターン`);
-
-  document.getElementById("status").innerHTML =
-    `モード：${game.mode==="solo"?"SOLO RANKED":"CO-OP CASUAL"} / 自分：${escapeHtml(myName)}<br>`+
-    `山札：${game.deck.length}枚 / 残り総数：${rem}枚 / 今ターン：${game.playedThisTurn}枚 / 必要：${need}枚`;
-  document.getElementById("hint").textContent = mine ? "カードを選んで、出したい場をタップ。" : "相手のターンです。YOUR TURN表示と音が出たら開始。";
-  document.getElementById("scoreNow").textContent=score;
-  document.getElementById("remainNow").textContent=rem;
-  document.getElementById("back10Now").textContent=game.back10Total || 0;
-
-  const pilesDiv=document.getElementById("piles"); pilesDiv.innerHTML="";
-  game.piles.forEach((p,i)=>{
-    const selected = selectedIndex!==null && game.hands[myId];
-    const div=document.createElement("div");
-    div.className="pile";
-    div.onclick=()=>playPile(i);
-    div.innerHTML=`<div class="pile-title">${p.name}</div><div class="pile-value">${p.value}</div><div class="small">${p.type==="up"?"大きい数字へ / BACK10":"小さい数字へ / BACK10"}</div>`;
-    pilesDiv.appendChild(div);
-  });
-
-  document.getElementById("handTitle").textContent = "自分の手札";
-  const handDiv=document.getElementById("hand"); handDiv.innerHTML="";
-  if(!game.hands || !game.hands[myId]){
-    handDiv.innerHTML='<div class="hidden">観戦中、または自分の手札がありません。</div>'; return;
-  }
-  const h=document.createElement("div"); h.className="hand";
-  game.hands[myId].forEach((card,i)=>{
-    const c=document.createElement("div");
-    c.className="card"+(selectedIndex===i?" selected":"")+(mine?"":" locked");
-    c.textContent=card; c.onclick=()=>selectCard(i); h.appendChild(c);
-  });
-  handDiv.appendChild(h);
-}
-
-function openRankings(){
-  document.getElementById("rankingModal").style.display="flex";
-  loadRankings("solo","daily");
-}
-
-async function loadRankings(mode, period){
-  const body=document.getElementById("rankingBody");
-  body.innerHTML="読み込み中...";
-  if(!db){ body.innerHTML="Firebaseに接続できません。"; return; }
-  const keyField = period==="daily" ? "dateKey" : "monthKey";
-  const keyValue = period==="daily" ? todayKey() : monthKey();
+async function loadRankings(mode,period){
+  const body = $("rankingBody");
+  body.innerHTML = "読み込み中...";
+  if(!db){ body.innerHTML = "Firebaseに接続できません。"; return; }
+  const field = period==="daily" ? "dailyKey" : "monthlyKey";
+  const value = mode + "_" + (period==="daily" ? todayKey() : monthKey());
   try{
-    const q=query(
-      collection(db,"rankings"),
-      where("mode","==",mode),
-      where(keyField,"==",keyValue),
-      orderBy("score","desc"),
-      limit(10)
-    );
-    const snap=await getDocs(q);
-    if(snap.empty){ body.innerHTML="まだ記録がありません。"; return; }
-    let html=`<b>${mode.toUpperCase()} ${period.toUpperCase()}</b><table class="rankingTable"><tr><th>#</th><th>名前</th><th>Score</th><th>残</th><th>B10</th></tr>`;
-    let i=1;
-    snap.forEach(doc=>{
-      const d=doc.data();
-      html += `<tr><td>${i++}</td><td>${escapeHtml(d.playerName||"Player")}</td><td>${d.score}</td><td>${d.remaining}</td><td>${d.back10Total}</td></tr>`;
+    const q = query(collection(db,"rankings"), where(field,"==",value));
+    const snap = await getDocs(q);
+    const rows = [];
+    snap.forEach(d=>rows.push(d.data()));
+    rows.sort((a,b)=>{
+      if((b.score||0)!==(a.score||0)) return (b.score||0)-(a.score||0);
+      return (a.timeSec||999999)-(b.timeSec||999999);
     });
-    html += "</table>";
-    body.innerHTML=html;
+    const top = rows.slice(0,10);
+    if(top.length===0){ body.innerHTML = "まだ記録がありません。1ゲーム終了すると表示されます。"; return; }
+    let html = `<div style="font-weight:1000;margin-bottom:8px">${mode==="solo"?"ひとり":"みんな"} / ${period==="daily"?"今日":"今月"}</div>`;
+    html += `<table class="rankingTable"><tr><th>#</th><th>名前</th><th>Score</th><th>残り</th><th>B10</th></tr>`;
+    top.forEach((r,i)=>{
+      html += `<tr><td>${i+1}</td><td>${escapeHtml(r.playerName||"Player")}</td><td>${r.score}</td><td>${r.remaining}</td><td>${r.back10Total}</td></tr>`;
+    });
+    html += `</table>`;
+    body.innerHTML = html;
   }catch(e){
-    body.innerHTML="ランキング取得に失敗。Firestoreのインデックス作成が必要な場合があります。";
     console.warn(e);
-  }
-}
-
-function showRules(){ document.getElementById("rulesModal").style.display="flex"; resumeAudio(); }
-function openSettings(){ document.getElementById("settingsModal").style.display="flex"; resumeAudio(); }
-function closeModal(id){ document.getElementById(id).style.display="none"; resumeAudio(); }
-
-function showToast(text, cls=""){
-  const t=document.getElementById("toast");
-  t.textContent=text; t.className=cls; t.style.display="block";
-  clearTimeout(t._timer);
-  t._timer=setTimeout(()=>{t.style.display="none"},1300);
-}
-
-function confetti(n){
-  const colors=["#ffd166","#66a3ff","#54d17a","#ff5c5c","#ffffff"];
-  for(let i=0;i<n;i++){
-    const el=document.createElement("div"); el.className="confetti";
-    el.style.left=Math.random()*100+"vw"; el.style.background=colors[i%colors.length];
-    el.style.animationDelay=(Math.random()*0.8)+"s"; el.style.transform=`rotate(${Math.random()*360}deg)`;
-    document.body.appendChild(el); setTimeout(()=>el.remove(),3500);
+    body.innerHTML = "ランキング取得に失敗しました。Firestoreルールを確認してください。";
   }
 }
 
 function ensureAudio(){
-  if(!audioCtx) audioCtx=new (window.AudioContext||window.webkitAudioContext)();
+  if(!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
   resumeAudio();
 }
 function resumeAudio(){ if(audioCtx && audioCtx.state==="suspended") audioCtx.resume(); }
-function beep(freq,dur,type="sine",vol=.08){
+function beep(freq,dur,type="triangle",vol=.05){
   ensureAudio();
-  const o=audioCtx.createOscillator(), g=audioCtx.createGain();
-  o.type=type; o.frequency.value=freq; g.gain.value=vol;
-  o.connect(g); g.connect(audioCtx.destination); o.start();
+  const o = audioCtx.createOscillator();
+  const g = audioCtx.createGain();
+  o.type = type;
+  o.frequency.value = freq;
+  g.gain.value = vol;
+  o.connect(g); g.connect(audioCtx.destination);
+  o.start();
   g.gain.exponentialRampToValueAtTime(.001,audioCtx.currentTime+dur);
   o.stop(audioCtx.currentTime+dur);
 }
-function playGood(){ beep(660,.08,"triangle"); setTimeout(()=>beep(880,.08,"triangle"),70); }
-function playBad(){ beep(160,.16,"sawtooth"); }
-function playPenalty(){ [120,90].forEach((f,i)=>setTimeout(()=>beep(f,.22,"sawtooth",.10),i*120)); }
-function playBack10(){ [740,990,1320].forEach((f,i)=>setTimeout(()=>beep(f,.09,"square",.07),i*60)); }
-function playTurnStart(){ [520,780].forEach((f,i)=>setTimeout(()=>beep(f,.12,"triangle",.08),i*90)); }
-function playWin(){ [523,659,784,1046].forEach((f,i)=>setTimeout(()=>beep(f,.18,"triangle",.1),i*120)); }
-function playLose(){ [220,180,140].forEach((f,i)=>setTimeout(()=>beep(f,.25,"sawtooth",.08),i*160)); }
-
+function playGood(){ beep(660,.08,"triangle",.045); setTimeout(()=>beep(880,.08,"triangle",.045),70); }
+function playPenalty(){ [140,110].forEach((f,i)=>setTimeout(()=>beep(f,.22,"sawtooth",.09),i*120)); }
+function playBack10(){ [740,990,1320].forEach((f,i)=>setTimeout(()=>beep(f,.09,"square",.055),i*60)); }
+function playTurnStart(){ [520,780].forEach((f,i)=>setTimeout(()=>beep(f,.12,"triangle",.06),i*90)); }
+function playWin(){ [523,659,784,1046].forEach((f,i)=>setTimeout(()=>beep(f,.18,"triangle",.07),i*120)); }
+function playLose(){ [220,180,140].forEach((f,i)=>setTimeout(()=>beep(f,.25,"sawtooth",.065),i*160)); }
 function toggleBgm(){
   ensureAudio();
-  if(bgmOn){ clearInterval(bgmTimer); bgmOn=false; showToast("BGM OFF"); return; }
-  bgmOn=true; showToast("BGM ON");
-  const melody=[
-    [392,.16],[0,.06],[494,.16],[587,.16],[659,.22],[587,.16],[494,.16],[440,.22],
-    [392,.16],[0,.06],[494,.16],[587,.16],[740,.22],[659,.16],[587,.16],[494,.22]
+  if(bgmOn){
+    clearInterval(bgmTimer);
+    bgmOn = false;
+    showToast("BGM OFF");
+    return;
+  }
+  bgmOn = true;
+  showToast("BGM ON");
+  const melody = [
+    [523,.12],[659,.12],[784,.18],[659,.12],
+    [587,.12],[659,.12],[880,.22],[659,.12],
+    [523,.12],[659,.12],[784,.18],[988,.12],
+    [880,.18],[784,.12],[659,.22],[0,.12]
   ];
   let i=0;
-  bgmTimer=setInterval(()=>{
-    if(!bgmOn)return;
-    const [freq,dur]=melody[i%melody.length];
-    if(freq>0) beep(freq,dur,"triangle",.035);
+  bgmTimer = setInterval(()=>{
+    if(!bgmOn) return;
+    const [freq,dur] = melody[i % melody.length];
+    if(freq>0) beep(freq,dur,"triangle",.024);
     i++;
-  },210);
+  },320);
 }
 
-function copyRoom(){ navigator.clipboard?.writeText(roomId || game?.roomId || ""); showToast("部屋IDコピー"); }
-function leaveLocal(){ location.reload(); }
-function escapeHtml(s){ return String(s).replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#039;"}[m])); }
+function showToast(text, cls=""){
+  const t = $("toast");
+  t.textContent = text;
+  t.className = cls;
+  t.style.display = "block";
+  clearTimeout(t._timer);
+  t._timer = setTimeout(()=>{ t.style.display = "none"; },1300);
+}
+function confetti(n){
+  const colors=["#ffd166","#9edcff","#9fd667","#ff9fb8","#fff"];
+  for(let i=0;i<n;i++){
+    const el = document.createElement("div");
+    el.className = "confetti";
+    el.style.left = Math.random()*100 + "vw";
+    el.style.background = colors[i % colors.length];
+    el.style.animationDelay = (Math.random()*0.8)+"s";
+    el.style.transform = `rotate(${Math.random()*360}deg)`;
+    document.body.appendChild(el);
+    setTimeout(()=>el.remove(),3300);
+  }
+}
+
+mountDecor();
 </script>
 </body>
 </html>
