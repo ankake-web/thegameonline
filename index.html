@@ -833,6 +833,72 @@ main{max-width:960px;margin:0 auto;padding:10px 10px 96px}
   }
 }
 
+
+/* --- hand area stability: keep 8 slots even when hand cards decrease --- */
+.handWrap{
+  min-height:112px!important;
+}
+.handCards{
+  grid-template-columns:repeat(4,minmax(0,1fr))!important;
+  grid-auto-rows:78px!important;
+}
+.card{
+  height:78px!important;
+}
+.cardEmpty{
+  pointer-events:none!important;
+  background:linear-gradient(180deg,#fffaf1,#fff3e2)!important;
+  border:2px dashed #ead0ae!important;
+  box-shadow:0 4px 0 #ead6bd!important;
+  opacity:.48!important;
+}
+.cardEmpty::after{
+  content:"";
+  width:20px;
+  height:20px;
+  border-radius:50%;
+  background:#f1d8b7;
+  opacity:.45;
+}
+
+@media (min-width:721px){
+  .handWrap{
+    min-height:100px!important;
+  }
+  .handCards{
+    grid-template-columns:repeat(8,minmax(56px,1fr))!important;
+    grid-auto-rows:74px!important;
+  }
+  .card{
+    height:74px!important;
+  }
+}
+
+@media (max-width:520px){
+  .handWrap{
+    min-height:146px!important;
+  }
+  .handCards{
+    grid-template-columns:repeat(4,minmax(0,1fr))!important;
+    grid-auto-rows:64px!important;
+  }
+  .card{
+    height:64px!important;
+  }
+}
+
+@media (max-width:390px){
+  .handWrap{
+    min-height:138px!important;
+  }
+  .handCards{
+    grid-auto-rows:60px!important;
+  }
+  .card{
+    height:60px!important;
+  }
+}
+
 </style>
 </head>
 <body>
@@ -1309,11 +1375,14 @@ function renderAll(){
   `).join("");
 
   const hand = game.hands?.[myId] || [];
-  $("hand").innerHTML = hand.map((n,i)=>`
-    <div class="card ${selectedIndex===i ? 'selected' : ''} ${mine ? '' : 'locked'}" onclick="selectCard(${i})">
-      ${n}
-    </div>
-  `).join("");
+  const visibleSlots = Math.max(8, handSize(game.playerCount || 1));
+  $("hand").innerHTML = Array.from({length:visibleSlots},(_,i)=>{
+    if(i < hand.length){
+      const n = hand[i];
+      return `<div class="card ${selectedIndex===i ? 'selected' : ''} ${mine ? '' : 'locked'}" onclick="selectCard(${i})">${n}</div>`;
+    }
+    return `<div class="card cardEmpty" aria-hidden="true"></div>`;
+  }).join("");
 }
 function selectCard(i){
   if(!isMyTurn() && !localMode) return;
