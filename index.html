@@ -6,43 +6,41 @@
 <title>BACK10</title>
 <style>
 :root{
-  --bg1:#fff7df;
-  --bg2:#ffeaf1;
-  --bg3:#eefaff;
-  --ink:#694b32;
-  --muted:#9d7d65;
-  --line:#eccca7;
-  --shadow:#dfbc93;
-  --paper:#fffdf8;
-  --panel:#fff9ef;
-  --pink:#ff9bb2;
-  --pink-deep:#de6886;
-  --pink-soft:#fff0f4;
-  --green:#95cf5a;
-  --green-deep:#73a93b;
-  --green-soft:#f1fbdf;
-  --blue:#9fd8ff;
-  --blue-deep:#68acd9;
-  --yellow:#ffd469;
-  --yellow-deep:#e5b03c;
-  --danger:#ff7c97;
-  --hand:#2d405f;
-  --pile1:#e56b85;
-  --pile2:#5887d5;
-  --pile3:#ed9a1b;
-  --pile4:#70a63b;
+  --ink:#6b4c31;
+  --muted:#9a7a60;
+  --line:#edcaa4;
+  --line2:#f4d9b8;
+  --shadow:#ddb789;
+  --paper:#fffdf7;
+  --panel:#fff8ec;
+  --pink:#ff91ab;
+  --pink2:#ffd7e2;
+  --green:#95cf58;
+  --green2:#dff5bc;
+  --blue:#8bd4ff;
+  --blue2:#dff5ff;
+  --yellow:#ffd462;
+  --orange:#f1a43a;
+  --danger:#ff7894;
+  --cardText:#2d405f;
+  --p1:#e86c86;
+  --p2:#5c88d8;
+  --p3:#ef9e25;
+  --p4:#72a83e;
 }
 *{box-sizing:border-box}
-html,body{min-height:100%;margin:0}
+html,body{margin:0;min-height:100%}
 body{
-  font-family:-apple-system,BlinkMacSystemFont,"Hiragino Sans","Yu Gothic",sans-serif;
   color:var(--ink);
+  font-family:-apple-system,BlinkMacSystemFont,"Hiragino Sans","Yu Gothic",sans-serif;
   background:
-    radial-gradient(circle at 10% 8%, #ffdce7 0 8%, transparent 9%),
-    radial-gradient(circle at 90% 14%, #d8efff 0 8%, transparent 9%),
-    radial-gradient(circle at 82% 92%, #e0f7cf 0 10%, transparent 11%),
-    linear-gradient(180deg,var(--bg1),var(--bg2) 54%,var(--bg3));
+    radial-gradient(circle at 9% 8%, #ffdce7 0 8%, transparent 9%),
+    radial-gradient(circle at 91% 13%, #d9f0ff 0 9%, transparent 10%),
+    radial-gradient(circle at 83% 94%, #dff6cd 0 10%, transparent 11%),
+    linear-gradient(180deg,#fff6d7,#ffebf0 53%,#effaff);
   background-attachment:fixed;
+  user-select:none;
+  -webkit-user-select:none;
 }
 button,input,select{
   font:inherit;
@@ -57,64 +55,86 @@ button{
   background:#fff9ee;
   border:2px solid var(--line);
   box-shadow:0 5px 0 var(--shadow);
+  touch-action:manipulation;
 }
 button:active{transform:translateY(3px);box-shadow:0 2px 0 var(--shadow)}
-button.primary{background:linear-gradient(180deg,var(--blue),#bfe7ff);color:#315a74;border-color:#94cff6;box-shadow:0 5px 0 var(--blue-deep)}
-button.good{background:linear-gradient(180deg,#b5e387,#def4c0);color:#40642a;border-color:#a6d372;box-shadow:0 5px 0 var(--green-deep)}
-button.warn{background:linear-gradient(180deg,#ffabbd,#ffd8e0);color:#874253;border-color:#ef9bb1;box-shadow:0 5px 0 var(--pink-deep)}
-button.softpink{background:linear-gradient(180deg,#ffb0c0,#ffe4ea);color:#8d4658;border-color:#f1afbf;box-shadow:0 5px 0 var(--pink-deep)}
-button.soft{background:#fff9ee}
+button.primary{background:linear-gradient(180deg,var(--blue),#c7ebff);color:#315a74;border-color:#9ad2f7;box-shadow:0 5px 0 #6aaed9}
+button.good{background:linear-gradient(180deg,#b8e98b,#e3f8c8);color:#41652d;border-color:#abd87a;box-shadow:0 5px 0 #73a947}
+button.warn{background:linear-gradient(180deg,#ff9fb5,#ffd5df);color:#873d4f;border-color:#ee96ab;box-shadow:0 5px 0 #d16580}
+button.softpink{background:linear-gradient(180deg,#ffb0c3,#ffe4eb);color:#8c4658;border-color:#f3b0bf;box-shadow:0 5px 0 #df718b}
+button.icon{padding:9px 11px;border-radius:16px}
 input,select{
-  background:white;
+  background:#fff;
   color:var(--ink);
   border:2px solid var(--line);
   box-shadow:0 4px 0 var(--shadow);
 }
-input::placeholder{color:#b59b84}
+input::placeholder{color:#b99f88}
 main{max-width:960px;margin:0 auto;padding:10px 10px 96px}
-.small{font-size:13px;line-height:1.45;color:var(--muted);font-weight:800}
+.small{font-size:13px;line-height:1.45;color:var(--muted);font-weight:850}
 .row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
 .screen{display:none}
 .screen.active{display:block}
 .panel{
-  background:#fffaf0f0;
+  background:#fffaf0ef;
   border:2px solid var(--line);
   border-radius:28px;
   box-shadow:0 8px 0 var(--shadow),0 18px 32px #b6855a20;
 }
+
+/* HOME */
 .home{
   position:relative;
   overflow:hidden;
   min-height:calc(100vh - 118px);
   padding:14px;
   background:
-    radial-gradient(circle at 18% 20%, #fff 0 6%, transparent 7%),
-    radial-gradient(circle at 77% 24%, #fff 0 5%, transparent 6%),
+    radial-gradient(circle at 18% 22%, #fff 0 6%, transparent 7%),
+    radial-gradient(circle at 77% 25%, #fff 0 5%, transparent 6%),
     linear-gradient(180deg,#fffaf0,#fff6df 42%,#f3ffd9);
 }
 .home:before,.home:after{
-  content:"";position:absolute;left:-10%;right:-10%;
+  content:"";
+  position:absolute;
+  left:-10%;
+  right:-10%;
   border-radius:50% 50% 0 0;
+  pointer-events:none;
 }
-.home:before{bottom:74px;height:112px;background:linear-gradient(180deg,#dff0a5,#b9dc73)}
-.home:after{bottom:0;height:88px;background:linear-gradient(180deg,#aad164,#89c04a)}
+.home:before{bottom:72px;height:112px;background:linear-gradient(180deg,#dff0a5,#b9dc73)}
+.home:after{bottom:0;height:86px;background:linear-gradient(180deg,#aad164,#89c04a)}
 .homeTop{
-  position:relative;z-index:2;
-  display:flex;justify-content:space-between;gap:10px;align-items:flex-start
+  position:relative;
+  z-index:3;
+  display:flex;
+  justify-content:space-between;
+  align-items:flex-start;
+  gap:8px;
 }
 .homeBtns{display:flex;gap:8px;flex-wrap:wrap}
 .logoArea{
-  position:relative;z-index:2;
-  margin:12px auto 0;
-  max-width:840px;
+  position:relative;
+  z-index:2;
+  max-width:860px;
+  margin:10px auto 0;
 }
 .logoRow{
-  display:grid;grid-template-columns:120px 1fr 120px;gap:10px;align-items:center
+  display:grid;
+  grid-template-columns:118px 1fr 118px;
+  gap:10px;
+  align-items:center;
+}
+.mascotTitle{
+  width:112px;
+  height:138px;
+  display:flex;
+  align-items:flex-end;
+  justify-content:center;
 }
 .logoWrap{text-align:center}
 .logo{
   margin:0;
-  font-size:clamp(58px,10vw,94px);
+  font-size:clamp(58px,10vw,96px);
   font-weight:1000;
   letter-spacing:.03em;
   line-height:1;
@@ -129,22 +149,32 @@ main{max-width:960px;margin:0 auto;padding:10px 10px 96px}
   font-weight:1000;
   color:#7d5a3e;
 }
-.mascotBox{display:flex;justify-content:center;align-items:center}
 .nameBar{
-  position:relative;z-index:2;
-  margin:12px auto 0;max-width:530px
+  position:relative;
+  z-index:3;
+  margin:12px auto 0;
+  max-width:530px;
 }
 .nameBar input{width:100%;text-align:center}
 .modeCards{
-  position:relative;z-index:2;
-  display:grid;grid-template-columns:1fr 1fr;gap:14px;
-  max-width:760px;margin:16px auto 0
+  position:relative;
+  z-index:3;
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:14px;
+  max-width:760px;
+  margin:16px auto 0;
 }
 .modeCard{
-  min-height:168px;
-  border-radius:28px;border:3px solid #f1d4b4;background:white;
+  min-height:150px;
+  border-radius:28px;
+  border:3px solid #f1d4b4;
+  background:white;
   box-shadow:0 8px 0 var(--shadow);
-  padding:16px 18px;position:relative;overflow:hidden;text-align:left
+  padding:18px;
+  position:relative;
+  overflow:hidden;
+  text-align:left;
 }
 .modeCard.solo{background:linear-gradient(180deg,#fff2f6,#fffaf2)}
 .modeCard.multi{background:linear-gradient(180deg,#f5ffe9,#fffaf2)}
@@ -153,143 +183,360 @@ main{max-width:960px;margin:0 auto;padding:10px 10px 96px}
   line-height:1.02;
   font-weight:1000;
   color:#6e4d33;
-  margin-top:10px;
 }
-.modeCardSub{margin-top:8px;font-size:15px;font-weight:900;color:#8e6e55}
-.modeMascot{
-  position:absolute;left:14px;bottom:10px;width:82px;height:82px;display:flex;align-items:flex-end;justify-content:center;
+.modeCardSub{
+  margin-top:10px;
+  max-width:74%;
+  font-size:15px;
+  font-weight:900;
+  color:#8e6e55;
 }
 .modeArrow{
-  position:absolute;right:14px;top:50%;transform:translateY(-50%);
-  width:54px;height:54px;border-radius:50%;display:flex;align-items:center;justify-content:center;
-  color:#fff;font-size:30px;font-weight:1000
+  position:absolute;
+  right:16px;
+  top:50%;
+  transform:translateY(-50%);
+  width:54px;
+  height:54px;
+  border-radius:50%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  color:#fff;
+  font-size:30px;
+  font-weight:1000;
 }
 .modeCard.solo .modeArrow{background:linear-gradient(180deg,#ff9fb2,#f07e99);box-shadow:0 5px 0 #dc6985}
 .modeCard.multi .modeArrow{background:linear-gradient(180deg,#9fd260,#79b240);box-shadow:0 5px 0 #6b9c39}
-.coopPanel{position:relative;z-index:2;max-width:620px;margin:14px auto 0;padding:14px}
+.coopPanel{
+  position:relative;
+  z-index:3;
+  max-width:620px;
+  margin:14px auto 0;
+  padding:14px;
+}
 .coopPanel .row>*{flex:1}
-.homeFooter{position:relative;z-index:2;text-align:center;margin-top:10px;color:#c89d71;font-weight:1000}
+.homeFooter{
+  position:relative;
+  z-index:3;
+  text-align:center;
+  margin-top:12px;
+  color:#c89d71;
+  font-weight:1000;
+}
+
+/* LOBBY */
 .lobby{padding:18px}
 .roomCode{font-size:38px;line-height:1;font-weight:1000;color:#ff7597;text-shadow:0 3px 0 #fff}
 .badge{
-  display:inline-flex;align-items:center;gap:6px;background:#fff9ea;border:2px solid var(--line);border-radius:999px;
-  padding:7px 12px;margin:4px;font-size:14px;font-weight:1000
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+  background:#fff9ea;
+  border:2px solid var(--line);
+  border-radius:999px;
+  padding:7px 12px;
+  margin:4px;
+  font-size:14px;
+  font-weight:1000;
 }
+
+/* PLAY */
 .playersRow{
-  display:flex;justify-content:flex-end;gap:8px;flex-wrap:wrap;margin-bottom:8px
+  display:flex;
+  justify-content:flex-end;
+  gap:8px;
+  flex-wrap:wrap;
+  margin-bottom:8px;
 }
 .playerChip{
-  width:70px;border:2px solid var(--line);border-radius:14px;background:#fffaf0;box-shadow:0 4px 0 var(--shadow);
-  padding:4px 4px 6px;text-align:center;font-size:11px;font-weight:1000;color:#8f7157
+  width:70px;
+  border:2px solid var(--line);
+  border-radius:14px;
+  background:#fffaf0;
+  box-shadow:0 4px 0 var(--shadow);
+  padding:4px 4px 6px;
+  text-align:center;
+  font-size:11px;
+  font-weight:1000;
+  color:#8f7157;
 }
 .playerChip.active{outline:3px solid #ffe08b}
 .playerChip .avatar{width:30px;height:30px;margin:0 auto 4px}
 .turnBanner{
-  display:flex;justify-content:center;align-items:center;gap:8px;
-  width:fit-content;max-width:100%;margin:0 auto 8px;padding:9px 18px;border-radius:999px;border:3px solid #fff;
-  color:#fff;font-size:clamp(22px,4.5vw,32px);font-weight:1000;text-shadow:0 2px 0 #0001;
-  box-shadow:0 10px 20px #00000012
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  gap:8px;
+  width:fit-content;
+  max-width:100%;
+  margin:0 auto 8px;
+  padding:9px 18px;
+  border-radius:999px;
+  border:3px solid #fff;
+  color:#fff;
+  font-size:clamp(22px,4.5vw,32px);
+  font-weight:1000;
+  text-shadow:0 2px 0 #0001;
+  box-shadow:0 10px 20px #00000012;
 }
 .turnBanner.mine{background:linear-gradient(180deg,#8cd168,#6fbe48)}
 .turnBanner.other{background:linear-gradient(180deg,#9ccfff,#7cc0f1)}
 .playPanel{
   padding:10px;
-  background:linear-gradient(180deg,#f7e5ca,#f0dbc0)
+  background:linear-gradient(180deg,#f7e5ca,#f0dbc0);
 }
-.playTop{
-  display:grid;grid-template-columns:70px 1fr 96px;gap:8px;align-items:start
-}
-.miniCard{
-  background:#fff9ee;border:2px solid var(--line);border-radius:18px;box-shadow:0 5px 0 var(--shadow)
-}
-.leftMini{padding:8px}
-.miniLabel{font-size:11px;font-weight:1000;color:#8f7157;margin-bottom:4px}
-.stackCard,.lastCard{
-  height:74px;border:2px solid #ecd6b7;border-radius:14px;background:#fff;display:flex;align-items:center;justify-content:center;
-  font-weight:1000
-}
-.stackCard{
-  position:relative;background:linear-gradient(180deg,#fff3f7,#ffe8ef)
-}
-.stackCard:before,.stackCard:after{
-  content:"";position:absolute;border:2px solid #edcddb;border-radius:12px;left:8px;right:8px;top:8px;bottom:8px
-}
-.stackCard:after{left:12px;right:12px;top:12px;bottom:12px}
-.miniCount{
-  display:block;margin-top:6px;padding:2px 8px;border-radius:999px;background:#95c65e;color:#fff;font-size:11px;font-weight:1000;width:fit-content
+.playGrid{
+  display:grid;
+  grid-template-columns:minmax(0,1fr) minmax(86px,124px);
+  gap:8px;
+  align-items:stretch;
 }
 .board{
-  padding:8px;background:#fff9ee;border:2px solid var(--line);border-radius:20px;box-shadow:0 5px 0 var(--shadow)
+  min-width:0;
+  padding:8px;
+  background:#fff9ee;
+  border:2px solid var(--line);
+  border-radius:20px;
+  box-shadow:0 5px 0 var(--shadow);
+  display:flex;
+  align-items:center;
+  justify-content:center;
 }
 .piles{
-  display:grid;grid-template-columns:repeat(4,1fr);gap:8px
+  width:100%;
+  display:grid;
+  grid-template-columns:repeat(4,minmax(0,1fr));
+  gap:8px;
 }
 .pile{
-  min-height:112px;border:2px solid #efdfca;border-radius:16px;background:#fffdf7;
-  display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:4px;
+  min-width:0;
+  height:116px;
+  position:relative;
+  overflow:hidden;
+  border:2px solid #efdfca;
+  border-radius:16px;
+  background:#fffdf7;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  padding:4px;
 }
-.pileArrow{font-size:22px;line-height:1;color:#7cab48;font-weight:1000}
-.pileValue{font-size:48px;line-height:1;font-weight:1000}
-.pileValue.p1{color:var(--pile1)} .pileValue.p2{color:var(--pile2)}
-.pileValue.p3{color:var(--pile3)} .pileValue.p4{color:var(--pile4)}
-.pileName{font-size:11px;font-weight:1000;color:#8f7157}
-.scoreBox{
-  padding:8px;background:#fff9ee;border:2px solid var(--line);border-radius:18px;box-shadow:0 5px 0 var(--shadow)
+.pileArrow{
+  position:absolute;
+  left:50%;
+  transform:translateX(-50%);
+  width:18px;
+  height:18px;
+  margin:0;
+  display:block;
+  font-size:0;
+  line-height:0;
+  z-index:1;
 }
-.scoreBig{font-size:36px;line-height:1;font-weight:1000;color:#ff7c97;text-align:right}
-.scoreList{margin-top:6px;font-size:12px;font-weight:1000;color:#88684c;line-height:1.6}
-.scoreList div{display:flex;justify-content:space-between;gap:6px}
-.giveupBtnTop{margin-top:8px;width:100%}
+.pileArrow.up{top:15px}
+.pileArrow.down{bottom:15px}
+.pileArrow.up:before{
+  content:"";
+  position:absolute;
+  left:50%;
+  top:1px;
+  transform:translateX(-50%);
+  border-left:9px solid transparent;
+  border-right:9px solid transparent;
+  border-bottom:12px solid #78ac4a;
+}
+.pileArrow.down:before{
+  content:"";
+  position:absolute;
+  left:50%;
+  top:4px;
+  transform:translateX(-50%);
+  border-left:9px solid transparent;
+  border-right:9px solid transparent;
+  border-top:12px solid #78ac4a;
+}
+.pileValue{
+  position:relative;
+  z-index:2;
+  width:100%;
+  display:block;
+  text-align:center;
+  line-height:1;
+  padding:0;
+  margin:0;
+  font-size:48px;
+  font-weight:1000;
+  font-variant-numeric:tabular-nums;
+  white-space:nowrap;
+  overflow:hidden;
+}
+.pileValue.p1{color:var(--p1)}
+.pileValue.p2{color:var(--p2)}
+.pileValue.p3{color:var(--p3)}
+.pileValue.p4{color:var(--p4)}
+.sideInfo{
+  min-width:0;
+  background:#fff9ee;
+  border:2px solid var(--line);
+  border-radius:18px;
+  box-shadow:0 5px 0 var(--shadow);
+  padding:8px;
+  display:flex;
+  flex-direction:column;
+  gap:8px;
+}
+.scoreBig{
+  font-size:clamp(24px,4vw,36px);
+  line-height:1;
+  font-weight:1000;
+  color:#ff7c97;
+  text-align:right;
+  font-variant-numeric:tabular-nums;
+  white-space:nowrap;
+}
+.scoreList{
+  font-size:12px;
+  font-weight:1000;
+  color:#88684c;
+  line-height:1.55;
+}
+.scoreList div{
+  display:flex;
+  justify-content:space-between;
+  gap:5px;
+  white-space:nowrap;
+}
+.deckInfo{
+  margin-top:auto;
+  padding-top:6px;
+  border-top:2px dashed #efd8bd;
+}
+.deckNumber{
+  font-size:clamp(28px,5vw,44px);
+  line-height:1;
+  font-weight:1000;
+  color:#6ca742;
+  text-align:center;
+  font-variant-numeric:tabular-nums;
+}
 .handWrap{
-  margin-top:8px;background:#fff9ee;border:2px solid var(--line);border-radius:22px;box-shadow:0 5px 0 var(--shadow);
-  padding:8px 8px 10px;position:relative
+  margin-top:8px;
+  background:#fff9ee;
+  border:2px solid var(--line);
+  border-radius:22px;
+  box-shadow:0 5px 0 var(--shadow);
+  padding:8px;
 }
-.handBadge{
-  position:absolute;left:10px;top:-12px;padding:4px 12px;border-radius:999px;background:linear-gradient(180deg,#ff9eb3,#ffcfda);
-  color:#fff;font-size:12px;font-weight:1000;border:2px solid #fff;box-shadow:0 4px 0 #db728b
-}
-.hintText{margin:10px 2px 8px;padding-left:2px}
 .handCards{
-  display:grid;grid-template-columns:repeat(auto-fit,minmax(42px,1fr));gap:6px
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(42px,1fr));
+  gap:6px;
 }
 .card{
-  height:74px;border-radius:13px;border:2px solid #efdec8;background:#fff;box-shadow:0 4px 0 #ecd7bc;
-  position:relative;display:flex;align-items:center;justify-content:center;
-  color:var(--hand);font-size:24px;font-weight:1000;
+  height:74px;
+  min-width:0;
+  border-radius:13px;
+  border:2px solid #efdec8;
+  background:#fff;
+  box-shadow:0 4px 0 #ecd7bc;
+  position:relative;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  color:var(--cardText);
+  font-size:24px;
+  font-weight:1000;
+  font-variant-numeric:tabular-nums;
 }
-.card .corner{position:absolute;left:6px;top:3px;font-size:12px;font-weight:1000;color:#7d8da8}
+.card .corner{
+  position:absolute;
+  left:6px;
+  top:3px;
+  font-size:12px;
+  font-weight:1000;
+  color:#7d8da8;
+}
 .card .corner.bottom{left:auto;right:6px;top:auto;bottom:3px}
 .card.selected{transform:translateY(-5px);background:#fffce8;border-color:#f2d28d}
 .card.locked{opacity:.66}
 .actionBar{
-  position:fixed;left:0;right:0;bottom:0;z-index:40;
+  position:fixed;
+  left:0;right:0;bottom:0;
+  z-index:40;
   padding:8px max(8px,env(safe-area-inset-left)) calc(8px + env(safe-area-inset-bottom)) max(8px,env(safe-area-inset-right));
-  background:#fff7edee;border-top:2px solid var(--line);backdrop-filter:blur(8px)
+  background:#fff7edee;
+  border-top:2px solid var(--line);
+  backdrop-filter:blur(8px);
 }
 .actionInner{
-  max-width:960px;margin:0 auto;display:grid;grid-template-columns:1.25fr 1fr 50px 50px;gap:8px
+  max-width:960px;
+  margin:0 auto;
+  display:grid;
+  grid-template-columns:1.35fr 1fr 50px 50px;
+  gap:8px;
 }
 .actionInner button{width:100%;min-height:48px}
+
+/* overlays */
 #toast{
-  position:fixed;left:50%;top:15%;transform:translateX(-50%);z-index:120;display:none;
-  padding:13px 18px;border-radius:999px;background:#fff8ee;border:3px solid #fff;color:#7c5b3f;
-  font-size:22px;font-weight:1000;box-shadow:0 8px 0 var(--shadow),0 18px 30px #af826333
+  position:fixed;
+  left:50%;
+  top:15%;
+  transform:translateX(-50%);
+  z-index:120;
+  display:none;
+  padding:13px 18px;
+  border-radius:999px;
+  background:#fff8ee;
+  border:3px solid #fff;
+  color:#7c5b3f;
+  font-size:22px;
+  font-weight:1000;
+  box-shadow:0 8px 0 var(--shadow),0 18px 30px #af826333;
+  white-space:nowrap;
 }
 #toast.back10{background:#fff3af;color:#916100}
 #toast.combo{background:#eedcff;color:#6b3ead}
 #toast.turn{background:#e0f4ff;color:#3a6c91}
 #toast.miss{background:#ffe0e8;color:#9f3650}
 .modalOverlay,#resultOverlay{
-  position:fixed;inset:0;display:none;align-items:center;justify-content:center;z-index:100;
-  padding:18px;background:#0006
+  position:fixed;
+  inset:0;
+  display:none;
+  align-items:center;
+  justify-content:center;
+  z-index:100;
+  padding:18px;
+  background:#0006;
 }
 .modalCard,.resultCard{
-  width:min(94vw,660px);max-height:88vh;overflow:auto;padding:20px;background:#fffaf0;
-  border:3px solid var(--line);border-radius:30px;box-shadow:0 10px 0 var(--shadow),0 20px 40px #ab7d5e33
+  width:min(94vw,660px);
+  max-height:88vh;
+  overflow:auto;
+  padding:20px;
+  background:#fffaf0;
+  border:3px solid var(--line);
+  border-radius:30px;
+  box-shadow:0 10px 0 var(--shadow),0 20px 40px #ab7d5e33;
 }
 .modalCard h2,.resultCard .title{text-align:center;margin:0 0 12px}
 .modalCard li{margin:8px 0;line-height:1.55;font-weight:900}
-.resultBig{font-size:48px;line-height:1;font-weight:1000;text-align:center;margin:6px 0}
+.confirmText{
+  text-align:center;
+  font-size:22px;
+  font-weight:1000;
+  line-height:1.4;
+  margin:6px 0 10px;
+}
+.resultBig{
+  font-size:48px;
+  line-height:1;
+  font-weight:1000;
+  text-align:center;
+  margin:6px 0;
+}
 .resultBig.clear{color:#f5a132;text-shadow:0 4px 0 #fff}
 .resultBig.fail{color:#ff7c97;text-shadow:0 4px 0 #fff}
 .resultGrid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
@@ -301,725 +548,288 @@ main{max-width:960px;margin:0 auto;padding:10px 10px 96px}
 .rankingTable th,.rankingTable td{padding:8px;border-bottom:1px solid #efd7ba;text-align:left}
 .confetti{position:fixed;top:-10px;width:10px;height:16px;z-index:130;animation:fall 2.6s linear forwards}
 @keyframes fall{to{transform:translateY(110vh) rotate(720deg);opacity:.15}}
+
 @media (max-width:720px){
-  .logoRow{grid-template-columns:74px 1fr 74px}
+  .logoRow{grid-template-columns:76px 1fr 76px}
+  .mascotTitle{width:72px;height:92px}
   .modeCards{grid-template-columns:1fr}
-  .modeCard{min-height:138px}
+  .modeCard{min-height:124px}
   .modeCardTitle{font-size:32px}
 }
 @media (max-width:520px){
   main{padding:8px 8px 92px}
   .home{padding:12px}
-  .logo{font-size:52px}
+  .homeTop .homeBtns button{font-size:13px;padding:8px 9px}
+  .logo{font-size:50px}
   .tagline{font-size:15px}
-  .homeTop .homeBtns button{font-size:14px;padding:9px 10px}
-  .modeCard{min-height:122px;padding:14px}
-  .modeCardTitle{font-size:30px}
-  .modeMascot{width:62px;height:62px;left:10px;bottom:8px}
-  .modeArrow{width:46px;height:46px;font-size:26px}
-  .playTop{grid-template-columns:58px 1fr 82px;gap:6px}
-  .leftMini{padding:6px}
-  .stackCard,.lastCard{height:58px;border-radius:12px}
-  .board{padding:6px}
-  .piles{gap:6px}
-  .pile{min-height:90px;padding:3px}
-  .pileValue{font-size:34px}
-  .pileArrow{font-size:18px}
-  .pileName{font-size:10px}
-  .scoreBox{padding:6px}
-  .scoreBig{font-size:28px}
-  .scoreList{font-size:11px;line-height:1.45}
-  .giveupBtnTop{display:none}
-  .handWrap{margin-top:6px;padding:8px 6px 8px}
-  .handCards{grid-template-columns:repeat(auto-fit,minmax(40px,1fr));gap:5px}
-  .card{height:62px;font-size:21px}
-  .actionInner{grid-template-columns:1.2fr 1fr 46px 46px}
+  .modeCard{min-height:112px;padding:14px}
+  .modeCardTitle{font-size:29px}
+  .modeArrow{width:44px;height:44px;font-size:25px;right:12px}
+  .coopPanel .row>*{flex:1 1 100%}
+  .playersRow{display:none}
+  .turnBanner{font-size:20px;padding:7px 14px;margin-bottom:6px}
+  .playPanel{padding:7px}
+  .playGrid{grid-template-columns:minmax(0,1fr) 82px;gap:6px}
+  .board{padding:5px;border-radius:16px}
+  .piles{grid-template-columns:repeat(2,minmax(0,1fr));gap:5px}
+  .pile{height:76px;border-radius:13px;padding:3px}
+  .pileArrow{width:14px;height:14px}
+  .pileArrow.up{top:9px}
+  .pileArrow.down{bottom:9px}
+  .pileArrow.up:before{
+    border-left-width:7px;
+    border-right-width:7px;
+    border-bottom-width:9px;
+  }
+  .pileArrow.down:before{
+    border-left-width:7px;
+    border-right-width:7px;
+    border-top-width:9px;
+    top:3px;
+  }
+  .pileValue{font-size:30px;line-height:1}
+  .sideInfo{padding:6px;border-radius:15px;gap:5px}
+  .scoreBig{font-size:25px;text-align:center}
+  .scoreList{font-size:10px;line-height:1.35}
+  .deckInfo{padding-top:5px}
+  .deckNumber{font-size:28px}
+  .handWrap{margin-top:6px;padding:6px;border-radius:16px}
+  .handCards{grid-template-columns:repeat(auto-fit,minmax(38px,1fr));gap:5px}
+  .card{height:56px;font-size:20px;border-radius:11px}
+  .card .corner{font-size:10px;left:5px}
+  .card .corner.bottom{right:5px}
+  .actionInner{grid-template-columns:1.35fr 1fr 46px 46px;gap:6px}
+  .actionInner button{min-height:46px;font-size:14px;padding:8px 6px}
   .resultGrid{grid-template-columns:repeat(2,1fr)}
 }
 
-/* --- BACK10 requested UI fixes --- */
-.modeMascot{display:none!important}
-.modeCard{min-height:150px!important}
-.modeCardTitle{margin-top:0!important}
-.modeCardSub{max-width:72%!important}
-.playGrid{
-  display:grid!important;
-  grid-template-columns:minmax(0,1fr) minmax(86px,124px)!important;
-  gap:8px!important;
-  align-items:stretch!important;
+/* --- FINAL polish: responsive title/mascots, no arrows on mode buttons, 4x2 hand, pile marks --- */
+.modeArrow{
+  display:none!important;
 }
-.board{
+.modeCard{
+  padding-right:18px!important;
+}
+.modeCardSub{
+  max-width:100%!important;
+}
+.logoRow{
+  grid-template-columns:minmax(74px,118px) minmax(0,1fr) minmax(74px,118px)!important;
+}
+.logoWrap{
   min-width:0!important;
-  padding:8px!important;
-  background:#fff9ee!important;
-  border:2px solid var(--line)!important;
-  border-radius:20px!important;
-  box-shadow:0 5px 0 var(--shadow)!important;
 }
-.piles{
-  display:grid!important;
-  grid-template-columns:repeat(4,minmax(0,1fr))!important;
-  gap:8px!important;
+.logo{
+  white-space:nowrap!important;
 }
-.pile{
-  min-width:0!important;
-  height:116px!important;
-  border:2px solid #efdfca!important;
-  border-radius:16px!important;
-  background:#fffdf7!important;
-  display:flex!important;
-  flex-direction:column!important;
-  align-items:center!important;
-  justify-content:center!important;
-  text-align:center!important;
-  padding:4px!important;
-}
-.pileArrow{
-  width:18px!important;
-  height:18px!important;
-  margin-bottom:3px!important;
-  display:block!important;
-  position:relative!important;
-  font-size:0!important;
-  line-height:0!important;
-}
-.pileArrow.up:before{
-  content:""!important;
-  position:absolute!important;
-  left:50%!important;
-  top:1px!important;
-  transform:translateX(-50%)!important;
-  border-left:9px solid transparent!important;
-  border-right:9px solid transparent!important;
-  border-bottom:12px solid #78ac4a!important;
-}
-.pileArrow.down:before{
-  content:""!important;
-  position:absolute!important;
-  left:50%!important;
-  top:4px!important;
-  transform:translateX(-50%)!important;
-  border-left:9px solid transparent!important;
-  border-right:9px solid transparent!important;
-  border-top:12px solid #78ac4a!important;
-}
-.pileValue{
+.mascotTitle{
   width:100%!important;
-  font-size:48px!important;
-  line-height:1!important;
-  font-weight:1000!important;
-  font-variant-numeric:tabular-nums!important;
-  overflow:hidden!important;
-  white-space:nowrap!important;
+  max-width:112px!important;
+  height:auto!important;
+  aspect-ratio:112/138!important;
+  overflow:visible!important;
+  margin:0 auto!important;
 }
-.pileName{
-  margin-top:4px!important;
-  font-size:11px!important;
-  font-weight:1000!important;
-  color:#8f7157!important;
-}
-.sideInfo{
-  min-width:0!important;
-  background:#fff9ee!important;
-  border:2px solid var(--line)!important;
-  border-radius:18px!important;
-  box-shadow:0 5px 0 var(--shadow)!important;
-  padding:8px!important;
-  display:flex!important;
-  flex-direction:column!important;
-  gap:8px!important;
-}
-.scoreBig{
-  font-size:clamp(24px,4vw,36px)!important;
-  line-height:1!important;
-  font-weight:1000!important;
-  color:#ff7c97!important;
-  text-align:right!important;
-  font-variant-numeric:tabular-nums!important;
-  white-space:nowrap!important;
-}
-.scoreList{
-  font-size:12px!important;
-  font-weight:1000!important;
-  color:#88684c!important;
-  line-height:1.55!important;
-}
-.scoreList div{
-  display:flex!important;
-  justify-content:space-between!important;
-  gap:5px!important;
-  white-space:nowrap!important;
-}
-.deckInfo{
-  margin-top:auto!important;
-  padding-top:6px!important;
-  border-top:2px dashed #efd8bd!important;
-}
-.deckNumber{
-  font-size:clamp(28px,5vw,44px)!important;
-  line-height:1!important;
-  font-weight:1000!important;
-  color:#6ca742!important;
-  text-align:center!important;
-  font-variant-numeric:tabular-nums!important;
-}
-.handWrap{
-  margin-top:8px!important;
-  background:#fff9ee!important;
-  border:2px solid var(--line)!important;
-  border-radius:22px!important;
-  box-shadow:0 5px 0 var(--shadow)!important;
-  padding:8px!important;
-}
-.handBadge,.hintText,#hint,.giveupBtnTop{display:none!important}
-.handCards{
-  display:grid!important;
-  grid-template-columns:repeat(auto-fit,minmax(42px,1fr))!important;
-  gap:6px!important;
-}
-.card{
-  height:74px!important;
-  min-width:0!important;
-  color:#2d405f!important;
-  font-variant-numeric:tabular-nums!important;
-}
-.confirmText{
-  text-align:center;
-  font-size:22px;
-  font-weight:1000;
-  line-height:1.4;
-  margin:6px 0 10px;
-}
-@media (max-width:520px){
-  .playersRow{display:none!important}
-  .turnBanner{font-size:20px!important;padding:7px 14px!important;margin-bottom:6px!important}
-  .playPanel{padding:7px!important}
-  .playGrid{grid-template-columns:minmax(0,1fr) 82px!important;gap:6px!important}
-  .board{padding:5px!important;border-radius:16px!important}
-  .piles{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:5px!important}
-  .pile{height:76px!important;border-radius:13px!important;padding:2px!important}
-  .pileArrow{width:14px!important;height:13px!important;margin-bottom:1px!important}
-  .pileArrow.up:before{border-left-width:7px!important;border-right-width:7px!important;border-bottom-width:9px!important}
-  .pileArrow.down:before{border-left-width:7px!important;border-right-width:7px!important;border-top-width:9px!important;top:3px!important}
-  .pileValue{font-size:30px!important}
-  .pileName{font-size:9px!important;margin-top:1px!important}
-  .sideInfo{padding:6px!important;border-radius:15px!important;gap:5px!important}
-  .scoreBig{font-size:25px!important;text-align:center!important}
-  .scoreList{font-size:10px!important;line-height:1.35!important}
-  .deckInfo{padding-top:5px!important}
-  .deckNumber{font-size:28px!important}
-  .handWrap{margin-top:6px!important;padding:6px!important;border-radius:16px!important}
-  .handCards{grid-template-columns:repeat(auto-fit,minmax(38px,1fr))!important;gap:5px!important}
-  .card{height:56px!important;font-size:20px!important;border-radius:11px!important}
-  .card .corner{font-size:10px!important;left:5px!important}
-  .card .corner.bottom{right:5px!important}
-}
-
-
-/* --- pile label fix: use only A/B/C/D + arrow --- */
-.pile{
-  position:relative!important;
+.mascotTitle svg{
+  width:100%!important;
+  height:auto!important;
+  max-height:138px!important;
+  display:block!important;
   overflow:visible!important;
 }
-.pileLetter{
-  position:absolute;
-  left:7px;
-  top:6px;
-  min-width:22px;
-  height:22px;
-  padding:1px 6px;
-  border-radius:999px;
-  background:transparent;
-  border:0;
-  color:#7a5438;
-  font-size:13px;
-  line-height:17px;
-  font-weight:1000;
-  transform:rotate(-10deg);
-  box-shadow:none;
-  z-index:2;
-}
-.pileArrow{
-  margin-top:4px!important;
-  margin-bottom:6px!important;
-}
-.pileValue{
-  margin-top:0!important;
-}
-.pileName{
-  display:none!important;
-}
-@media (max-width:520px){
-  .pileLetter{
-    left:4px;
-    top:4px;
-    min-width:18px;
-    height:18px;
-    padding:0 5px;
-    font-size:11px;
-    line-height:14px;
-    border-width:1.5px;
-  }
-  .pileArrow{
-    margin-top:6px!important;
-    margin-bottom:2px!important;
-  }
-}
 
-
-/* --- natural A/B/C/D marker fix --- */
+/* 場カードのA/B/C/Dは、カードの識別だけを目的に小さく自然に */
 .pile{
   position:relative!important;
-  overflow:hidden!important;
-  justify-content:center!important;
-  padding-top:10px!important;
-  padding-bottom:8px!important;
 }
-.pileLetter{
+.pileMark{
   position:absolute!important;
-  left:9px!important;
-  top:7px!important;
-  background:transparent!important;
-  border:0!important;
-  box-shadow:none!important;
-  padding:0!important;
-  min-width:auto!important;
-  height:auto!important;
-  line-height:1!important;
-  border-radius:0!important;
-  transform:rotate(-8deg)!important;
-  font-size:15px!important;
-  font-weight:1000!important;
-  opacity:.95!important;
-  z-index:2!important;
-}
-.pileLetter.p1{color:var(--upColor)!important}
-.pileLetter.p2{color:var(--upColor2)!important}
-.pileLetter.p3{color:var(--downColor)!important}
-.pileLetter.p4{color:var(--downColor2)!important}
-.pileArrow{
-  width:18px!important;
-  height:16px!important;
-  margin:0 0 5px 0!important;
-  flex:0 0 auto!important;
-}
-.pileValue{
-  margin:0!important;
-  flex:0 0 auto!important;
-  width:100%!important;
-  text-align:center!important;
-  display:block!important;
-  line-height:1!important;
-}
-.pileName{
-  display:none!important;
-}
-@media (max-width:520px){
-  .pile{
-    justify-content:center!important;
-    padding-top:7px!important;
-    padding-bottom:5px!important;
-  }
-  .pileLetter{
-    left:6px!important;
-    top:5px!important;
-    font-size:12px!important;
-    transform:rotate(-7deg)!important;
-  }
-  .pileArrow{
-    width:14px!important;
-    height:12px!important;
-    margin-bottom:3px!important;
-  }
-  .pileValue{
-    line-height:.95!important;
-  }
-}
-
-
-/* --- natural corner A/B/C/D + separated arrow layout --- */
-.pile{
-  position:relative!important;
-  overflow:hidden!important;
-  justify-content:center!important;
-  align-items:center!important;
-  padding:12px 6px!important;
-}
-.pileLetter{
-  position:absolute!important;
-  background:transparent!important;
-  border:0!important;
-  box-shadow:none!important;
-  border-radius:0!important;
-  padding:0!important;
-  min-width:auto!important;
-  height:auto!important;
-  line-height:1!important;
-  font-size:15px!important;
-  font-weight:1000!important;
-  opacity:.95!important;
   z-index:3!important;
+  line-height:1!important;
+  font-size:14px!important;
+  font-weight:1000!important;
   font-variant-numeric:tabular-nums!important;
+  opacity:.92!important;
+  pointer-events:none!important;
+  background:transparent!important;
+  border:0!important;
+  box-shadow:none!important;
 }
-.pileLetterTop{
+.pileMarkTop{
   left:8px!important;
   top:7px!important;
-  transform:rotate(-8deg)!important;
 }
-.pileLetterBottom{
+.pileMarkBottom{
   right:8px!important;
   bottom:7px!important;
-  transform:rotate(-8deg)!important;
+  transform:rotate(180deg)!important;
 }
-.pileLetter.p1{color:var(--upColor)!important}
-.pileLetter.p2{color:var(--upColor2)!important}
-.pileLetter.p3{color:var(--downColor)!important}
-.pileLetter.p4{color:var(--downColor2)!important}
+.pileMark.p1{color:var(--p1)!important}
+.pileMark.p2{color:var(--p2)!important}
+.pileMark.p3{color:var(--p3)!important}
+.pileMark.p4{color:var(--p4)!important}
 
-.pileArrow{
-  position:absolute!important;
-  left:50%!important;
-  transform:translateX(-50%)!important;
-  width:18px!important;
-  height:18px!important;
-  margin:0!important;
-  display:block!important;
-  font-size:0!important;
-  line-height:0!important;
-  z-index:2!important;
-}
-.pileArrow.up{
-  top:18px!important;
-}
-.pileArrow.down{
-  bottom:18px!important;
-}
-.pileArrow.up:before{
-  content:""!important;
-  position:absolute!important;
-  left:50%!important;
-  top:0!important;
-  transform:translateX(-50%)!important;
-  border-left:9px solid transparent!important;
-  border-right:9px solid transparent!important;
-  border-bottom:12px solid #78ac4a!important;
-}
-.pileArrow.down:before{
-  content:""!important;
-  position:absolute!important;
-  left:50%!important;
-  top:4px!important;
-  transform:translateX(-50%)!important;
-  border-left:9px solid transparent!important;
-  border-right:9px solid transparent!important;
-  border-top:12px solid #78ac4a!important;
-}
-
-.pileValue{
-  margin:0!important;
-  width:100%!important;
-  text-align:center!important;
-  display:block!important;
-  line-height:1!important;
-  align-self:center!important;
-  transform:translateY(0)!important;
-}
-.pile.up .pileValue{
-  padding-top:14px!important;
-}
-.pile.down .pileValue{
-  padding-bottom:14px!important;
-}
-.pileName{
+/* 手札は中央の数字だけ。スマホは4列固定で縦長画面でも大きく見せる */
+.card .corner{
   display:none!important;
 }
+.handCards{
+  grid-template-columns:repeat(4,minmax(0,1fr))!important;
+}
+.card{
+  font-size:clamp(22px,5.6vw,30px)!important;
+  height:78px!important;
+}
 
+/* PCでは広すぎる時だけ手札が間延びしないよう上限を持たせる */
+@media (min-width:721px){
+  .handCards{
+    grid-template-columns:repeat(8,minmax(56px,1fr))!important;
+  }
+}
+
+/* タブレット〜小さめ横幅 */
+@media (max-width:720px){
+  .logoRow{
+    grid-template-columns:70px minmax(0,1fr) 70px!important;
+    gap:6px!important;
+  }
+  .logo{
+    font-size:clamp(44px,11vw,66px)!important;
+  }
+  .tagline{
+    font-size:clamp(13px,3.4vw,18px)!important;
+  }
+  .mascotTitle{
+    max-width:70px!important;
+  }
+  .modeCard{
+    min-height:112px!important;
+  }
+}
+
+/* 最近の縦長スマホ想定：ボードと手札を大きめに保つ */
 @media (max-width:520px){
-  .pile{
-    padding:8px 4px!important;
+  .homeTop{
+    gap:6px!important;
   }
-  .pileLetter{
+  .homeTop .homeBtns{
+    gap:5px!important;
+  }
+  .homeTop .homeBtns button{
     font-size:12px!important;
+    padding:7px 8px!important;
+    border-radius:14px!important;
   }
-  .pileLetterTop{
+  .logoArea{
+    margin-top:8px!important;
+  }
+  .logoRow{
+    grid-template-columns:58px minmax(0,1fr) 58px!important;
+    gap:4px!important;
+  }
+  .mascotTitle{
+    max-width:58px!important;
+  }
+  .logo{
+    font-size:clamp(36px,12.2vw,50px)!important;
+    letter-spacing:0!important;
+  }
+  .tagline{
+    margin-top:4px!important;
+    font-size:12px!important;
+    line-height:1.25!important;
+  }
+  .nameBar{
+    margin-top:10px!important;
+  }
+  .modeCards{
+    gap:10px!important;
+    margin-top:12px!important;
+  }
+  .modeCard{
+    min-height:104px!important;
+    padding:13px 14px!important;
+    border-radius:24px!important;
+  }
+  .modeCardTitle{
+    font-size:28px!important;
+  }
+  .modeCardSub{
+    font-size:13px!important;
+  }
+
+  .handCards{
+    grid-template-columns:repeat(4,minmax(0,1fr))!important;
+    gap:6px!important;
+  }
+  .card{
+    height:64px!important;
+    font-size:24px!important;
+  }
+  .pileMark{
+    font-size:11px!important;
+  }
+  .pileMarkTop{
     left:5px!important;
     top:5px!important;
   }
-  .pileLetterBottom{
+  .pileMarkBottom{
     right:5px!important;
     bottom:5px!important;
   }
-  .pileArrow{
-    width:14px!important;
-    height:14px!important;
+}
+
+/* 極小幅でもタイトル・シロクマが見切れないようにする */
+@media (max-width:390px){
+  .logoRow{
+    grid-template-columns:48px minmax(0,1fr) 48px!important;
+    gap:3px!important;
   }
-  .pileArrow.up{
-    top:13px!important;
+  .mascotTitle{
+    max-width:48px!important;
   }
-  .pileArrow.down{
-    bottom:13px!important;
+  .logo{
+    font-size:clamp(32px,11.8vw,44px)!important;
   }
-  .pileArrow.up:before{
-    border-left-width:7px!important;
-    border-right-width:7px!important;
-    border-bottom-width:9px!important;
+  .tagline{
+    font-size:11px!important;
   }
-  .pileArrow.down:before{
-    border-left-width:7px!important;
-    border-right-width:7px!important;
-    border-top-width:9px!important;
-    top:3px!important;
+  .modeCardTitle{
+    font-size:26px!important;
   }
-  .pile.up .pileValue{
-    padding-top:10px!important;
-  }
-  .pile.down .pileValue{
-    padding-bottom:10px!important;
+  .card{
+    height:60px!important;
+    font-size:22px!important;
   }
 }
 
 
-/* --- remove A/B/C/D and center pile values --- */
-.pileLetter,
-.pileLetterTop,
-.pileLetterBottom{
-  display:none!important;
+/* --- score panel polish: use BACK10 label, remove remaining row --- */
+.scoreList{
+  letter-spacing:-0.02em!important;
 }
-.pile{
-  position:relative!important;
-  overflow:hidden!important;
-  display:flex!important;
-  flex-direction:column!important;
-  justify-content:center!important;
-  align-items:center!important;
-  text-align:center!important;
-  padding:8px 4px!important;
-}
-.pileArrow{
-  position:relative!important;
-  left:auto!important;
-  top:auto!important;
-  bottom:auto!important;
-  transform:none!important;
-  width:18px!important;
-  height:18px!important;
-  margin:0!important;
-  display:block!important;
-  flex:0 0 auto!important;
-  font-size:0!important;
-  line-height:0!important;
-  z-index:1!important;
-}
-.pileArrow.up{
-  margin-bottom:10px!important;
-}
-.pileArrow.down{
-  margin-top:10px!important;
-}
-.pileArrow.up:before{
-  content:""!important;
-  position:absolute!important;
-  left:50%!important;
-  top:1px!important;
-  transform:translateX(-50%)!important;
-  border-left:9px solid transparent!important;
-  border-right:9px solid transparent!important;
-  border-bottom:12px solid #78ac4a!important;
-}
-.pileArrow.down:before{
-  content:""!important;
-  position:absolute!important;
-  left:50%!important;
-  top:4px!important;
-  transform:translateX(-50%)!important;
-  border-left:9px solid transparent!important;
-  border-right:9px solid transparent!important;
-  border-top:12px solid #78ac4a!important;
-}
-.pileValue{
-  padding:0!important;
-  margin:0!important;
-  width:100%!important;
-  display:block!important;
-  text-align:center!important;
-  line-height:1!important;
-  align-self:center!important;
-  transform:none!important;
-  flex:0 0 auto!important;
-}
-.pile.up .pileValue,
-.pile.down .pileValue{
-  padding:0!important;
-  margin:0!important;
-}
-.pileName{
-  display:none!important;
+.scoreList div span:first-child{
+  min-width:44px!important;
 }
 @media (max-width:520px){
-  .pile{
-    padding:5px 3px!important;
-  }
-  .pileArrow{
-    width:14px!important;
-    height:14px!important;
-  }
-  .pileArrow.up{
-    margin-bottom:5px!important;
-  }
-  .pileArrow.down{
-    margin-top:5px!important;
-  }
-  .pileArrow.up:before{
-    border-left-width:7px!important;
-    border-right-width:7px!important;
-    border-bottom-width:9px!important;
-  }
-  .pileArrow.down:before{
-    border-left-width:7px!important;
-    border-right-width:7px!important;
-    border-top-width:9px!important;
-    top:3px!important;
-  }
-  .pileValue{
-    padding:0!important;
-    margin:0!important;
-    line-height:1!important;
-  }
-}
-
-
-/* --- board frame position fix: center the pile cards inside the table --- */
-.board{
-  display:flex!important;
-  align-items:center!important;
-  justify-content:center!important;
-  min-height:100%!important;
-}
-.piles{
-  width:100%!important;
-  align-self:center!important;
-}
-
-/* PCではスコア欄の高さに引っ張られて場カードが上寄りに見えるため、ボード内で中央配置 */
-@media (min-width:521px){
   .playGrid{
-    align-items:stretch!important;
+    grid-template-columns:minmax(0,1fr) 86px!important;
   }
-  .board{
-    min-height:100%!important;
+  .scoreList{
+    font-size:9.5px!important;
+    letter-spacing:-0.04em!important;
   }
-  .piles{
-    transform:translateY(0)!important;
-  }
-}
-
-/* スマホでは場と手札を同時に見せたいので高さは詰めつつ中央維持 */
-@media (max-width:520px){
-  .board{
-    align-items:center!important;
-    justify-content:center!important;
+  .scoreList div span:first-child{
+    min-width:42px!important;
   }
 }
-
-
-/* --- pile number alignment fix: keep pile frames centered, align all numbers on same center line --- */
-.pile{
-  position:relative!important;
-  overflow:hidden!important;
-  display:flex!important;
-  align-items:center!important;
-  justify-content:center!important;
-  text-align:center!important;
-  padding:4px!important;
-}
-.pileValue{
-  position:relative!important;
-  z-index:2!important;
-  width:100%!important;
-  display:block!important;
-  text-align:center!important;
-  line-height:1!important;
-  padding:0!important;
-  margin:0!important;
-  transform:none!important;
-  flex:0 0 auto!important;
-}
-.pile.up .pileValue,
-.pile.down .pileValue{
-  padding:0!important;
-  margin:0!important;
-  transform:none!important;
-}
-.pileArrow{
-  position:absolute!important;
-  left:50%!important;
-  transform:translateX(-50%)!important;
-  width:18px!important;
-  height:18px!important;
-  margin:0!important;
-  display:block!important;
-  flex:none!important;
-  font-size:0!important;
-  line-height:0!important;
-  z-index:1!important;
-}
-.pileArrow.up{
-  top:15px!important;
-  bottom:auto!important;
-}
-.pileArrow.down{
-  bottom:15px!important;
-  top:auto!important;
-}
-.pileArrow.up:before{
-  content:""!important;
-  position:absolute!important;
-  left:50%!important;
-  top:1px!important;
-  transform:translateX(-50%)!important;
-  border-left:9px solid transparent!important;
-  border-right:9px solid transparent!important;
-  border-bottom:12px solid #78ac4a!important;
-}
-.pileArrow.down:before{
-  content:""!important;
-  position:absolute!important;
-  left:50%!important;
-  top:4px!important;
-  transform:translateX(-50%)!important;
-  border-left:9px solid transparent!important;
-  border-right:9px solid transparent!important;
-  border-top:12px solid #78ac4a!important;
-}
-@media (max-width:520px){
-  .pile{
-    padding:3px!important;
+@media (max-width:390px){
+  .playGrid{
+    grid-template-columns:minmax(0,1fr) 84px!important;
   }
-  .pileArrow{
-    width:14px!important;
-    height:14px!important;
-  }
-  .pileArrow.up{
-    top:9px!important;
-  }
-  .pileArrow.down{
-    bottom:9px!important;
-  }
-  .pileArrow.up:before{
-    border-left-width:7px!important;
-    border-right-width:7px!important;
-    border-bottom-width:9px!important;
-  }
-  .pileArrow.down:before{
-    border-left-width:7px!important;
-    border-right-width:7px!important;
-    border-top-width:9px!important;
-    top:3px!important;
-  }
-  .pileValue{
-    line-height:1!important;
-    padding:0!important;
-    margin:0!important;
+  .scoreList{
+    font-size:9px!important;
   }
 }
 
@@ -1031,7 +841,7 @@ main{max-width:960px;margin:0 auto;padding:10px 10px 96px}
     <div class="panel home">
       <div class="homeTop">
         <div class="homeBtns">
-          <button class="softpink" onclick="toggleBgm()">🎵 BGM ON</button>
+          <button class="softpink" onclick="toggleBgm()">🎵 BGM</button>
         </div>
         <div class="homeBtns">
           <button onclick="openRankings()">👑 ランキング</button>
@@ -1041,12 +851,12 @@ main{max-width:960px;margin:0 auto;padding:10px 10px 96px}
 
       <div class="logoArea">
         <div class="logoRow">
-          <div class="mascotBox" id="homeMascotLeft"></div>
+          <div class="mascotTitle" id="homeMascotLeft"></div>
           <div class="logoWrap">
             <div class="logo"><span class="a">BACK</span><span class="b">1</span><span class="c">0</span></div>
             <div class="tagline">数字を捌け。10で流れを変えろ。</div>
           </div>
-          <div class="mascotBox" id="homeMascotRight"></div>
+          <div class="mascotTitle" id="homeMascotRight"></div>
         </div>
       </div>
 
@@ -1058,12 +868,10 @@ main{max-width:960px;margin:0 auto;padding:10px 10px 96px}
         <button class="modeCard solo" onclick="quickSolo()">
           <div class="modeCardTitle">ひとりで<br>あそぶ</div>
           <div class="modeCardSub">6000点クリアをめざそう！</div>
-          <div class="modeArrow">›</div>
         </button>
         <button class="modeCard multi" onclick="showCoopSetup()">
           <div class="modeCardTitle">みんなで<br>あそぶ</div>
           <div class="modeCardSub">協力プレイでハイスコアをめざそう！</div>
-          <div class="modeArrow">›</div>
         </button>
       </div>
 
@@ -1119,8 +927,7 @@ main{max-width:960px;margin:0 auto;padding:10px 10px 96px}
             <div id="scoreNow" class="scoreBig">0</div>
           </div>
           <div class="scoreList">
-            <div><span>B10</span><span id="back10Now">0</span></div>
-            <div><span>残り</span><span id="remainNow">98</span></div>
+            <div><span>BACK10</span><span id="back10Now">0</span></div>
             <div><span>ターン</span><span id="turnPlayNow">0</span></div>
             <div><span>目標</span><span>6000</span></div>
           </div>
@@ -1153,14 +960,13 @@ main{max-width:960px;margin:0 auto;padding:10px 10px 96px}
   <div class="modalCard">
     <h2>BACK10 ルール</h2>
     <ul>
-      <li>上向きの場には大きい数字へ、下向きの場には小さい数字へ出します。</li>
+      <li>上向きの場には大きい数字、下向きの場には小さい数字を出します。</li>
       <li>BACK10：上向きはちょうど10小さい数字、下向きはちょうど10大きい数字を出せます。</li>
       <li>山札がある間は最低2枚、山札切れ後は最低1枚出します。</li>
       <li>1枚10点。1ターン2枚×1.0、3枚×1.5、4枚×2.0、5枚以上×3.0。</li>
       <li>出せない場を選ぶとMISSで-50点です。</li>
       <li>終了時の残り枚数＝手札＋山札。0枚+10000、1〜4枚+8000、5〜9枚+5000。</li>
       <li>6000点以上でCLEAR。6000点を超えても自動終了しません。</li>
-      <li>ギブアップを押すと結果画面を表示します。</li>
     </ul>
     <div style="text-align:center"><button class="primary" onclick="closeModal('rulesModal')">とじる</button></div>
   </div>
@@ -1260,6 +1066,8 @@ function todayKey(){ return new Date().toISOString().slice(0,10); }
 function monthKey(){ return new Date().toISOString().slice(0,7); }
 function shuffle(a){ for(let i=a.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]]; } }
 function escapeHtml(s){ return String(s).replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#039;"}[m])); }
+function cloneGame(g){ return JSON.parse(JSON.stringify(g)); }
+function stripMeta(g){ const x = {...g}; delete x.createdAt; delete x.updatedAt; return x; }
 function getPlayerName(){ return $("nameInput").value.trim() || "Player"; }
 function handSize(n){ return n===1 ? 8 : (n===2 ? 7 : 6); }
 function minPlay(g){ return g.deck.length>0 ? 2 : 1; }
@@ -1283,7 +1091,7 @@ function rabbitSVG(size=88){
       <ellipse cx="77" cy="20" rx="11" ry="23" fill="#ffc6d6" stroke="#eca0b4" stroke-width="3"/>
       <ellipse cx="43" cy="22" rx="5" ry="14" fill="#ffe6ef"/>
       <ellipse cx="77" cy="22" rx="5" ry="14" fill="#ffe6ef"/>
-      <circle cx="60" cy="61" r="36" fill="#ffd0dc" stroke="#eca0b4" stroke-width="3"/>
+      <path d="M24 60 C24 34 42 25 60 27 C80 25 97 38 96 62 C97 88 79 103 60 102 C38 103 23 86 24 60 Z" fill="#ffd0dc" stroke="#eca0b4" stroke-width="3"/>
       <ellipse cx="49" cy="57" rx="4" ry="5" fill="#6f4d35"/>
       <ellipse cx="71" cy="57" rx="4" ry="5" fill="#6f4d35"/>
       <circle cx="40" cy="68" r="5.5" fill="#ffb8c8"/>
@@ -1301,7 +1109,7 @@ function bearSVG(size=88){
     <g>
       <circle cx="41" cy="28" r="12" fill="#fffaf4" stroke="#e5d0b8" stroke-width="3"/>
       <circle cx="79" cy="28" r="12" fill="#fffaf4" stroke="#e5d0b8" stroke-width="3"/>
-      <circle cx="60" cy="63" r="38" fill="#fffaf4" stroke="#e5d0b8" stroke-width="3"/>
+      <path d="M24 61 C24 35 41 26 60 28 C81 25 96 39 96 64 C97 91 78 104 60 103 C39 104 23 87 24 61 Z" fill="#fffaf4" stroke="#e5d0b8" stroke-width="3"/>
       <ellipse cx="49" cy="58" rx="4" ry="5" fill="#6f4d35"/>
       <ellipse cx="71" cy="58" rx="4" ry="5" fill="#6f4d35"/>
       <circle cx="40" cy="68" r="5.5" fill="#ffd7cf"/>
@@ -1316,7 +1124,7 @@ function bearSVG(size=88){
 function greenBlobSVG(size=58){
   return `<svg viewBox="0 0 92 92" width="${size}" height="${size}" aria-hidden="true">
     <g>
-      <circle cx="46" cy="49" r="28" fill="#bfe182" stroke="#95be56" stroke-width="3"/>
+      <path d="M18 52 C18 31 31 20 47 22 C64 20 76 33 75 53 C76 71 62 80 46 80 C29 80 17 68 18 52 Z" fill="#bfe182" stroke="#95be56" stroke-width="3"/>
       <path d="M43 21 C40 12 49 11 47 4 C57 13 57 22 43 21 Z" fill="#72ac3c" stroke="#649739" stroke-width="2"/>
       <ellipse cx="37" cy="46" rx="3.2" ry="4" fill="#6f4d35"/>
       <ellipse cx="55" cy="46" rx="3.2" ry="4" fill="#6f4d35"/>
@@ -1328,7 +1136,7 @@ function greenBlobSVG(size=58){
 function chickSVG(size=58){
   return `<svg viewBox="0 0 92 92" width="${size}" height="${size}" aria-hidden="true">
     <g>
-      <circle cx="46" cy="49" r="28" fill="#ffe472" stroke="#f1c947" stroke-width="3"/>
+      <path d="M18 52 C18 31 31 20 46 22 C63 20 75 34 74 53 C75 71 62 80 46 80 C29 80 17 68 18 52 Z" fill="#ffe472" stroke="#f1c947" stroke-width="3"/>
       <path d="M40 22 L46 14 L52 22 Z" fill="#95c553" stroke="#7ab240" stroke-width="2"/>
       <ellipse cx="37" cy="46" rx="3.2" ry="4" fill="#6f4d35"/>
       <ellipse cx="55" cy="46" rx="3.2" ry="4" fill="#6f4d35"/>
@@ -1338,10 +1146,10 @@ function chickSVG(size=58){
     </g></svg>`;
 }
 function mountMascots(){
-  $("homeMascotLeft").innerHTML = rabbitSVG(98);
-  $("homeMascotRight").innerHTML = bearSVG(98);
+  $("homeMascotLeft").innerHTML = rabbitSVG(96);
+  $("homeMascotRight").innerHTML = bearSVG(96);
   $("giveupMascot").innerHTML = bearSVG(88);
-    }
+}
 function avatarHTML(name,size=28){
   const i=(name.codePointAt(0)||65)%4;
   if(i===0) return rabbitSVG(size);
@@ -1430,7 +1238,7 @@ async function startOnlineGame(){
   if(!game || game.hostId!==myId){ showToast("部屋を作った人だけ開始できます"); return; }
   if(Object.keys(game.players||{}).length < game.playerCount){ showToast("まだ人数がそろっていません"); return; }
   const next = buildGame("multi",game.playerCount,game.players);
-  await updateDoc(doc(db,"rooms",roomId), next);
+  await updateDoc(doc(db,"rooms",roomId), { ...next, updatedAt:serverTimestamp() });
 }
 function buildGame(mode,n,players){
   const deck=[]; for(let i=2;i<=99;i++) deck.push(i); shuffle(deck);
@@ -1446,22 +1254,22 @@ function buildGame(mode,n,players){
   return {
     status:"playing", deck, hands,
     piles:[
-      {type:"up", value:1, name:"A"},
-      {type:"up", value:1, name:"B"},
-      {type:"down", value:100, name:"C"},
-      {type:"down", value:100, name:"D"}
+      {type:"up", value:1},
+      {type:"up", value:1},
+      {type:"down", value:100},
+      {type:"down", value:100}
     ],
     turnOrder:ids,
     currentPlayer:ids[0],
     playedThisTurn:0, turnCards:0, turnBack10:0,
-    scoreBase:0, back10Total:0, maxCombo:0,  stats,
-    startedAtMs:Date.now(), result:null, updatedAt:serverTimestamp()
+    scoreBase:0, back10Total:0, maxCombo:0, stats,
+    startedAtMs:Date.now(), result:null
   };
 }
 async function saveGame(g){
   game=g;
   if(localMode){ renderAll(); return; }
-  await updateDoc(doc(db,"rooms",roomId), { ...g, updatedAt:serverTimestamp() });
+  await updateDoc(doc(db,"rooms",roomId), { ...stripMeta(g), updatedAt:serverTimestamp() });
 }
 function renderAll(){
   if(!game){ showScreen("homeScreen"); return; }
@@ -1487,23 +1295,23 @@ function renderAll(){
     </div>`;
   }).join("");
   $("deckCount").textContent = game.deck.length;
-  
   $("scoreNow").textContent = totalScore(game);
   $("back10Now").textContent = game.back10Total || 0;
-  $("remainNow").textContent = remaining(game);
   $("turnPlayNow").textContent = game.playedThisTurn || 0;
 
   $("piles").innerHTML = game.piles.map((p,i)=>`
     <div class="pile ${p.type}" onclick="playPile(${i})">
+      <span class="pileMark pileMarkTop p${i+1}">${["A","B","C","D"][i]}</span>
       <span class="pileArrow ${p.type === 'up' ? 'up' : 'down'}"></span>
       <div class="pileValue p${i+1}">${p.value}</div>
+      <span class="pileMark pileMarkBottom p${i+1}">${["A","B","C","D"][i]}</span>
     </div>
   `).join("");
 
   const hand = game.hands?.[myId] || [];
   $("hand").innerHTML = hand.map((n,i)=>`
     <div class="card ${selectedIndex===i ? 'selected' : ''} ${mine ? '' : 'locked'}" onclick="selectCard(${i})">
-      <div class="corner">${n}</div>${n}<div class="corner bottom">${n}</div>
+      ${n}
     </div>
   `).join("");
 }
@@ -1520,7 +1328,7 @@ async function playPile(i){
   const pileBefore = game.piles[i];
 
   if(!canPlay(card,pileBefore)){
-    const g = structuredClone(game);
+    const g = cloneGame(game);
     g.scoreBase = Math.max(0,(g.scoreBase||0)-50);
     if(g.stats?.[myId]){
       g.stats[myId].score = Math.max(0,(g.stats[myId].score||0)-50);
@@ -1533,12 +1341,11 @@ async function playPile(i){
   }
 
   const back10 = isBack10(card,pileBefore);
-  const g = structuredClone(game);
+  const g = cloneGame(game);
   g.piles[i].value = card;
   g.hands[myId].splice(selectedIndex,1);
   g.playedThisTurn++;
   g.turnCards++;
-  
   g.stats[myId].cards++;
   if(back10){
     g.turnBack10++;
@@ -1576,7 +1383,7 @@ async function endTurn(){
   if(!isMyTurn() && !localMode){ showToast("今は自分のターンではありません"); return; }
   const need = minPlay(game);
   if(game.playedThisTurn < need){ showToast(`最低${need}枚出してください`); return; }
-  const g = structuredClone(game);
+  const g = cloneGame(game);
   applyTurnScore(g,myId);
   while(g.hands[myId].length < handSize(g.playerCount) && g.deck.length>0){
     g.hands[myId].push(g.deck.pop());
@@ -1597,7 +1404,7 @@ function forceGiveUp(){
 async function confirmGiveUp(){
   closeModal("giveupModal");
   if(!game || game.status!=="playing") return;
-  const g = structuredClone(game);
+  const g = cloneGame(game);
   if(g.playedThisTurn>0) applyTurnScore(g,myId);
   await endGame(g,"ギブアップ");
 }
@@ -1667,13 +1474,14 @@ async function resetSameRoom(){
   if(localMode){ quickSolo(); return; }
   if(!game || game.hostId!==myId){ showToast("再開できるのは部屋を作った人だけ"); return; }
   const next = buildGame("multi", game.playerCount, game.players);
-  await updateDoc(doc(db,"rooms",roomId), next);
+  await updateDoc(doc(db,"rooms",roomId), { ...next, updatedAt:serverTimestamp() });
 }
 function goHome(){
   if(unsub){ unsub(); unsub=null; }
   roomId=""; myId=""; game=null; selectedIndex=null; localMode=false;
   $("coopSetup").style.display="none";
   $("resultOverlay").style.display="none";
+  $("giveupModal").style.display="none";
   document.body.dataset.resultShown="";
   showScreen("homeScreen");
 }
@@ -1704,10 +1512,9 @@ async function loadRankings(mode,period){
     body.innerHTML = html;
   }catch(e){
     console.warn(e);
-    body.innerHTML="ランキング取得に失敗しました。Firestoreのルールやインデックスを確認してください。";
+    body.innerHTML="ランキング取得に失敗しました。Firestoreのルールを確認してください。";
   }
 }
-
 function ensureAudio(){ if(!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)(); resumeAudio(); }
 function resumeAudio(){ if(audioCtx && audioCtx.state==="suspended") audioCtx.resume(); }
 function beep(freq,dur,type="triangle",vol=.05){
@@ -1725,9 +1532,7 @@ function playWin(){ [523,659,784,1046].forEach((f,i)=>setTimeout(()=>beep(f,.18,
 function playLose(){ [220,180,140].forEach((f,i)=>setTimeout(()=>beep(f,.25,"sawtooth",.065),i*160)); }
 function toggleBgm(){
   ensureAudio();
-  if(bgmOn){
-    clearInterval(bgmTimer); bgmOn=false; showToast("BGM OFF"); return;
-  }
+  if(bgmOn){ clearInterval(bgmTimer); bgmOn=false; showToast("BGM OFF"); return; }
   bgmOn=true; showToast("BGM ON");
   const melody=[
     [523,.12],[659,.12],[784,.18],[659,.12],
