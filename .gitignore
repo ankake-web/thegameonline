@@ -1,0 +1,12 @@
+
+node_modules/
+dist/
+.env
+.env.*
+AGENTS.md
+CLAUDE.md
+PROGRESS.md
+KICKOFF.md
+MEMORY.md
+_memory/
+.claude/

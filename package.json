@@ -1,0 +1,10 @@
+{
+  "name": "thegameonline",
+  "version": "2.0.0",
+  "private": true,
+  "type": "module",
+  "description": "BACK10の独立サイト",
+  "scripts": {
+    "build": "node --experimental-vm-modules build.mjs"
+  }
+}
