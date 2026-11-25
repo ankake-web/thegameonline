@@ -1158,7 +1158,7 @@ main{max-width:980px;margin:0 auto;padding:0 12px 110px;position:relative;z-inde
       <div class="row" style="margin-top:16px">
         <button class="primary" id="startBtn" onclick="startOnlineGame()">ゲーム開始</button>
         <button class="ghost" onclick="copyRoom()">部屋IDコピー</button>
-        <button class="warn" onclick="goHome()">退出</button>
+        <button class="warn" onclick="leaveRoom()">退出</button>
       </div>
     </div>
   </section>
@@ -1200,7 +1200,7 @@ main{max-width:980px;margin:0 auto;padding:0 12px 110px;position:relative;z-inde
 
 <div id="actionBar" class="actionBar" style="display:none">
   <div class="actionInner">
-    <button class="primary" onclick="endTurn()">ターン終了</button>
+    <button class="primary" id="endTurnBtn" onclick="endTurn()">ターン終了</button>
     <button class="ghost" onclick="openMenu()" aria-label="メニュー"><svg class="ic ic-lg"><use href="#ic-menu"/></svg></button>
   </div>
 </div>
@@ -1261,18 +1261,14 @@ main{max-width:980px;margin:0 auto;padding:0 12px 110px;position:relative;z-inde
     </div>
     <div id="playerStats" style="margin-top:14px"></div>
     <div class="row" style="justify-content:center;margin-top:16px">
-      <button class="ghost" onclick="goHome()">トップへ戻る</button>
-      <button class="primary" onclick="resetSameRoom()">もう一回</button>
+      <button class="ghost" onclick="leaveRoom()">トップへ戻る</button>
+      <button class="primary" id="rematchBtn" onclick="resetSameRoom()">もう一回</button>
     </div>
   </div>
 </div>
 
 <script type="module">
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js";
-import {
-  getFirestore, doc, setDoc, getDoc, updateDoc, onSnapshot, serverTimestamp,
-  collection, addDoc, query, where, getDocs
-} from "https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore.js";
+let db, loadingDB, doc, updateDoc, onSnapshot, serverTimestamp, runTransaction, collection, addDoc, query, where, getDocs;
 
 const firebaseConfig = {
   apiKey: "AIzaSyA0qKOQfnJjqsTrZJe5OA9Jd7LSGkWGLcg",
@@ -1284,12 +1280,17 @@ const firebaseConfig = {
   measurementId: "G-3FE7CNX811"
 };
 
-let app, db;
-try{
-  app = initializeApp(firebaseConfig);
-  db = getFirestore(app);
-}catch(e){
-  console.warn("Firebase init error", e);
+async function connectDB(){
+  if(db)return db;
+  if(!loadingDB)loadingDB=Promise.all([
+    import("https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js"),
+    import("https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore.js")
+  ]).then(([app,fs])=>{
+    ({doc,updateDoc,onSnapshot,serverTimestamp,runTransaction,collection,addDoc,query,where,getDocs}=fs);
+    db=fs.getFirestore(app.initializeApp(firebaseConfig));
+    return db;
+  }).finally(()=>{loadingDB=null});
+  return loadingDB;
 }
 
 let roomId = "";
@@ -1305,7 +1306,7 @@ let bgmTimer = null;
 Object.assign(window,{
   quickSolo, showCoopSetup, createCoopRoom, joinCoopRoom,
   startOnlineGame, selectCard, playPile, endTurn, openMenu, forceGiveUp, confirmGiveUp, resetSameRoom,
-  goHome, copyRoom, showRules, closeModal, openRankings, loadRankings, toggleBgm
+  leaveRoom, copyRoom, showRules, closeModal, openRankings, loadRankings, toggleBgm
 });
 
 function $(id){ return document.getElementById(id); }
@@ -1331,7 +1332,7 @@ function currentTurnScore(g){
   if(cards<=0) return 0;
   return Math.round(cards*10*getComboMultiplier(cards) + backs*100);
 }
-function totalScore(g){ return (g.scoreBase||0) + currentTurnScore(g) + getEndBonus(remaining(g)); }
+function totalScore(g){ return g.result?.score ?? ((g.scoreBase||0) + currentTurnScore(g) + getEndBonus(remaining(g))); }
 
 /* ===== Minimalist geometric emblems (replaces rabbit/bear pastel mascots) =====
    Same function names + signatures preserved so every call site still resolves. */
@@ -1372,6 +1373,7 @@ function showScreen(id){
 }
 
 function quickSolo(){
+  selectedIndex=null;
   myId="solo";
   const players={ solo:{ name:getPlayerName(), seat:1 } };
   game={
@@ -1386,36 +1388,52 @@ function showCoopSetup(){
   $("coopSetup").style.display="block";
   $("roomInput").focus();
 }
-async function createCoopRoom(){ await createRoom(); }
-async function joinCoopRoom(){ await joinRoom(); }
+let enteringRoom=false;
+async function enterRoom(action){
+  if(enteringRoom)return;
+  enteringRoom=true;
+  showToast("部屋に接続中…");
+  try{await connectDB();await action()}
+  catch(e){showToast(e.roomMessage || "接続できませんでした。通信を確認してもう一度試してください。")}
+  finally{enteringRoom=false}
+}
+function roomError(message){return Object.assign(new Error(message),{roomMessage:message})}
+async function createCoopRoom(){ await enterRoom(createRoom); }
+async function joinCoopRoom(){ await enterRoom(joinRoom); }
 
 async function createRoom(){
-  if(!db){ showToast("Firebase接続エラー"); return; }
-  roomId = $("roomInput").value.trim() || roomCode();
-  myId = uid();
+  const code = $("roomInput").value.trim() || roomCode();
+  const id = uid();
   const count = Number($("playerCount").value || 2);
-  const ref = doc(db,"rooms",roomId);
-  await setDoc(ref,{
-    roomId, hostId:myId, mode:"multi", playerCount:count, status:"lobby",
-    players:{ [myId]:{ name:getPlayerName(), seat:1 } },
-    createdAt:serverTimestamp(), updatedAt:serverTimestamp()
+  const ref = doc(db,"rooms",code);
+  const name=getPlayerName();
+  await runTransaction(db,async tx=>{
+    const snap=await tx.get(ref);
+    if(snap.exists()&&snap.data().status!=="closed")throw roomError("その部屋IDは使用中です。別のIDを選んでください。");
+    tx.set(ref,{
+      roomId:code, hostId:id, mode:"multi", playerCount:count, status:"lobby",
+      players:{ [id]:{ name, seat:1 } },
+      createdAt:serverTimestamp(), updatedAt:serverTimestamp()
+    });
   });
+  roomId=code;myId=id;
   listen(ref);
 }
 async function joinRoom(){
-  if(!db){ showToast("Firebase接続エラー"); return; }
-  roomId = $("roomInput").value.trim();
-  if(!roomId){ showToast("部屋IDを入力してください"); return; }
-  const ref = doc(db,"rooms",roomId);
-  const snap = await getDoc(ref);
-  if(!snap.exists()){ showToast("部屋がありません"); return; }
-  const d = snap.data();
-  if(d.status !== "lobby"){ showToast("すでに開始済みです"); return; }
-  const players = d.players || {};
-  if(Object.keys(players).length >= d.playerCount){ showToast("満員です"); return; }
-  myId = uid();
-  players[myId] = { name:getPlayerName(), seat:Object.keys(players).length + 1 };
-  await updateDoc(ref,{ players, updatedAt:serverTimestamp() });
+  const code=$("roomInput").value.trim();
+  if(!code){ showToast("部屋IDを入力してください"); return; }
+  const ref=doc(db,"rooms",code);
+  const id=uid(),name=getPlayerName();
+  await runTransaction(db,async tx=>{
+    const snap=await tx.get(ref);
+    if(!snap.exists())throw roomError("部屋がありません");
+    const d=snap.data(),players=d.players||{};
+    if(d.status!=="lobby")throw roomError("すでに開始済みです");
+    if(Object.keys(players).length>=d.playerCount)throw roomError("満員です");
+    players[id]={name,seat:Object.keys(players).length+1};
+    tx.update(ref,{players,updatedAt:serverTimestamp()});
+  });
+  roomId=code;myId=id;
   listen(ref);
 }
 function listen(ref){
@@ -1425,6 +1443,11 @@ function listen(ref){
     const prevPlayer = game?.currentPlayer;
     const prevStatus = game?.status;
     game = snap.data();
+    if(!game || !game.players?.[myId]){goHome();return}
+    if(prevStatus==="ended" && game.status!=="ended"){
+      document.body.dataset.resultShown="";
+      $("resultOverlay").style.display="none";
+    }
     selectedIndex = null;
     renderAll();
     if(prevStatus==="playing" && game.status==="playing" && prevPlayer!==game.currentPlayer){
@@ -1444,8 +1467,16 @@ function listen(ref){
 async function startOnlineGame(){
   if(!game || game.hostId!==myId){ showToast("部屋を作った人だけ開始できます"); return; }
   if(Object.keys(game.players||{}).length < game.playerCount){ showToast("まだ人数がそろっていません"); return; }
-  const next = buildGame("multi",game.playerCount,game.players);
-  await updateDoc(doc(db,"rooms",roomId), { ...next, updatedAt:serverTimestamp() });
+  try{await startRound("lobby")}catch(e){showToast(e.roomMessage||"開始できませんでした。もう一度試してください。")}
+}
+async function startRound(status){
+  const ref=doc(db,"rooms",roomId),host=myId;
+  await runTransaction(db,async tx=>{
+    const current=(await tx.get(ref)).data();
+    if(current?.status!==status||current.hostId!==host||Object.keys(current.players).length!==current.playerCount)
+      throw roomError("部屋の参加状況が変わりました。");
+    tx.update(ref,{...buildGame("multi",current.playerCount,current.players),updatedAt:serverTimestamp()});
+  });
 }
 function buildGame(mode,n,players){
   const deck=[]; for(let i=2;i<=99;i++) deck.push(i); shuffle(deck);
@@ -1487,7 +1518,9 @@ function renderAll(){
     $("lobbyPlayers").innerHTML = Object.values(game.players||{})
       .sort((a,b)=>a.seat-b.seat)
       .map(p=>`<span class="badge">${avatarHTML(p.name,26)} ${escapeHtml(p.name)}</span>`).join("");
-    $("startBtn").disabled = game.hostId!==myId;
+    const host=game.hostId===myId,full=Object.keys(game.players||{}).length>=game.playerCount;
+    $("startBtn").disabled = !host || !full;
+    $("startBtn").textContent = !host ? "ホストの開始を待っています" : full ? "ゲーム開始" : "参加者を待っています";
     return;
   }
   showScreen("playScreen");
@@ -1507,6 +1540,9 @@ function renderAll(){
   $("scoreNow").textContent = totalScore(game);
   $("back10Now").textContent = game.back10Total || 0;
   $("turnPlayNow").textContent = game.playedThisTurn || 0;
+  const left=Math.max(0,minPlay(game)-(game.playedThisTurn||0));
+  $("endTurnBtn").disabled=!mine||left>0;
+  $("endTurnBtn").textContent=!mine?"相手の手番です":left?`あと${left}枚でターン終了`:"ターン終了";
 
   $("piles").innerHTML = game.piles.map((p,i)=>`
     <div class="pile ${p.type}" onclick="playPile(${i})">
@@ -1602,7 +1638,10 @@ async function endTurn(){
   }
   g.hands[myId].sort((a,b)=>a-b);
   const idx = g.turnOrder.indexOf(myId);
-  g.currentPlayer = g.turnOrder[(idx+1)%g.turnOrder.length];
+  for(let offset=1;offset<=g.turnOrder.length;offset++){
+    const next=g.turnOrder[(idx+offset)%g.turnOrder.length];
+    if(g.hands[next].length){g.currentPlayer=next;break}
+  }
   g.playedThisTurn = 0;
   g.turnCards = 0;
   g.turnBack10 = 0;
@@ -1627,7 +1666,7 @@ function forceGiveUp(){
 async function confirmGiveUp(){
   if(!game || game.status!=="playing") return;
   const g = cloneGame(game);
-  if(g.playedThisTurn>0) applyTurnScore(g,myId);
+  if(g.playedThisTurn>0) applyTurnScore(g,g.currentPlayer);
   await endGame(g,"ギブアップ");
 }
 async function endGame(g,reason){
@@ -1644,8 +1683,8 @@ async function endGame(g,reason){
   g.status="ended";
   g.result=result;
   await saveGame(g);
-  await saveRanking(g,result);
-  showResult(result);
+  if(game?.status==="ended"&&!document.body.dataset.resultShown)showResult(result);
+  void saveRanking(g,result);
 }
 const LOCAL_RANK_KEY="asobiba:back10:rankings";
 function saveLocalRanking(entry){
@@ -1685,14 +1724,17 @@ async function saveRanking(g,result){
   // この端末のランキングには必ず反映（Firestore不可でも見える）
   saveLocalRanking({...entry,createdAt:Date.now()});
   // 共有オンラインランキングにも保存を試みる（Firestoreルール許可時）
-  if(!db) return;
   try{
+    await connectDB();
     await addDoc(collection(db,"rankings"),{...entry,createdAt:serverTimestamp()});
   }catch(e){
     console.warn("online ranking save failed (local saved)", e);
   }
 }
 function showResult(result){
+  const canRestart=localMode||game?.hostId===myId;
+  $("rematchBtn").disabled=!canRestart;
+  $("rematchBtn").textContent=canRestart?"もう一回":"ホストの再戦を待っています";
   $("resultOverlay").style.display="flex";
   $("resultBig").textContent = result.clear ? "CLEAR!" : "TRY AGAIN";
   $("resultBig").className = "resultBig " + (result.clear ? "clear" : "fail");
@@ -1715,12 +1757,31 @@ function showResult(result){
   if(result.clear){ confetti(result.remaining===0 ? 120 : 70); playWin(); } else playLose();
 }
 async function resetSameRoom(){
-  document.body.dataset.resultShown="";
-  $("resultOverlay").style.display="none";
-  if(localMode){ quickSolo(); return; }
+  if(localMode){ $("resultOverlay").style.display="none";quickSolo();return; }
   if(!game || game.hostId!==myId){ showToast("再開できるのは部屋を作った人だけ"); return; }
-  const next = buildGame("multi", game.playerCount, game.players);
-  await updateDoc(doc(db,"rooms",roomId), { ...next, updatedAt:serverTimestamp() });
+  $("rematchBtn").disabled=true;
+  try{await startRound("ended")}
+  catch(e){$("rematchBtn").disabled=false;showToast("再戦できませんでした。もう一度試してください。")}
+}
+async function leaveRoom(){
+  if(localMode||!game){goHome();return}
+  const ref=doc(db,"rooms",roomId),id=myId;
+  try{
+    await runTransaction(db,async tx=>{
+      const current=(await tx.get(ref)).data();
+      if(!current?.players?.[id])return;
+      if(current.status==="playing")throw roomError("ゲームが始まりました。");
+      const players={...current.players};
+      delete players[id];
+      const seats=Object.keys(players).sort((a,b)=>players[a].seat-players[b].seat);
+      seats.forEach((pid,i)=>{players[pid]={...players[pid],seat:i+1}});
+      tx.update(ref,{
+        players,hostId:current.hostId===id?(seats[0]||null):current.hostId,
+        status:seats.length?"lobby":"closed",result:null,updatedAt:serverTimestamp()
+      });
+    });
+    if(myId===id)goHome();
+  }catch(e){showToast(e.roomMessage||"退出できませんでした。通信を確認してください。")}
 }
 function goHome(){
   if(unsub){ unsub(); unsub=null; }
@@ -1730,10 +1791,13 @@ function goHome(){
   $("menuModal").style.display="none";
   document.body.dataset.resultShown="";
   showScreen("homeScreen");
+  paintBestScore();
 }
-function copyRoom(){
-  navigator.clipboard?.writeText(roomId || game?.roomId || "");
-  showToast("部屋IDコピー");
+async function copyRoom(){
+  const code=roomId||game?.roomId;
+  if(!code)return;
+  try{await navigator.clipboard.writeText(code);showToast("部屋IDをコピーしました")}
+  catch{showToast(`部屋ID：${code}`)}
 }
 function showRules(){ $("rulesModal").style.display="flex"; resumeAudio(); }
 function openRankings(){ $("rankingModal").style.display="flex"; loadRankings("solo","daily"); }
@@ -1745,8 +1809,9 @@ async function loadRankings(mode,period){
   const value = mode + "_" + (period==="daily" ? todayKey() : monthKey());
   let rows = localRankings(field,value);
   let online = false;
-  if(db){
+  {
     try{
+      await connectDB();
       const q = query(collection(db,"rankings"), where(field,"==",value));
       const snap = await getDocs(q);
       snap.forEach(d=>rows.push(d.data()));
