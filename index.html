@@ -4,10 +4,10 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
 <title>BACK10</title>
-<!-- 書体: 本文/UI = Zen Kaku Gothic New、ロゴ・数字・スコア = Rajdhani（共通CSSの --font-ui / このページの --font-num） -->
+<!-- 数字・カードは Barlow Condensed、本文は Zen Kaku Gothic New -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@400;500;700;900&family=Rajdhani:wght@500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@400;500;700;900&family=Barlow+Condensed:wght@700;800&display=swap" rel="stylesheet">
 <style>
 /* ============================================================
    あそびば共通モバイル基盤（base-mobile.css）
@@ -53,675 +53,386 @@ button, [role="button"]{ min-height:44px; }
 
 </style>
 <style>
-:root{
-  /* base */
-  --bg0:#0a1226;
-  --bg1:#0e1730;
-  --bg2:#122046;
-  --panel:rgba(20,33,68,.62);
-  --panel2:rgba(13,22,48,.70);
-  --glass-border:rgba(120,160,230,.18);
-  --glass-hi:rgba(150,200,255,.10);
-  --ink:#e8f0ff;
-  --muted:#93a6cf;
-  --muted2:#6f84b4;
-  /* accents */
-  --aqua:#38e1d6;
-  --aqua-soft:#7ff3ea;
-  --lime:#8be36b;
-  --amber:#ffbf4d;
-  --amber-soft:#ffe0a3;
-  --danger:#ff6b8a;
-  --violet:#b89cff;
-  /* channel colors A/B/C/D (legacy p1..p4 retargeted) */
-  --p1:#38e1d6; /* A up  - aqua */
-  --p2:#8be36b; /* B up  - lime */
-  --p3:#ffbf4d; /* C down- amber */
-  --p4:#b89cff; /* D down- violet */
-  --cardText:#eaf2ff;
-  --radius:18px;
-  --glow-aqua:0 0 0 1px rgba(56,225,214,.35), 0 0 22px rgba(56,225,214,.28);
-  --glow-amber:0 0 0 1px rgba(255,191,77,.45), 0 0 26px rgba(255,191,77,.40);
-  /* 数字専用（ロゴ・場札・手札・スコア）。Rajdhani は最大 700 なので 900 指定はしない */
-  --font-num:"Rajdhani",var(--font-ui);
+:root {
+  --paper: #f7f0df;
+  --paper-light: #fffaf0;
+  --ink: #152c23;
+  --muted: #506459;
+  --edge: #d5cab2;
+  --felt: #17392c;
+  --felt-dark: #0b271e;
+  --felt-edge: #426354;
+  --mint: #c9eaaa;
+  --orange: #ff8758;
+  --danger: #972d21;
+  --font-num: "Barlow Condensed", "Arial Narrow", var(--font-ui);
 }
-*{box-sizing:border-box}
-html,body{margin:0;min-height:100%}
-body{
-  color:var(--ink);
-  font-family:var(--font-ui);
+* { box-sizing: border-box; }
+[hidden] { display: none !important; }
+body {
+  margin: 0;
+  min-height: 100vh;
+  min-height: 100dvh;
+  color: var(--ink);
+  background: var(--paper);
+  font-family: var(--font-ui);
+  -webkit-tap-highlight-color: transparent;
+}
+button, input, select {
+  font: inherit;
+  color: inherit;
+  border: 1px solid var(--edge);
+  border-radius: 8px;
+  padding: 9px 13px;
+  background: var(--paper-light);
+}
+button {
+  font-weight: 800;
+  cursor: pointer;
+  transition: background .15s, box-shadow .15s, transform .12s;
+}
+button:active:not(:disabled) { transform: translateY(1px); }
+button:disabled { cursor: default; }
+button.primary { color: var(--paper-light); background: var(--felt); border-color: var(--felt); }
+button.primary:hover:not(:disabled) { background: #284e3e; }
+button.ghost:hover:not(:disabled) { background: #eee4ce; }
+button.bgmButton[aria-pressed="true"] { background: #e0eacb; border-color: #66866d; }
+button.warn { color: var(--danger); }
+button.primary:disabled { color: var(--muted); background: #ede4d0; border-color: var(--edge); }
+.row { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+.small { color: var(--muted); font-size: 14px; line-height: 1.5; }
+.panel { border: 1px solid var(--edge); border-radius: 16px; background: var(--paper-light); }
+.screen { display: none; }
+.screen.active { display: block; }
+main { width: min(100%, 1140px); margin: 0 auto; padding: 24px max(20px, var(--sar)) 32px max(20px, var(--sal)); }
+
+.topbar { border-bottom: 1px solid var(--edge); background: var(--paper); }
+.topInner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  width: min(100%, 1140px);
+  margin: auto;
+  padding: calc(10px + var(--sat)) max(20px, var(--sar)) 10px max(20px, var(--sal));
+}
+.topTitle { display: flex; align-items: center; gap: 8px; font: 700 28px/.9 var(--font-num); letter-spacing: .04em; }
+.topMark {
+  display: grid;
+  place-items: center;
+  width: 27px;
+  height: 33px;
+  border-radius: 5px;
+  color: var(--mint);
+  background: var(--felt);
+  transform: rotate(-8deg);
+}
+.topMark .ic { width: 18px; height: 18px; }
+.topCtl { display: flex; align-items: center; gap: 7px; }
+.topCtl button { display: inline-flex; align-items: center; gap: 6px; font-size: 13px; min-width: 44px; justify-content: center; }
+body[data-screen="playScreen"] .topCtl { display: none; }
+
+.home {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  min-height: 530px;
+  overflow: hidden;
+}
+.heroArtwork {
+  display: grid;
+  place-items: center;
+  position: relative;
+  isolation: isolate;
+  min-height: 290px;
+  overflow: hidden;
+  color: var(--paper-light);
   background:
-    radial-gradient(1100px 720px at 12% -8%, #1b2c5e 0%, transparent 55%),
-    radial-gradient(900px 700px at 108% 6%, #10314a 0%, transparent 52%),
-    radial-gradient(900px 900px at 82% 116%, #19204e 0%, transparent 55%),
-    linear-gradient(180deg,#0c1530 0%, #0a1226 55%, #0b1430 100%);
-  background-attachment:fixed;
-  user-select:none;
-  -webkit-user-select:none;
-  -webkit-tap-highlight-color:transparent;
+    repeating-linear-gradient(128deg, transparent 0 46px, #9ddcb114 47px 48px),
+    radial-gradient(ellipse at 56% 35%, #315843 0%, var(--felt) 58%, var(--felt-dark) 100%);
 }
-/* subtle animated data-grid overlay */
-body:before{
-  content:"";
-  position:fixed; inset:0; z-index:0; pointer-events:none;
-  background:
-    linear-gradient(rgba(80,130,210,.05) 1px, transparent 1px) 0 0/100% 38px,
-    linear-gradient(90deg, rgba(80,130,210,.05) 1px, transparent 1px) 0 0/38px 100%;
-  mask:radial-gradient(120% 90% at 50% 0%, #000 30%, transparent 78%);
-  opacity:.6;
+.heroArtwork::before,
+.heroArtwork::after {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  width: 82%;
+  aspect-ratio: 1;
+  border: 1px solid #c9eaaa35;
+  border-radius: 50%;
 }
-/* ゆっくり流れるオーロラ（FLOW の「流れ」）。文字の後ろ・グリッドの上 */
-body:after{
-  content:"";
-  position:fixed; inset:-25% -20%; z-index:0; pointer-events:none;
-  background:
-    radial-gradient(38% 26% at 18% 32%, rgba(56,225,214,.13), transparent 70%),
-    radial-gradient(32% 26% at 72% 24%, rgba(139,227,107,.10), transparent 70%),
-    radial-gradient(40% 28% at 58% 74%, rgba(184,156,255,.10), transparent 70%);
-  filter:blur(26px);
-  animation:aurora 30s ease-in-out infinite alternate;
+.heroArtwork::after { width: 70%; }
+.heroCards { position: relative; width: clamp(216px, 32vw, 346px); aspect-ratio: 1.03; transform: rotate(-8deg); }
+.heroCard {
+  position: absolute;
+  display: grid;
+  place-items: center;
+  width: 53%;
+  height: 77%;
+  font: 700 clamp(86px, 12vw, 152px)/.85 var(--font-num);
+  font-variant-numeric: tabular-nums;
+  border: 1px solid #172b21;
+  border-radius: 15px;
+  box-shadow: 2px 9px 0 #0b261c, 14px 23px 33px #071d1590;
 }
-@keyframes aurora{
-  0%{transform:translate3d(-3%,-2%,0) rotate(-2deg) scale(1);}
-  50%{transform:translate3d(2%,1%,0) rotate(2deg) scale(1.06);}
-  100%{transform:translate3d(4%,3%,0) rotate(5deg) scale(1.02);}
+.heroCard::after { content: ""; position: absolute; inset: 8px; border: 1px solid currentColor; opacity: .28; border-radius: 9px; }
+.heroCard.first { top: 8%; left: 3%; transform: rotate(-13deg); background: var(--paper); color: var(--ink); }
+.heroCard.second { top: 23%; right: 3%; transform: rotate(13deg); background: var(--orange); color: #352014; }
+.heroCard span { position: absolute; top: 14px; left: 15px; font: 700 clamp(17px, 2vw, 24px)/1 var(--font-num); }
+.heroArrow { position: absolute; top: 5%; right: 20%; width: 27%; height: 27%; color: var(--mint); transform: rotate(14deg); }
+.homeBody { display: grid; align-content: center; padding: clamp(24px, 4vw, 48px); }
+.logo { margin: 0; font: 800 clamp(76px, 11vw, 130px)/.83 var(--font-num); letter-spacing: -.045em; }
+.logo span { color: #a33a22; }
+.tagline { margin: 16px 0 22px; font-size: 17px; font-weight: 700; line-height: 1.6; text-wrap: pretty; }
+.modeCards { display: grid; gap: 8px; margin-top: 20px; }
+.modeCard {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 14px;
+  min-height: 72px;
+  padding: 12px;
+  text-align: left;
 }
-@media (prefers-reduced-motion:reduce){ body:after{animation:none} }
-button,input,select{
-  font:inherit;
-  border:0;
-  border-radius:14px;
-  font-size:16px;
-  padding:12px 15px;
-  color:var(--ink);
-}
-button{
-  font-weight:800;
-  letter-spacing:.01em;
-  color:var(--ink);
-  background:linear-gradient(180deg, rgba(40,58,108,.9), rgba(24,38,80,.9));
-  border:1px solid var(--glass-border);
-  box-shadow:0 1px 0 rgba(255,255,255,.06) inset, 0 6px 18px rgba(0,0,0,.35);
-  touch-action:manipulation;
-  transition:transform .08s ease, box-shadow .15s ease, background .15s ease, filter .15s ease;
-  cursor:pointer;
-}
-button:hover{filter:brightness(1.08)}
-button:active{transform:translateY(2px);filter:brightness(.96)}
-button.primary{
-  background:linear-gradient(180deg, #2bd6cb, #1aa7a0);
-  color:#04221f; border-color:rgba(120,255,245,.5);
-  box-shadow:0 6px 20px rgba(56,225,214,.32), 0 1px 0 rgba(255,255,255,.25) inset;
-}
-button.good{
-  background:linear-gradient(180deg, #8be36b, #5fc145);
-  color:#0c2c08; border-color:rgba(170,255,140,.5);
-  box-shadow:0 6px 20px rgba(139,227,107,.28), 0 1px 0 rgba(255,255,255,.25) inset;
-}
-button.warn{
-  background:linear-gradient(180deg, #ff7a93, #e64f6f);
-  color:#2a0610; border-color:rgba(255,150,170,.5);
-  box-shadow:0 6px 20px rgba(255,107,138,.26), 0 1px 0 rgba(255,255,255,.18) inset;
-}
-button.softpink{
-  background:linear-gradient(180deg, rgba(56,225,214,.16), rgba(56,225,214,.06));
-  color:var(--aqua-soft); border-color:rgba(56,225,214,.35);
-  box-shadow:0 4px 14px rgba(0,0,0,.3);
-}
-button.ghost{
-  background:rgba(255,255,255,.04);
-  border-color:var(--glass-border);
-  color:var(--ink);
-}
-button.icon{padding:10px 12px;border-radius:13px}
-button:disabled{opacity:.45;filter:grayscale(.3);cursor:default;transform:none}
-input,select{
-  background:rgba(8,15,34,.7);
-  color:var(--ink);
-  border:1px solid var(--glass-border);
-  box-shadow:0 2px 10px rgba(0,0,0,.3) inset;
-}
-input::placeholder{color:var(--muted2)}
-input:focus,select:focus{outline:none;border-color:rgba(56,225,214,.6);box-shadow:0 0 0 3px rgba(56,225,214,.18)}
-select option{background:#0e1730;color:var(--ink)}
-main{max-width:980px;margin:0 auto;padding:0 12px 110px;position:relative;z-index:1}
-.small{font-size:13px;line-height:1.5;color:var(--muted);font-weight:500}
-.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
-.screen{display:none}
-.screen.active{display:block}
-.panel{
-  background:var(--panel);
-  border:1px solid var(--glass-border);
-  border-radius:24px;
-  box-shadow:0 18px 50px rgba(0,0,0,.45), 0 1px 0 var(--glass-hi) inset;
-  backdrop-filter:blur(14px);
-  -webkit-backdrop-filter:blur(14px);
-}
+.modeCard.solo { background: var(--felt); color: var(--paper-light); border-color: var(--felt); }
+.modeCard.solo:hover { background: #284e3e; }
+.modeCard.multi:hover, .modeCard.multi[aria-expanded="true"] { background: #eee4ce; }
+.modeCardTitle, .modeCardSub { display: block; }
+.modeCardTitle { font-size: 19px; line-height: 1.35; }
+.modeCardSub { color: var(--muted); font-size: 13px; font-weight: 600; }
+.modeCard.solo .modeCardSub { color: #d1e4d5; }
+.modeIcon { display: grid; place-items: center; width: 42px; height: 42px; border-radius: 6px; background: var(--mint); color: var(--felt); }
+.modeCard.multi .modeIcon { background: var(--orange); color: #352014; }
+.modeIcon .ic { width: 24px; height: 24px; }
+.modeNext { font: 700 24px/1 var(--font-num); }
+.nameBar { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 10px; align-items: center; font-size: 14px; font-weight: 700; }
+.nameBar input { min-width: 0; width: 100%; height: 44px; font-weight: 700; }
+.bestChip { display: flex; align-items: center; gap: 8px; margin-top: 16px; font-size: 14px; }
+.bestChip b { font: 700 23px/1 var(--font-num); }
+.coopPanel { margin-top: 16px; padding: 20px; scroll-margin: 20px; }
+.coopPanel h2, .lobby h1 { margin: 0 0 12px; font-size: 23px; }
+.roomForms { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+.roomForm { display: grid; gap: 8px; align-content: start; padding: 16px; border: 1px solid var(--edge); border-radius: 10px; }
+.roomForm h3, .roomForm p { margin: 0; }
+.roomForm label { font-size: 14px; font-weight: 700; }
+.roomForm input, .roomForm select { width: 100%; min-width: 0; min-height: 44px; }
+.roomForm button { justify-self: start; margin-top: 3px; }
+.roomForm form { display: grid; gap: 8px; margin: 0; }
+.roomForm fieldset { display: grid; gap: 8px; margin: 0; min-width: 0; padding: 0; border: 0; }
+.roomForm fieldset:disabled { opacity: .6; }
+.roomForm details summary { cursor: pointer; font-size: 14px; min-height: 44px; display: list-item; padding: 10px 0; }
+.roomStatus { margin: 12px 0 0; color: var(--danger); font-weight: 700; }
+.roomStatus:not(.error) { color: var(--muted); }
+.roomStatus:empty { display: none; }
+body[data-invited] .home { display: block; min-height: 0; }
+body[data-invited] .heroArtwork { display: none; }
+body[data-invited] .homeBody { padding: 18px; }
+body[data-invited] .logo { font-size: 60px; }
+body[data-invited] .tagline { margin: 10px 0 12px; }
+.lobby { max-width: 680px; padding: clamp(17px, 4vw, 36px); margin: 24px auto; }
+.lobby h1 { margin-bottom: 18px; }
+.inviteBox { padding: 16px; border-radius: 10px; display: flex; gap: 12px 22px; justify-content: space-between; flex-wrap: wrap; align-items: center; background: var(--felt); color: var(--paper-light); }
+.inviteBox .small { color: var(--mint); }
+.roomCode { font: 700 clamp(36px, 7vw, 58px)/1 var(--font-num); letter-spacing: .07em; overflow-wrap: anywhere; }
+.inviteBox .row { gap: 6px; }
+.inviteBox button { color: var(--ink); padding-inline: 10px; }
+#inviteFallback { width: 100%; color: var(--ink); }
+.lobbyStatus { margin: 18px 0 7px; font-weight: 900; }
+.lobbyPlayers { display: flex; flex-wrap: wrap; gap: 7px; }
+.badge { display: inline-flex; gap: 6px; align-items: center; min-width: 0; overflow-wrap: anywhere; padding: 6px 10px; border: 1px solid var(--edge); border-radius: 6px; background: var(--paper); font-size: 14px; font-weight: 700; }
+.badge svg { flex-shrink: 0; }
+.lobbyActions { margin-top: 20px; }
 
-/* ===== TOP BAR (shared collection chrome) ===== */
-.topbar{
-  position:sticky; top:0; z-index:50;
-  display:flex; align-items:center; gap:10px;
-  padding:calc(8px + var(--sat)) max(12px,var(--sal)) 8px max(12px,var(--sar));
-  margin:0 0 12px;
-  background:linear-gradient(180deg, rgba(10,18,38,.92), rgba(10,18,38,.62) 70%, transparent);
-  backdrop-filter:blur(10px);
-  -webkit-backdrop-filter:blur(10px);
+.playMeta { display: flex; gap: 10px; justify-content: space-between; align-items: center; margin-bottom: 10px; }
+.turnBanner { display: flex; align-items: center; gap: 8px; min-width: 0; font-size: 21px; font-weight: 900; overflow-wrap: anywhere; }
+.turnBanner::before { content: ""; width: 10px; height: 10px; border-radius: 50%; background: #7d8d83; flex: 0 0 auto; }
+.turnBanner.mine::before { background: #337049; box-shadow: 0 0 0 3px #33704932; }
+.playersRow { display: flex; justify-content: flex-end; flex-wrap: wrap; gap: 5px; }
+.playerChip { display: flex; align-items: center; gap: 4px; min-width: 0; max-width: 145px; padding: 3px 8px; border: 1px solid var(--edge); border-radius: 5px; font-size: 12px; }
+.playerChip span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.playerChip svg { flex-shrink: 0; color: var(--muted); }
+.playerChip.active { border-color: #66866d; background: #e0eacb; font-weight: 700; }
+.playPanel { padding: clamp(12px, 2.25vw, 24px); color: var(--paper-light); background: var(--felt); border-color: var(--felt-dark); }
+.scoreboard { display: grid; grid-template-columns: 1.5fr 1.2fr 1fr 1fr; gap: 1px; margin-bottom: 18px; border: 1px solid var(--felt-edge); background: var(--felt-edge); border-radius: 8px; overflow: hidden; }
+.scoreboard > div { min-width: 0; padding: 9px 12px; background: var(--felt-dark); }
+.scoreboard .small { font-weight: 700; color: #c1d5c7; }
+.scoreboard strong { font: 700 clamp(28px, 5vw, 38px)/1 var(--font-num); font-variant-numeric: tabular-nums; color: var(--mint); }
+.scoreLine { display: flex; gap: 5px; align-items: baseline; flex-wrap: wrap; }
+.deckBar { height: 4px; max-width: 104px; margin-top: 4px; border-radius: 4px; overflow: hidden; background: #456756; }
+.deckBar i { display: block; height: 100%; width: 100%; background: var(--mint); transition: width .25s ease; }
+.board { padding: 12px; border: 1px solid var(--felt-edge); border-radius: 8px; background: var(--felt-dark); }
+.piles { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; }
+.pile {
+  position: relative;
+  display: grid;
+  align-content: center;
+  justify-items: center;
+  gap: 4px;
+  min-width: 0;
+  height: clamp(100px, 16vw, 163px);
+  padding: 0 4px;
+  border-radius: 9px;
+  color: var(--ink);
+  border-color: #8a9d6e;
+  background: #e1ebcc;
+  box-shadow: inset 0 0 0 4px #f4f8e754, 0 3px 0 #071e16;
 }
-.backLink{
-  display:inline-flex; align-items:center; gap:6px;
-  text-decoration:none;
-  padding:9px 13px; border-radius:999px;
-  background:rgba(255,255,255,.05);
-  border:1px solid var(--glass-border);
-  color:var(--aqua-soft); font-weight:800; font-size:14px;
-  white-space:nowrap;
+.pile.down { color: #512717; border-color: #b08b67; background: #f3ddc2; }
+.pile:hover:not(:disabled) { background: #f3f7dd; }
+.pile.down:hover:not(:disabled) { background: #ffe9d1; }
+.pile:focus-visible, .card:focus-visible { outline-color: var(--mint); }
+.pileMark { position: absolute; top: 7px; left: 9px; font: 700 15px/1 var(--font-num); }
+.pileDir { display: flex; align-items: center; gap: 3px; font-size: 13px; font-weight: 900; }
+.pileArrow { width: 7px; height: 10px; background: currentColor; clip-path: polygon(50% 0, 100% 55%, 68% 55%, 68% 100%, 32% 100%, 32% 55%, 0 55%); }
+.pile.down .pileArrow { transform: rotate(180deg); }
+.pileValue { font: 700 clamp(44px, 8vw, 94px)/.85 var(--font-num); font-variant-numeric: tabular-nums; }
+.pile[data-feedback="placed"] { animation: land .34s ease-out; }
+.pile[data-feedback="back10"] { animation: reverse-hit .62s ease-out; }
+.pile[data-feedback="miss"] { animation: miss-hit .4s ease-out; }
+@keyframes land { 0% { transform: translateY(-5px) scale(1.025); } 100% { transform: none; } }
+@keyframes reverse-hit { 20% { transform: translateY(-6px) rotate(-2deg); background: var(--orange); box-shadow: 0 0 0 4px var(--orange); } }
+@keyframes miss-hit { 20%, 60% { transform: translateX(-3px); border-color: var(--orange); } 40%, 80% { transform: translateX(3px); } }
+.handWrap { margin-top: 16px; }
+.handHeading { display: flex; justify-content: space-between; flex-wrap: wrap; align-items: baseline; gap: 4px 12px; margin-bottom: 8px; }
+.handHeading h2 { margin: 0; font-size: 17px; }
+.handHeading .small { color: #d3e4d7; font-weight: 700; }
+.handCards { display: grid; grid-template-columns: repeat(8, minmax(0, 1fr)); gap: 8px; }
+.card {
+  display: grid;
+  place-items: center;
+  min-width: 0;
+  min-height: 50px;
+  height: clamp(56px, 9vw, 92px);
+  padding: 0;
+  border: 1px solid #d3c39d;
+  border-radius: 8px;
+  box-shadow: 0 3px 0 #a49169;
+  color: var(--ink);
+  background: var(--paper-light);
+  font: 700 clamp(33px, 5vw, 55px)/.9 var(--font-num);
+  font-variant-numeric: tabular-nums;
 }
-.backLink:active{transform:translateY(1px)}
-.topTitle{
-  display:flex; align-items:center; gap:9px;
-  margin:0 auto 0 4px; min-width:0;
+.card:hover:not(:disabled) { background: var(--paper); }
+.card.selected, .card.selected:hover { transform: translateY(-3px); color: #352014; background: var(--orange); border-color: #ffb294; box-shadow: 0 3px 0 #9e4b28; }
+.card.locked { background: #e0dac7; color: #526056; box-shadow: none; }
+.card.cardEmpty { pointer-events: none; border: 1px dashed #799589; background: #ffffff04; box-shadow: none; }
+.actionBar {
+  position: sticky;
+  bottom: 0;
+  z-index: 10;
+  padding: 8px 1px calc(5px + var(--sab));
+  color: var(--ink);
+  background: var(--paper);
 }
-.topEmblem{width:26px;height:26px;flex:0 0 auto}
-.topTitle .name{
-  font-weight:700; letter-spacing:.06em; font-size:20px; font-family:var(--font-num);
-  background:linear-gradient(90deg,var(--aqua),var(--lime));
-  -webkit-background-clip:text; background-clip:text; color:transparent;
-  white-space:nowrap;
-}
-.topCtl{display:flex; gap:7px; flex:0 0 auto}
-.topCtl button{padding:9px 11px;font-size:13px;border-radius:12px;white-space:nowrap}
-.topCtl .bi{font-size:15px}
-.topCtl .bl{margin-left:5px}
-@media(max-width:560px){
-  .topbar{gap:6px;margin-bottom:10px}
-  .topTitle{margin-left:2px;gap:6px}
-  .topTitle .name{font-size:16px}
-  .backLink{padding:8px 10px;font-size:13px}
-  .topCtl{gap:5px}
-  .topCtl button{padding:9px;font-size:14px}
-  .topCtl .bl{display:none}        /* スマホはアイコンのみで重なり回避 */
-}
+.actionInner { display: grid; grid-template-columns: minmax(220px, 1fr) auto; width: fit-content; margin-left: auto; gap: 8px; }
+.actionInner button { min-height: 46px; }
 
-/* ===== HOME ===== */
-.home{
-  position:relative;
-  overflow:hidden;
-  /* 旧: min-height:calc(100dvh - 150px) で下半分が空洞だった → 中身ぶんの高さにして、
-     余白には「遊び方3ステップ」と「自己ベスト」を置く */
-  padding:18px 16px 22px;
+.modalOverlay, #resultOverlay {
+  position: fixed;
+  inset: 0;
+  z-index: 40;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 14px;
+  background: #0b261cb0;
 }
-/* flowing stream accent behind hero */
-.home:before{
-  content:"";
-  position:absolute; inset:-40% -10% auto -10%; height:70%;
-  background:
-    radial-gradient(60% 60% at 30% 30%, rgba(56,225,214,.16), transparent 70%),
-    radial-gradient(60% 60% at 75% 40%, rgba(139,227,107,.12), transparent 70%);
-  filter:blur(8px); pointer-events:none;
+.modalCard, .resultCard {
+  width: min(100%, 650px);
+  max-height: 88dvh;
+  overflow: auto;
+  padding: clamp(16px, 4vw, 30px);
+  border: 1px solid var(--edge);
+  border-radius: 14px;
+  color: var(--ink);
+  background: var(--paper-light);
+  box-shadow: 0 16px 44px #071d1570;
 }
-.homeTop{position:relative;z-index:3;display:flex;justify-content:flex-end;gap:8px}
-.homeBtns{display:flex;gap:8px;flex-wrap:wrap}
-.logoArea{position:relative;z-index:2;max-width:860px;margin:6px auto 0;text-align:center}
-.brandMark{
-  display:flex; align-items:center; justify-content:center; gap:14px;
+.modalCard h2 { margin: 0 0 14px; font-size: 22px; }
+.modalCard ul { padding-left: 20px; }
+.modalCard li { margin: 8px 0; }
+.resultBig { margin: 0 0 6px; font-size: clamp(32px, 7vw, 54px); font-weight: 900; text-align: center; color: var(--ink); }
+.resultBig.fail { color: var(--danger); }
+.resultGrid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 8px; }
+.metric { padding: 9px 6px; text-align: center; background: var(--paper); border: 1px solid var(--edge); border-radius: 8px; }
+.metric span { display: block; font-size: 13px; font-weight: 700; }
+.metric b { display: block; font: 700 35px/1.15 var(--font-num); }
+.playerCard { margin: 8px 0; padding: 10px; border: 1px solid var(--edge); border-radius: 8px; color: var(--muted); }
+.rankingTable { width: 100%; border-collapse: collapse; color: var(--ink); }
+.rankingTable th, .rankingTable td { padding: 7px 5px; border-bottom: 1px solid var(--edge); text-align: left; overflow-wrap: anywhere; }
+#toast {
+  position: fixed;
+  z-index: 70;
+  top: calc(12px + var(--sat));
+  left: 50%;
+  transform: translateX(-50%);
+  display: none;
+  width: max-content;
+  max-width: min(90vw, 430px);
+  padding: 10px 16px;
+  border: 1px solid var(--felt-edge);
+  border-radius: 9px;
+  color: var(--paper-light);
+  background: var(--felt-dark);
+  text-align: center;
+  font-weight: 900;
+  overflow-wrap: anywhere;
+  box-shadow: 0 6px 18px #0b261c40;
+  pointer-events: none;
 }
-.mascotTitle{width:64px;height:64px;display:flex;align-items:center;justify-content:center}
-.logoWrap{text-align:center}
-.logo{
-  margin:0;
-  font-size:clamp(64px,14vw,116px);
-  font-weight:700;
-  font-family:var(--font-num);
-  letter-spacing:.03em;
-  line-height:.92;
-  font-variant-numeric:tabular-nums;
-}
-.logo .a{
-  background:linear-gradient(180deg,#eaf6ff,#9fb6e6);
-  -webkit-background-clip:text;background-clip:text;color:transparent;
-}
-.logo .b{color:var(--aqua);text-shadow:0 0 24px rgba(56,225,214,.55)}
-.logo .c{color:var(--amber);text-shadow:0 0 24px rgba(255,191,77,.5)}
-.tagline{
-  margin-top:12px;
-  font-size:clamp(14px,3vw,20px);
-  font-weight:600;
-  color:var(--muted);
-  letter-spacing:.02em;
-}
-.subtagline{
-  margin-top:4px;
-  font-size:clamp(11px,2.4vw,14px);
-  color:var(--muted2);
-  font-weight:500;
-  letter-spacing:.18em;
-  text-transform:uppercase;
-}
-.nameBar{position:relative;z-index:3;margin:18px auto 0;max-width:520px}
-.nameBar input{width:100%;text-align:center;font-weight:700}
-.modeCards{
-  position:relative;z-index:3;
-  display:grid;grid-template-columns:1fr 1fr;gap:14px;
-  max-width:760px;margin:18px auto 0;
-}
-.modeCard{
-  min-height:148px;
-  border-radius:22px;
-  border:1px solid var(--glass-border);
-  background:var(--panel2);
-  box-shadow:0 14px 34px rgba(0,0,0,.42), 0 1px 0 var(--glass-hi) inset;
-  padding:20px;
-  position:relative;overflow:hidden;text-align:left;
-  transition:transform .1s ease, box-shadow .2s ease, border-color .2s ease;
-}
-.modeCard:active{transform:translateY(2px)}
-.modeCard.solo{background:linear-gradient(160deg, rgba(56,225,214,.14), rgba(20,33,68,.6))}
-.modeCard.solo:hover{border-color:rgba(56,225,214,.45);box-shadow:0 14px 40px rgba(56,225,214,.2)}
-.modeCard.multi{background:linear-gradient(160deg, rgba(139,227,107,.14), rgba(20,33,68,.6))}
-.modeCard.multi:hover{border-color:rgba(139,227,107,.45);box-shadow:0 14px 40px rgba(139,227,107,.18)}
-.modeCardTitle{
-  font-size:clamp(30px,5vw,42px);
-  line-height:1.04;font-weight:800;color:var(--ink);font-feature-settings:"palt";
-}
-.modeCardSub{margin-top:10px;font-size:14px;font-weight:500;color:var(--muted)}
-.coopPanel{position:relative;z-index:3;max-width:620px;margin:16px auto 0;padding:16px}
-.coopPanel .row>*{flex:1}
-/* ホーム下段: 遊び方3ステップ＋自己ベスト（空洞だった余白を埋める。説明だけで判定には関与しない） */
-.homeInfo{position:relative;z-index:3;max-width:760px;margin:16px auto 0}
-.howRow{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
-.howStep{
-  display:flex;flex-direction:column;align-items:center;text-align:center;gap:4px;
-  padding:12px 8px 11px;border-radius:16px;
-  background:rgba(8,15,34,.45);border:1px solid var(--glass-border);
-  box-shadow:0 1px 0 var(--glass-hi) inset;
-}
-.howStep .ic{width:24px;height:24px;color:var(--aqua)}
-.howStep:nth-child(2) .ic{color:var(--amber)}
-.howStep:nth-child(3) .ic{color:var(--lime)}
-.howStep b{font-size:13px;font-weight:700;color:var(--ink);line-height:1.3;font-feature-settings:"palt"}
-.howStep span{font-size:11.5px;font-weight:400;color:var(--muted);line-height:1.45;white-space:nowrap;font-feature-settings:"palt"}
-.howStep .n{
-  font-family:var(--font-num);font-weight:700;font-size:12px;letter-spacing:.12em;color:var(--muted2);
-}
-.bestChip{
-  margin:12px auto 0;width:fit-content;max-width:100%;
-  display:inline-flex;align-items:center;gap:8px;
-  padding:9px 16px;border-radius:999px;
-  background:linear-gradient(180deg, rgba(255,191,77,.16), rgba(255,191,77,.06));
-  border:1px solid rgba(255,191,77,.4);color:var(--amber-soft);font-size:13px;font-weight:700;
-}
-.bestChip b{font-family:var(--font-num);font-weight:700;font-size:20px;line-height:1;color:var(--amber);font-variant-numeric:tabular-nums}
-.bestChip[hidden]{display:none}
-.homeFooter{
-  position:relative;z-index:3;text-align:center;margin-top:18px;
-  color:var(--muted2);font-weight:500;letter-spacing:.2em;font-size:12px;
-}
+#toast.back10, #toast.miss { background: var(--orange); border-color: #8f4226; color: #352014; }
+#toast.combo, #toast.turn { background: var(--mint); color: var(--ink); }
+.confetti { position: fixed; top: -10px; width: 10px; height: 16px; z-index: 80; pointer-events: none; animation: fall 2.6s linear forwards; }
+@keyframes fall { to { transform: translateY(110vh) rotate(720deg); opacity: .15; } }
 
-/* ===== LOBBY ===== */
-.lobby{padding:22px}
-.roomCode{
-  font-size:48px;line-height:1;font-weight:700;font-family:var(--font-num);color:var(--aqua);
-  letter-spacing:.1em;font-variant-numeric:tabular-nums;
-  text-shadow:0 0 26px rgba(56,225,214,.5);
+@media (max-width: 680px) {
+  main { padding: 14px max(12px, var(--sar)) 20px max(12px, var(--sal)); }
+  .topInner { padding: calc(6px + var(--sat)) max(12px, var(--sar)) 6px max(12px, var(--sal)); }
+  .topCtl button { padding-inline: 8px; }
+  .topCtl .bl { display: none; }
+  .home { grid-template-columns: minmax(0, 1fr); min-height: 0; }
+  .heroArtwork { min-height: 192px; }
+  .heroCards { width: 191px; }
+  .heroCard { font-size: 75px; border-radius: 10px; }
+  .heroCard span { top: 8px; left: 10px; }
+  .homeBody { padding: 22px 16px 16px; }
+  .logo { font-size: clamp(62px, 19vw, 95px); }
+  .tagline { margin: 10px 0 15px; font-size: 15px; }
+  .modeCards { margin-top: 14px; }
+  .modeCard { min-height: 62px; gap: 9px; padding: 8px; }
+  .modeIcon { width: 37px; height: 37px; }
+  .modeCardTitle { font-size: 17px; }
+  .roomForms { grid-template-columns: minmax(0, 1fr); }
+  .coopPanel { padding: 12px; }
+  .lobby { margin: 8px auto; }
+  .playMeta { align-items: start; flex-direction: column; gap: 4px; margin-bottom: 8px; }
+  .turnBanner { font-size: 18px; }
+  .playersRow { gap: 4px; justify-content: flex-start; }
+  .playerChip { max-width: 102px; padding: 1px 5px; }
+  .board { padding: 7px; }
+  .piles { gap: 5px; }
+  .pile { height: clamp(88px, 23vw, 115px); gap: 2px; }
+  .pileMark { top: 6px; left: 7px; font-size: 13px; }
+  .pileValue { font-size: clamp(36px, 10.5vw, 60px); }
+  .pileDir { font-size: 11px; }
+  .scoreboard { margin-bottom: 10px; grid-template-columns: 1.35fr 1fr 1fr 1fr; }
+  .scoreboard > div { padding: 6px 7px; }
+  .scoreboard .small { font-size: 11px; }
+  .scoreLine { display: block; }
+  .scoreLine .small { display: block; white-space: nowrap; }
+  .handWrap { margin-top: 12px; }
+  .handHeading .small { font-size: 12px; }
+  .handCards { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 7px; }
+  .actionInner { grid-template-columns: minmax(0, 1fr) auto; width: 100%; }
+  .resultGrid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
-.badge{
-  display:inline-flex;align-items:center;gap:7px;
-  background:rgba(255,255,255,.05);
-  border:1px solid var(--glass-border);
-  border-radius:999px;padding:8px 13px;margin:4px;
-  font-size:14px;font-weight:700;color:var(--ink);
-}
-
-/* ===== PLAY ===== */
-.playersRow{display:flex;justify-content:flex-end;gap:8px;flex-wrap:wrap;margin-bottom:8px}
-.playerChip{
-  width:72px;
-  border:1px solid var(--glass-border);
-  border-radius:14px;background:var(--panel2);
-  box-shadow:0 6px 16px rgba(0,0,0,.35);
-  padding:6px 4px 7px;text-align:center;
-  font-size:12px;font-weight:700;color:var(--muted);
-  transition:outline .15s, box-shadow .15s;
-}
-.playerChip.active{outline:2px solid var(--aqua);box-shadow:0 0 18px rgba(56,225,214,.35)}
-.playerChip .avatar{width:30px;height:30px;margin:0 auto 4px}
-.turnBanner{
-  display:flex;justify-content:center;align-items:center;gap:9px;
-  width:fit-content;max-width:100%;margin:0 auto 10px;
-  padding:9px 20px;border-radius:999px;
-  border:1px solid var(--glass-border);
-  font-size:clamp(18px,4.2vw,26px);font-weight:800;
-  backdrop-filter:blur(8px);
-}
-.turnBanner.mine{
-  background:linear-gradient(180deg, rgba(56,225,214,.22), rgba(56,225,214,.08));
-  color:var(--aqua-soft);border-color:rgba(56,225,214,.5);
-  box-shadow:0 0 22px rgba(56,225,214,.28);
-}
-.turnBanner.other{
-  background:linear-gradient(180deg, rgba(120,150,220,.18), rgba(120,150,220,.05));
-  color:#bcd0ff;border-color:rgba(140,170,230,.4);
-}
-.playPanel{padding:12px}
-.playGrid{
-  display:grid;
-  grid-template-columns:minmax(0,1fr) minmax(92px,130px);
-  gap:10px;align-items:stretch;
-}
-.board{
-  min-width:0;padding:10px;
-  background:rgba(8,15,34,.45);
-  border:1px solid var(--glass-border);
-  border-radius:18px;
-  box-shadow:0 1px 0 var(--glass-hi) inset;
-  display:flex;align-items:center;justify-content:center;
-}
-.piles{width:100%;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
-.pile{
-  min-width:0;height:124px;position:relative;overflow:hidden;
-  border:1px solid var(--glass-border);
-  border-radius:16px;
-  background:linear-gradient(180deg, rgba(20,33,68,.85), rgba(11,19,42,.85));
-  display:flex;align-items:center;justify-content:center;text-align:center;
-  padding:4px;cursor:pointer;
-  transition:transform .09s ease, box-shadow .18s ease, border-color .18s ease;
-}
-.pile:active{transform:translateY(2px)}
-/* channel direction tint stripe */
-.pile:before{
-  content:"";position:absolute;left:0;right:0;height:46px;pointer-events:none;
-  background:radial-gradient(120% 100% at 50% 0, currentColor, transparent 72%);
-  opacity:.16;
-}
-.pile.up:before{top:0}
-.pile.down:before{bottom:0;background:radial-gradient(120% 100% at 50% 100%, currentColor, transparent 72%)}
-.pile.up{color:var(--aqua)}
-.pile.down{color:var(--amber)}
-.pile:nth-child(1){box-shadow:0 0 0 1px rgba(56,225,214,.12) inset}
-.pile:nth-child(2){box-shadow:0 0 0 1px rgba(139,227,107,.12) inset}
-.pile:nth-child(3){box-shadow:0 0 0 1px rgba(255,191,77,.12) inset}
-.pile:nth-child(4){box-shadow:0 0 0 1px rgba(184,156,255,.12) inset}
-.pileArrow{
-  position:absolute;left:50%;transform:translateX(-50%);
-  width:20px;height:20px;margin:0;display:block;font-size:0;line-height:0;z-index:1;
-}
-.pileArrow.up{top:12px}
-.pileArrow.down{bottom:12px}
-.pileArrow.up:before{
-  content:"";position:absolute;left:50%;top:0;transform:translateX(-50%);
-  border-left:9px solid transparent;border-right:9px solid transparent;
-  border-bottom:12px solid var(--aqua);
-  filter:drop-shadow(0 0 6px rgba(56,225,214,.6));
-}
-.pileArrow.down:before{
-  content:"";position:absolute;left:50%;top:4px;transform:translateX(-50%);
-  border-left:9px solid transparent;border-right:9px solid transparent;
-  border-top:12px solid var(--amber);
-  filter:drop-shadow(0 0 6px rgba(255,191,77,.55));
-}
-.pileValue{
-  position:relative;z-index:2;width:100%;display:block;text-align:center;
-  line-height:1;padding:0;margin:0;font-size:56px;font-weight:700;font-family:var(--font-num);
-  font-variant-numeric:tabular-nums;white-space:nowrap;overflow:hidden;
-  text-shadow:0 0 18px currentColor;
-}
-.pileValue.p1{color:var(--p1)}
-.pileValue.p2{color:var(--p2)}
-.pileValue.p3{color:var(--p3)}
-.pileValue.p4{color:var(--p4)}
-.sideInfo{
-  min-width:0;background:rgba(8,15,34,.45);
-  border:1px solid var(--glass-border);border-radius:16px;
-  box-shadow:0 1px 0 var(--glass-hi) inset;
-  padding:10px;display:flex;flex-direction:column;gap:9px;
-}
-.scoreBig{
-  font-size:clamp(28px,4.4vw,40px);line-height:1;font-weight:700;font-family:var(--font-num);
-  color:var(--aqua);text-align:right;font-variant-numeric:tabular-nums;
-  white-space:nowrap;text-shadow:0 0 18px rgba(56,225,214,.4);
-}
-.scoreList{font-size:12px;font-weight:600;color:var(--muted);line-height:1.6}
-.scoreList div{display:flex;justify-content:space-between;gap:5px;white-space:nowrap}
-.scoreList div span:last-child{color:var(--ink);font-family:var(--font-num);font-weight:700;font-size:13px}
-.deckInfo{margin-top:auto;padding-top:8px;border-top:1px solid rgba(120,160,230,.18)}
-.deckNumber{
-  font-size:clamp(30px,5.2vw,46px);line-height:1;font-weight:700;font-family:var(--font-num);
-  color:var(--lime);text-align:center;font-variant-numeric:tabular-nums;
-  text-shadow:0 0 16px rgba(139,227,107,.35);
-}
-.handWrap{
-  margin-top:10px;background:rgba(8,15,34,.45);
-  border:1px solid var(--glass-border);border-radius:18px;
-  box-shadow:0 1px 0 var(--glass-hi) inset;padding:10px;
-  min-height:112px;
-}
-.handCards{
-  display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;grid-auto-rows:78px;
-}
-.card{
-  height:78px;min-width:0;border-radius:14px;
-  border:1px solid var(--glass-border);
-  background:linear-gradient(180deg, rgba(40,58,112,.92), rgba(20,33,68,.92));
-  box-shadow:0 6px 16px rgba(0,0,0,.4), 0 1px 0 rgba(255,255,255,.07) inset;
-  position:relative;display:flex;align-items:center;justify-content:center;
-  color:var(--cardText);font-size:clamp(24px,6vw,32px);font-weight:700;font-family:var(--font-num);
-  font-variant-numeric:tabular-nums;cursor:pointer;
-  transition:transform .09s ease, box-shadow .18s ease, border-color .18s ease, background .18s ease;
-}
-.card:active{transform:translateY(1px)}
-.card.selected{
-  transform:translateY(-6px);
-  background:linear-gradient(180deg, rgba(56,225,214,.3), rgba(20,60,72,.9));
-  border-color:rgba(56,225,214,.7);
-  box-shadow:0 10px 24px rgba(56,225,214,.4), 0 0 0 1px rgba(56,225,214,.6) inset;
-  color:#eafffd;
-}
-.card.locked{opacity:.5;cursor:default}
-.card.cardEmpty{
-  pointer-events:none;
-  background:rgba(255,255,255,.03);
-  border:1px dashed rgba(120,160,230,.25);
-  box-shadow:none;
-}
-.card.cardEmpty::after{
-  content:"";width:18px;height:18px;border-radius:50%;
-  background:rgba(120,160,230,.14);
-}
-
-/* ===== ACTION BAR ===== */
-.actionBar{
-  position:fixed;left:0;right:0;bottom:0;z-index:40;
-  padding:10px max(10px,var(--sal)) calc(10px + var(--sab)) max(10px,var(--sar));
-  background:linear-gradient(180deg, transparent, rgba(8,14,32,.92) 30%);
-  border-top:1px solid var(--glass-border);
-  backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
-}
-.actionInner{
-  max-width:980px;margin:0 auto;display:grid;
-  grid-template-columns:1fr 56px;gap:8px;
-}
-.actionInner button{width:100%;min-height:50px}
-
-/* ===== overlays ===== */
-#toast{
-  position:fixed;left:50%;top:14%;transform:translateX(-50%);
-  z-index:120;display:none;padding:13px 20px;border-radius:999px;
-  background:rgba(20,33,68,.92);border:1px solid var(--glass-border);
-  color:var(--ink);font-size:21px;font-weight:800;white-space:nowrap;
-  box-shadow:0 12px 34px rgba(0,0,0,.5);backdrop-filter:blur(8px);
-}
-#toast.back10{
-  background:linear-gradient(180deg, rgba(255,191,77,.95), rgba(230,150,30,.95));
-  color:#2a1500;border-color:rgba(255,210,120,.7);
-  box-shadow:var(--glow-amber), 0 12px 34px rgba(0,0,0,.5);
-}
-#toast.combo{
-  background:linear-gradient(180deg, rgba(184,156,255,.95), rgba(130,100,230,.95));
-  color:#160a33;border-color:rgba(200,180,255,.7);
-}
-#toast.turn{
-  background:linear-gradient(180deg, rgba(56,225,214,.95), rgba(30,170,160,.95));
-  color:#04221f;border-color:rgba(150,255,245,.7);
-}
-#toast.miss{
-  background:linear-gradient(180deg, rgba(255,107,138,.95), rgba(210,60,90,.95));
-  color:#2a040e;border-color:rgba(255,160,180,.7);
-}
-.modalOverlay,#resultOverlay{
-  position:fixed;inset:0;display:none;align-items:center;justify-content:center;
-  z-index:100;padding:18px;background:rgba(4,8,20,.72);backdrop-filter:blur(6px);
-}
-.modalCard,.resultCard{
-  width:min(94vw,640px);max-height:88vh;max-height:88dvh;overflow:auto;padding:24px;
-  background:linear-gradient(180deg, rgba(22,36,74,.96), rgba(13,22,48,.96));
-  border:1px solid var(--glass-border);border-radius:26px;
-  box-shadow:0 24px 70px rgba(0,0,0,.6), 0 1px 0 var(--glass-hi) inset;
-}
-.modalCard h2{
-  text-align:center;margin:0 0 16px;font-weight:900;letter-spacing:.04em;
-  background:linear-gradient(90deg,var(--aqua),var(--lime));
-  -webkit-background-clip:text;background-clip:text;color:transparent;
-}
-.resultCard .title{text-align:center;margin:0 0 8px}
-.modalCard li{margin:10px 0;line-height:1.6;font-weight:600;color:var(--ink)}
-.modalCard ul{padding-left:20px}
-.confirmText{text-align:center;font-size:22px;font-weight:800;line-height:1.4;margin:10px 0 8px;color:var(--ink)}
-.resultBig{
-  font-size:56px;line-height:1;font-weight:700;font-family:var(--font-num);text-align:center;
-  margin:8px 0;letter-spacing:.06em;
-}
-.resultBig.clear{color:var(--aqua);text-shadow:0 0 30px rgba(56,225,214,.6)}
-.resultBig.fail{color:var(--danger);text-shadow:0 0 26px rgba(255,107,138,.5)}
-.resultGrid{display:grid;grid-template-columns:repeat(4,1fr);gap:9px}
-.metric{
-  background:rgba(8,15,34,.55);border:1px solid var(--glass-border);
-  border-radius:16px;padding:10px 6px;text-align:center;
-}
-.metric span{display:block;font-size:11px;font-weight:700;color:var(--muted);letter-spacing:.1em}
-.metric b{display:block;font-size:26px;font-weight:700;font-family:var(--font-num);color:var(--ink);font-variant-numeric:tabular-nums}
-.playerCard{
-  margin:8px 0;padding:12px;background:rgba(8,15,34,.5);
-  border:1px solid var(--glass-border);border-radius:16px;font-weight:600;color:var(--ink);line-height:1.6;
-}
-.rankingTable{width:100%;border-collapse:collapse;font-size:14px;color:var(--ink)}
-.rankingTable th,.rankingTable td{padding:9px 8px;border-bottom:1px solid rgba(120,160,230,.15);text-align:left}
-.rankingTable th{color:var(--muted);font-weight:700;font-size:12px;letter-spacing:.06em}
-.confetti{position:fixed;top:-10px;width:10px;height:16px;z-index:130;pointer-events:none;animation:fall 2.6s linear forwards}
-@keyframes fall{to{transform:translateY(110vh) rotate(720deg);opacity:.15}}
-
-/* ===== RESPONSIVE ===== */
-@media (min-width:721px){
-  .handCards{grid-template-columns:repeat(8,minmax(56px,1fr));grid-auto-rows:74px}
-  .card{height:74px}
-  .handWrap{min-height:100px}
-}
-@media (max-width:720px){
-  .brandMark{gap:10px}
-  .mascotTitle{width:52px;height:52px}
-  .modeCards{grid-template-columns:1fr}
-  .modeCard{min-height:120px}
-  .modeCardTitle{font-size:30px}
-}
-@media (max-width:520px){
-  main{padding:0 10px 100px}
-  .topTitle .name{font-size:16px}
-  .topCtl button{font-size:12px;padding:8px 9px}
-  .home{padding:14px 12px 18px}
-  .logo{font-size:clamp(46px,15vw,72px)}
-  .tagline{font-size:13px}
-  .subtagline{font-size:11px;letter-spacing:.14em}
-  .modeCard{min-height:108px;padding:15px}
-  .modeCardTitle{font-size:27px}
-  .modeCardSub{font-size:13px}
-  .coopPanel .row>*{flex:1 1 100%}
-  .playersRow{display:none}
-  .turnBanner{font-size:18px;padding:8px 16px;margin-bottom:8px}
-  .playPanel{padding:8px}
-  .playGrid{grid-template-columns:minmax(0,1fr) 88px;gap:7px}
-  .board{padding:6px;border-radius:15px}
-  .piles{grid-template-columns:repeat(2,minmax(0,1fr));gap:7px}
-  .pile{height:84px;border-radius:14px;padding:3px}
-  .pileArrow{width:16px;height:16px}
-  .pileArrow.up{top:8px}
-  .pileArrow.down{bottom:8px}
-  .pileArrow.up:before{border-left-width:7px;border-right-width:7px;border-bottom-width:10px}
-  .pileArrow.down:before{border-left-width:7px;border-right-width:7px;border-top-width:10px;top:3px}
-  .pileValue{font-size:38px}
-  .sideInfo{padding:7px;border-radius:14px;gap:6px}
-  .scoreBig{font-size:28px;text-align:center}
-  .scoreList{font-size:11px;line-height:1.45}
-  .deckNumber{font-size:30px}
-  .handWrap{margin-top:8px;padding:8px;border-radius:15px;min-height:146px}
-  .handCards{grid-template-columns:repeat(4,minmax(0,1fr));gap:7px;grid-auto-rows:64px}
-  .card{height:64px;font-size:26px;border-radius:12px}
-  .actionInner{grid-template-columns:1fr 52px;gap:6px}
-  .actionInner button{min-height:48px;font-size:14px;padding:8px 6px}
-  .resultGrid{grid-template-columns:repeat(2,1fr)}
-}
-@media (max-width:390px){
-  .logo{font-size:clamp(40px,15vw,58px)}
-  .modeCardTitle{font-size:25px}
-  .pile{height:78px}
-  .card{height:60px;font-size:22px}
-  .handWrap{min-height:138px}
-  .handCards{grid-auto-rows:60px}
-}
-
-/* 縦に余裕がある端末（iPhone 13 以上の高さ）では場札・手札を一段大きく。対局画面の下半分が空洞だった対策 */
-@media (max-width:520px) and (min-height:760px){
-  .pile{height:104px}
-  .pileValue{font-size:46px}
-  .pileArrow{width:18px;height:18px}
-  .pileArrow.up{top:10px}
-  .pileArrow.down{bottom:10px}
-  .handWrap{min-height:176px;padding:10px}
-  .handCards{grid-auto-rows:76px;gap:8px}
-  .card{height:76px;font-size:30px;border-radius:14px}
-  .scoreBig{font-size:32px}
-  .deckNumber{font-size:34px}
-  .turnBanner{margin-bottom:10px}
-}
-@media (max-width:390px) and (min-height:760px){
-  .pile{height:96px}
-  .pileValue{font-size:42px}
-  .handWrap{min-height:168px}
-  .handCards{grid-auto-rows:72px}
-  .card{height:72px;font-size:28px}
-}
-
-/* ===== pile A/B/C/D channel labels ===== */
-.pileMark{
-  position:absolute;z-index:3;line-height:1;font-size:13px;font-weight:700;font-family:var(--font-num);
-  font-variant-numeric:tabular-nums;opacity:.85;pointer-events:none;
-  background:transparent;border:0;box-shadow:none;letter-spacing:.04em;
-}
-.pileMarkTop{left:9px;top:8px}
-.pileMarkBottom{right:9px;bottom:8px;transform:rotate(180deg)}
-.pileMark.p1{color:var(--p1)}
-.pileMark.p2{color:var(--p2)}
-.pileMark.p3{color:var(--p3)}
-.pileMark.p4{color:var(--p4)}
-@media (max-width:520px){
-  .pileMark{font-size:11px}
-  .pileMarkTop{left:6px;top:6px}
-  .pileMarkBottom{right:6px;bottom:6px}
-}
-
-/* ===== 山札の残量ミニバー ===== */
-.deckBar{
-  margin-top:6px;height:6px;border-radius:999px;
-  background:rgba(120,160,230,.16);overflow:hidden;
-}
-.deckBar i{
-  display:block;height:100%;width:100%;border-radius:999px;
-  background:linear-gradient(90deg,var(--aqua),var(--lime));
-  box-shadow:0 0 8px rgba(139,227,107,.45);
-  transition:width .3s ease;
+@media (prefers-reduced-motion: reduce) {
+  .pile[data-feedback], .confetti { animation: none; }
+  .confetti { display: none; }
+  button, .deckBar i { transition: none; }
 }
 </style>
 <meta name="description" content="数字カードをつないで6000点をめざす協力カードゲーム。ひとりでも、友達とオンラインでも。">
-<meta name="theme-color" content="#28d5c5">
+<meta name="theme-color" content="#f7f0df">
 <meta property="og:title" content="BACK10">
 <meta property="og:description" content="数字カードをつないで6000点をめざす協力カードゲーム。ひとりでも、友達とオンラインでも。">
 <meta property="og:type" content="website">
@@ -932,8 +643,8 @@ main{max-width:980px;margin:0 auto;padding:0 12px 110px;position:relative;z-inde
     ".abcOv.show{opacity:1}" +
     "@media(min-width:600px){.abcOv{align-items:center}}" +
     ".abcSheet{width:100%;max-width:440px;box-sizing:border-box;" +
-    "background:linear-gradient(180deg,#2a2633,#1d1a26);color:#f4eee6;" +
-    "border:1px solid rgba(255,255,255,.16);border-bottom:none;" +
+    "background:var(--paper-light);color:var(--ink);" +
+    "border:1px solid var(--edge);border-bottom:none;" +
     "border-radius:22px 22px 0 0;padding:20px 18px calc(16px + env(safe-area-inset-bottom,0px));" +
     "box-shadow:0 -18px 50px rgba(0,0,0,.5);transform:translateY(24px);transition:transform .18s ease}" +
     ".abcOv.show .abcSheet{transform:translateY(0)}" +
@@ -941,16 +652,16 @@ main{max-width:980px;margin:0 auto;padding:0 12px 110px;position:relative;z-inde
     ".abcTitle{margin:0;font-size:18px;font-weight:900;line-height:1.45;letter-spacing:.01em}" +
     ".abcLines{margin:14px 0 0;display:grid;gap:6px}" +
     ".abcRow{display:flex;justify-content:space-between;gap:12px;font-size:14px;font-weight:700;" +
-    "padding:9px 12px;border-radius:12px;background:rgba(255,255,255,.055)}" +
+    "padding:9px 12px;border-radius:8px;background:var(--paper)}" +
     ".abcRow b{font-weight:900}" +
-    ".abcNote{margin:12px 2px 0;font-size:12.5px;line-height:1.5;color:#b9b0c9;font-weight:600}" +
+    ".abcNote{margin:12px 2px 0;font-size:12.5px;line-height:1.5;color:var(--muted);font-weight:600}" +
     ".abcBtns{margin-top:16px;display:grid;grid-template-columns:1fr 1.4fr;gap:10px}" +
     ".abcBtn{border:none;border-radius:15px;min-height:52px;font-size:16px;font-weight:900;" +
     "font-family:inherit;cursor:pointer;letter-spacing:.02em}" +
     ".abcBtn:active{transform:translateY(1px)}" +
-    ".abcCancel{background:rgba(255,255,255,.09);color:#f4eee6;border:1px solid rgba(255,255,255,.2)}" +
+    ".abcCancel{background:var(--paper-light);color:var(--ink);border:1px solid var(--edge)}" +
     ".abcOk{color:#1c1626;box-shadow:0 5px 0 rgba(0,0,0,.35)}" +
-    ".abcOk.danger{color:#fff;background:linear-gradient(180deg,#e5574f,#c23a33);box-shadow:0 5px 0 #7e2420}" +
+    ".abcOk.danger{color:#fff;background:var(--danger);box-shadow:none}" +
     ".abcToast{position:fixed;left:50%;bottom:calc(24px + env(safe-area-inset-bottom,0px));z-index:9991;" +
     "transform:translate(-50%,14px);max-width:88vw;box-sizing:border-box;" +
     "background:rgba(28,24,38,.95);color:#f4eee6;border:1px solid rgba(255,255,255,.2);" +
@@ -1030,11 +741,13 @@ main{max-width:980px;margin:0 auto;padding:0 12px 110px;position:relative;z-inde
 
       requestAnimationFrame(function () { ov.classList.add("show"); });
 
+      let closing = false;
       function close(val) {
+        if (closing) return;
+        closing = true;
         ov.classList.remove("show");
         document.removeEventListener("keydown", onKey);
-        setTimeout(function () { ov.remove(); }, 180);
-        resolve(val);
+        setTimeout(function () { ov.remove(); resolve(val); }, 180);
       }
       function onKey(e) { if (e.key === "Escape") close(false); }
 
@@ -1064,157 +777,157 @@ main{max-width:980px;margin:0 auto;padding:0 12px 110px;position:relative;z-inde
 })();
 
 </script>
-<div class="topbar">
-  
-  <div class="topTitle">
-    <svg class="topEmblem" viewBox="0 0 40 40" aria-hidden="true">
-      <defs><linearGradient id="emb" x1="0" y1="0" x2="1" y2="1">
-        <stop offset="0" stop-color="#38e1d6"/><stop offset="1" stop-color="#8be36b"/>
-      </linearGradient></defs>
-      <rect x="3" y="3" width="34" height="34" rx="10" fill="none" stroke="url(#emb)" stroke-width="2.5"/>
-      <path d="M11 25 L16 14 L20 22 L24 12 L29 26" fill="none" stroke="url(#emb)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
-    </svg>
-    <span class="name">BACK10</span>
+<header class="topbar">
+  <div class="topInner">
+    <div class="topTitle">
+      <span class="topMark" aria-hidden="true"><svg class="ic"><use href="#ic-restart"/></svg></span>
+      <span>BACK10</span>
+    </div>
+    <div class="topCtl" aria-label="ゲーム情報">
+      <button class="ghost rulesButton" onclick="showRules()" aria-label="遊び方"><svg class="ic" aria-hidden="true"><use href="#ic-book"/></svg><span class="bl">遊び方</span></button>
+      <button class="ghost" onclick="openRankings()" aria-label="ランキング"><svg class="ic" aria-hidden="true"><use href="#ic-trophy"/></svg><span class="bl">ランキング</span></button>
+      <button class="ghost bgmButton" onclick="toggleBgm()" aria-label="BGM" aria-pressed="false"><svg class="ic" aria-hidden="true"><use href="#ic-music"/></svg><span class="bl">BGM</span></button>
+    </div>
   </div>
-  <div class="topCtl">
-    <button class="softpink" onclick="toggleBgm()" aria-label="BGM"><span class="bi"><svg class="ic"><use href="#ic-music"/></svg></span><span class="bl">BGM</span></button>
-    <button class="ghost" onclick="showRules()" aria-label="ルール"><span class="bi"><svg class="ic"><use href="#ic-book"/></svg></span><span class="bl">ルール</span></button>
-    <button class="ghost" onclick="openRankings()" aria-label="ランキング"><span class="bi"><svg class="ic"><use href="#ic-trophy"/></svg></span><span class="bl">ランキング</span></button>
-  </div>
-</div>
+</header>
 
 <main>
-  <section id="homeScreen" class="screen active">
+  <section id="homeScreen" class="screen active" aria-labelledby="homeTitle">
     <div class="panel home">
-      <div class="homeTop">
-        <div class="homeBtns"></div>
-      </div>
-
-      <div class="logoArea">
-        <div class="brandMark">
-          <div class="mascotTitle" id="homeMascotLeft"></div>
-          <div class="logoWrap">
-            <div class="logo"><span class="a">BACK</span><span class="b">1</span><span class="c">0</span></div>
-          </div>
-          <div class="mascotTitle" id="homeMascotRight"></div>
+      <div class="heroArtwork" aria-hidden="true">
+        <div class="heroCards">
+          <div class="heroCard first"><span>A</span>42</div>
+          <svg class="heroArrow" viewBox="0 0 48 48" fill="none"><path d="M42 29C35 15 22 10 8 21m0 0 3-11m-3 11 12 1" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <div class="heroCard second"><span>−10</span>32</div>
         </div>
-        <div class="tagline">数字を捌け。10で流れを変えろ。</div>
-        <div class="subtagline">FLOW · 協力で数字の流れを整える</div>
       </div>
-
-      <div class="nameBar">
-        <input id="nameInput" placeholder="名前を入力してください" />
-      </div>
-
-      <div class="modeCards">
-        <button class="modeCard solo" onclick="quickSolo()">
-          <div class="modeCardTitle">ひとりで<br>あそぶ</div>
-          <div class="modeCardSub">6000点クリアをめざそう</div>
-        </button>
-        <button class="modeCard multi" onclick="showCoopSetup()">
-          <div class="modeCardTitle">みんなで<br>あそぶ</div>
-          <div class="modeCardSub">協力プレイでハイスコアをめざそう</div>
-        </button>
-      </div>
-
-      <div id="coopSetup" class="panel coopPanel" style="display:none">
-        <div class="small">みんなであそぶ設定</div>
-        <div class="row" style="margin-top:10px">
-          <select id="playerCount">
-            <option value="2" selected>2人</option>
-            <option value="3">3人</option>
-            <option value="4">4人</option>
-            <option value="5">5人</option>
-          </select>
-          <input id="roomInput" placeholder="部屋ID（任意）" />
+      <div class="homeBody">
+        <h1 class="logo" id="homeTitle" tabindex="-1">BACK<span>10</span></h1>
+        <p class="tagline">4つの場に数字をつないで、6,000点をめざそう。</p>
+        <label class="nameBar" for="nameInput">表示名
+          <input id="nameInput" placeholder="未入力でも遊べます" autocomplete="nickname" />
+        </label>
+        <div class="modeCards">
+          <button class="modeCard solo" onclick="quickSolo()">
+            <span class="modeIcon" aria-hidden="true"><svg class="ic"><use href="#ic-updown"/></svg></span>
+            <span><b class="modeCardTitle">ひとりで遊ぶ</b><span class="modeCardSub">すぐにスタート</span></span>
+            <span class="modeNext" aria-hidden="true">→</span>
+          </button>
+          <button class="modeCard multi" id="coopToggle" onclick="showCoopSetup()" aria-controls="coopSetup" aria-expanded="false">
+            <span class="modeIcon" aria-hidden="true"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"><circle cx="8" cy="8" r="3"/><circle cx="16" cy="8" r="3"/><path d="M2 19v-2a4 4 0 0 1 4-4h4a4 4 0 0 1 4 4v2m2-6h2a4 4 0 0 1 4 4v2"/></svg></span>
+            <span><b class="modeCardTitle">みんなで遊ぶ</b><span class="modeCardSub">2〜5人でオンライン協力</span></span>
+            <span class="modeNext" aria-hidden="true">↓</span>
+          </button>
         </div>
-        <div class="row" style="margin-top:10px">
-          <button class="primary" onclick="createCoopRoom()">部屋を作る</button>
-          <button class="good" onclick="joinCoopRoom()">部屋に入る</button>
-        </div>
-        <div class="small" style="margin-top:10px">部屋を作った人がゲーム開始できます。スタート順はランダムです。</div>
+        <div class="bestChip" id="bestChip" hidden><svg class="ic" aria-hidden="true"><use href="#ic-crown"/></svg>自己ベスト <b id="bestScore">0</b></div>
       </div>
-
-      <!-- 遊び方3ステップ（ルール本文は ☰ / ルール で）＋ この端末の自己ベスト -->
-      <div class="homeInfo">
-        <div class="howRow">
-          <div class="howStep"><span class="n">01</span><svg class="ic"><use href="#ic-updown"/></svg><b>上りは大きく<br>下りは小さく</b><span>4つの場に<br>手札を置く</span></div>
-          <div class="howStep"><span class="n">02</span><svg class="ic"><use href="#ic-restart"/></svg><b>BACK10</b><span>ちょうど10差で<br>逆向きに戻せる</span></div>
-          <div class="howStep"><span class="n">03</span><svg class="ic"><use href="#ic-trophy"/></svg><b>6000点で<br>クリア</b><span>連続で出すほど<br>高得点</span></div>
-        </div>
-        <div class="bestChip" id="bestChip" hidden><svg class="ic"><use href="#ic-crown"/></svg>自己ベスト <b id="bestScore">0</b></div>
-      </div>
-
-      <div class="homeFooter">© BACK10 · FLOW</div>
     </div>
+    <section id="coopSetup" class="panel coopPanel" aria-labelledby="coopTitle" hidden>
+      <h2 id="coopTitle" tabindex="-1">オンライン協力</h2>
+      <div class="roomForms" id="roomForms">
+        <form class="roomForm" onsubmit="createCoopRoom(); return false">
+          <h3>部屋を作る</h3>
+          <p class="small">先に部屋を作って、友だちを招待。</p>
+          <fieldset>
+            <label for="playerCount">プレイ人数</label>
+            <select id="playerCount">
+              <option value="2" selected>2人</option>
+              <option value="3">3人</option>
+              <option value="4">4人</option>
+              <option value="5">5人</option>
+            </select>
+            <details>
+              <summary>部屋IDを自分で指定</summary>
+              <label class="small" for="createRoomInput">部屋ID（任意）</label>
+              <input id="createRoomInput" placeholder="空欄なら自動発行" autocomplete="off" />
+            </details>
+            <button class="primary" type="submit">作成する</button>
+          </fieldset>
+        </form>
+        <form class="roomForm" id="joinForm" onsubmit="joinCoopRoom(); return false">
+          <h3>招待された部屋に入る</h3>
+          <p class="small">友だちから届いた部屋IDを入力。</p>
+          <fieldset>
+            <label for="roomInput">部屋ID</label>
+            <input id="roomInput" placeholder="部屋IDを入力" autocomplete="off" required />
+            <button class="primary" type="submit">参加する</button>
+          </fieldset>
+        </form>
+      </div>
+      <p id="roomStatus" class="roomStatus" role="status"></p>
+    </section>
   </section>
 
-  <section id="lobbyScreen" class="screen">
+  <section id="lobbyScreen" class="screen" aria-labelledby="lobbyTitle">
     <div class="panel lobby">
-      <div class="small">部屋ID</div>
-      <div id="roomCodeText" class="roomCode">----</div>
-      <div id="lobbyStatus" class="small" style="margin-top:12px"></div>
-      <div id="lobbyPlayers" style="margin-top:10px"></div>
-      <div class="row" style="margin-top:16px">
+      <h1 id="lobbyTitle" tabindex="-1">オンラインロビー</h1>
+      <div class="inviteBox">
+        <div><div class="small">部屋ID</div><div id="roomCodeText" class="roomCode">----</div></div>
+        <div class="row">
+          <button class="ghost" onclick="copyRoom(true)">招待リンクをコピー</button>
+          <button class="ghost" onclick="copyRoom()">IDをコピー</button>
+        </div>
+        <input id="inviteFallback" aria-label="コピー用の招待リンクまたは部屋ID" readonly hidden />
+      </div>
+      <div id="lobbyStatus" class="lobbyStatus" role="status"></div>
+      <div id="lobbyPlayers" class="lobbyPlayers"></div>
+      <div class="row lobbyActions">
         <button class="primary" id="startBtn" onclick="startOnlineGame()">ゲーム開始</button>
-        <button class="ghost" onclick="copyRoom()">部屋IDコピー</button>
         <button class="warn" onclick="leaveRoom()">退出</button>
       </div>
     </div>
   </section>
 
-  <section id="playScreen" class="screen">
-    <div id="playersRow" class="playersRow"></div>
-    <div id="turnBanner" class="turnBanner mine">あなたのターン！</div>
-
+  <section id="playScreen" class="screen" aria-labelledby="turnBanner">
+    <div class="playMeta">
+      <div id="turnBanner" class="turnBanner mine" aria-live="polite" tabindex="-1">あなたの手番</div>
+      <div id="playersRow" class="playersRow" aria-label="プレイヤー"></div>
+    </div>
     <div class="panel playPanel">
-      <div class="playGrid">
-        <div class="board">
-          <div id="piles" class="piles"></div>
+      <div class="scoreboard" aria-label="対戦状況">
+        <div>
+          <div class="small">スコア</div>
+          <div class="scoreLine"><strong id="scoreNow">0</strong><span class="small">/ 6,000</span></div>
         </div>
-
-        <div class="sideInfo">
-          <div>
-            <div class="small">スコア</div>
-            <div id="scoreNow" class="scoreBig">0</div>
-          </div>
-          <div class="scoreList">
-            <div><span>BACK10</span><span id="back10Now">0</span></div>
-            <div><span>ターン</span><span id="turnPlayNow">0</span></div>
-            <div><span>目標</span><span>6000</span></div>
-          </div>
-          <div class="deckInfo">
-            <div class="small" style="text-align:center">山札</div>
-            <div id="deckCount" class="deckNumber">0</div>
-            <div class="deckBar"><i id="deckBarFill"></i></div>
-          </div>
+        <div>
+          <div class="small">山札</div>
+          <strong id="deckCount">0</strong>
+          <div class="deckBar" aria-hidden="true"><i id="deckBarFill"></i></div>
         </div>
+        <div><div class="small">BACK10</div><strong id="back10Now">0</strong></div>
+        <div><div class="small">この手番</div><strong id="turnPlayNow">0</strong></div>
       </div>
-
+      <div class="board" aria-label="4つの場">
+        <div id="piles" class="piles"></div>
+      </div>
       <div class="handWrap">
+        <div class="handHeading">
+          <h2>手札</h2>
+          <span id="handPrompt" class="small" aria-live="polite"></span>
+        </div>
         <div id="hand" class="handCards"></div>
+      </div>
+    </div>
+    <div id="actionBar" class="actionBar" style="display:none">
+      <div class="actionInner">
+        <button class="primary" id="endTurnBtn" onclick="endTurn()">手番を終える</button>
+        <button class="ghost" onclick="openMenu()" aria-label="メニュー"><svg class="ic ic-lg" aria-hidden="true"><use href="#ic-menu"/></svg></button>
       </div>
     </div>
   </section>
 </main>
 
-<div id="actionBar" class="actionBar" style="display:none">
-  <div class="actionInner">
-    <button class="primary" id="endTurnBtn" onclick="endTurn()">ターン終了</button>
-    <button class="ghost" onclick="openMenu()" aria-label="メニュー"><svg class="ic ic-lg"><use href="#ic-menu"/></svg></button>
-  </div>
-</div>
+<div id="toast" role="status"></div>
 
-<div id="toast"></div>
-
-<div id="rulesModal" class="modalOverlay">
+<div id="rulesModal" class="modalOverlay" role="dialog" aria-modal="true" aria-labelledby="rulesTitle">
   <div class="modalCard">
-    <h2>BACK10 ルール</h2>
+    <h2 id="rulesTitle" tabindex="-1">BACK10の遊び方</h2>
     <ul>
       <li>上向きの場には大きい数字、下向きの場には小さい数字を出します。</li>
-      <li>BACK10：上向きはちょうど10小さい数字、下向きはちょうど10大きい数字を出せます。</li>
+      <li><strong>BACK10</strong>。上向きの場にはちょうど10小さい札、下向きの場にはちょうど10大きい札も出せます（例：上向きの42に32）。</li>
       <li>山札がある間は最低2枚、山札切れ後は最低1枚出します。</li>
       <li>1枚10点。1ターン2枚×1.0、3枚×1.5、4枚×2.0、5枚以上×3.0。</li>
+      <li>手札を1枚選んで場をタップすると、カードを出します。選んだ手札をもう一度タップすると選択を解除できます。</li>
       <li>出せない場を選ぶとMISSで-50点です。</li>
       <li>終了時の残り枚数＝手札＋山札。0枚+10000、1〜4枚+8000、5〜9枚+5000。</li>
       <li>6000点以上でCLEAR。6000点を超えても自動終了しません。</li>
@@ -1223,19 +936,21 @@ main{max-width:980px;margin:0 auto;padding:0 12px 110px;position:relative;z-inde
   </div>
 </div>
 
-<div id="menuModal" class="modalOverlay">
+<div id="menuModal" class="modalOverlay" role="dialog" aria-modal="true" aria-labelledby="menuTitle">
   <div class="modalCard" style="max-width:380px">
-    <h2>メニュー</h2>
+    <h2 id="menuTitle" tabindex="-1">メニュー</h2>
     <div class="row" style="flex-direction:column;align-items:stretch">
+      <button class="ghost" onclick="showRules()"><svg class="ic" aria-hidden="true"><use href="#ic-book"/></svg> 遊び方</button>
+      <button class="ghost bgmButton" onclick="toggleBgm()" aria-pressed="false"><svg class="ic" aria-hidden="true"><use href="#ic-music"/></svg> BGM</button>
       <button class="warn" onclick="forceGiveUp()"><svg class="ic"><use href="#ic-flag"/></svg> ギブアップ</button>
       <button class="ghost" onclick="closeModal('menuModal')"><svg class="ic"><use href="#ic-close"/></svg> とじる</button>
     </div>
   </div>
 </div>
 
-<div id="rankingModal" class="modalOverlay">
+<div id="rankingModal" class="modalOverlay" role="dialog" aria-modal="true" aria-labelledby="rankingTitle">
   <div class="modalCard">
-    <h2>ランキング</h2>
+    <h2 id="rankingTitle" tabindex="-1">ランキング</h2>
     <div class="row" style="justify-content:center;margin-bottom:12px">
       <button class="ghost" onclick="loadRankings('solo','daily')">ひとり 今日</button>
       <button class="ghost" onclick="loadRankings('solo','monthly')">ひとり 今月</button>
@@ -1247,17 +962,16 @@ main{max-width:980px;margin:0 auto;padding:0 12px 110px;position:relative;z-inde
   </div>
 </div>
 
-<div id="resultOverlay">
+<div id="resultOverlay" role="dialog" aria-modal="true" aria-labelledby="resultBig">
   <div class="resultCard">
-    <div class="small title">RESULT</div>
-    <div id="resultBig" class="resultBig">CLEAR!</div>
+    <h2 id="resultBig" class="resultBig" tabindex="-1">クリア達成</h2>
     <div id="resultDetail" style="text-align:center;font-size:20px;font-weight:900"></div>
     <div id="resultMsg" class="small" style="text-align:center;margin:8px 0 16px"></div>
     <div class="resultGrid">
-      <div class="metric"><span>SCORE</span><b id="resScore">0</b></div>
-      <div class="metric"><span>REMAIN</span><b id="resRemain">0</b></div>
+      <div class="metric"><span>スコア</span><b id="resScore">0</b></div>
+      <div class="metric"><span>残り枚数</span><b id="resRemain">0</b></div>
       <div class="metric"><span>BACK10</span><b id="resBack10">0</b></div>
-      <div class="metric"><span>MAX COMBO</span><b id="resCombo">0</b></div>
+      <div class="metric"><span>最大コンボ</span><b id="resCombo">0</b></div>
     </div>
     <div id="playerStats" style="margin-top:14px"></div>
     <div class="row" style="justify-content:center;margin-top:16px">
@@ -1334,42 +1048,26 @@ function currentTurnScore(g){
 }
 function totalScore(g){ return g.result?.score ?? ((g.scoreBase||0) + currentTurnScore(g) + getEndBonus(remaining(g))); }
 
-/* ===== Minimalist geometric emblems (replaces rabbit/bear pastel mascots) =====
-   Same function names + signatures preserved so every call site still resolves. */
-function nodeEmblem(size, stroke, fill){
-  const s = size;
-  return `<svg viewBox="0 0 48 48" width="${s}" height="${s}" aria-hidden="true">
-    <polygon points="24,5 40,15 40,33 24,43 8,33 8,15" fill="${fill}" stroke="${stroke}" stroke-width="2.5" stroke-linejoin="round"/>
-    <circle cx="24" cy="24" r="6" fill="${stroke}"/>
+function avatarHTML(name, size = 18) {
+  const colors = ["#446f4e", "#a44028", "#805623", "#555685"];
+  const color = colors[(name.codePointAt(0) || 0) % colors.length];
+  return `<svg viewBox="0 0 20 20" width="${size}" height="${size}" aria-hidden="true">
+    <circle cx="10" cy="10" r="7" fill="${color}" opacity=".22"/>
+    <circle cx="10" cy="10" r="3" fill="${color}"/>
   </svg>`;
-}
-function streamEmblem(size, a, b){
-  const s = size;
-  return `<svg viewBox="0 0 48 48" width="${s}" height="${s}" aria-hidden="true">
-    <rect x="5" y="5" width="38" height="38" rx="11" fill="none" stroke="${a}" stroke-width="2.5"/>
-    <path d="M12 30 L19 16 L25 26 L31 14 L37 30" fill="none" stroke="${b}" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
-  </svg>`;
-}
-function rabbitSVG(size=88){ return streamEmblem(size, "#38e1d6", "#7ff3ea"); }
-function bearSVG(size=88){ return streamEmblem(size, "#8be36b", "#bdf3a6"); }
-function greenBlobSVG(size=58){ return nodeEmblem(size, "#8be36b", "rgba(139,227,107,.18)"); }
-function chickSVG(size=58){ return nodeEmblem(size, "#ffbf4d", "rgba(255,191,77,.18)"); }
-function mountMascots(){
-  $("homeMascotLeft").innerHTML = streamEmblem(60, "#38e1d6", "#7ff3ea");
-  $("homeMascotRight").innerHTML = streamEmblem(60, "#8be36b", "#bdf3a6");
-}
-function avatarHTML(name,size=28){
-  const i=(name.codePointAt(0)||65)%4;
-  if(i===0) return nodeEmblem(size, "#38e1d6", "rgba(56,225,214,.18)");
-  if(i===1) return nodeEmblem(size, "#8be36b", "rgba(139,227,107,.18)");
-  if(i===2) return nodeEmblem(size, "#ffbf4d", "rgba(255,191,77,.18)");
-  return nodeEmblem(size, "#b89cff", "rgba(184,156,255,.18)");
 }
 
-function showScreen(id){
-  ["homeScreen","lobbyScreen","playScreen"].forEach(x=>$(x).classList.remove("active"));
-  $(id).classList.add("active");
-  $("actionBar").style.display = id==="playScreen" && game?.status==="playing" ? "block" : "none";
+function showScreen(id) {
+  const changed = document.body.dataset.screen !== id;
+  document.body.dataset.screen = id;
+  for (const screen of document.querySelectorAll(".screen")) {
+    screen.classList.toggle("active", screen.id === id);
+  }
+  $("actionBar").style.display = id === "playScreen" && game?.status === "playing" ? "block" : "none";
+  if (changed) {
+    $(document.querySelector("#" + id).getAttribute("aria-labelledby")).focus({ preventScroll: true });
+    window.scrollTo(0, 0);
+  }
 }
 
 function quickSolo(){
@@ -1384,25 +1082,50 @@ function quickSolo(){
   document.body.dataset.resultShown="";
   renderAll();
 }
-function showCoopSetup(){
-  $("coopSetup").style.display="block";
-  $("roomInput").focus();
+function setCoopVisibility(visible) {
+  $("coopSetup").hidden = !visible;
+  $("coopToggle").setAttribute("aria-expanded", String(visible));
 }
-let enteringRoom=false;
-async function enterRoom(action){
-  if(enteringRoom)return;
-  enteringRoom=true;
-  showToast("部屋に接続中…");
-  try{await connectDB();await action()}
-  catch(e){showToast(e.roomMessage || "接続できませんでした。通信を確認してもう一度試してください。")}
-  finally{enteringRoom=false}
+function showCoopSetup() {
+  const opening = $("coopSetup").hidden;
+  setCoopVisibility(opening);
+  if (!opening) delete document.body.dataset.invited;
+  if (opening) {
+    $("coopTitle").focus({ preventScroll: true });
+    $("coopTitle").scrollIntoView({ block: "nearest" });
+  }
+}
+function roomCodeFrom(input) {
+  const code = $(input).value.trim();
+  if (code.includes("/")) throw roomError("部屋IDに / は使えません。");
+  return code;
+}
+let enteringRoom = false;
+async function enterRoom(action) {
+  if (enteringRoom) return;
+  enteringRoom = true;
+  const fields = $("roomForms").querySelectorAll("fieldset");
+  fields.forEach(field => { field.disabled = true; });
+  $("roomStatus").textContent = "部屋に接続中…";
+  $("roomStatus").classList.remove("error");
+  try {
+    await connectDB();
+    await action();
+    $("roomStatus").textContent = "";
+  } catch (error) {
+    $("roomStatus").textContent = error.roomMessage || "接続できませんでした。通信を確認してもう一度試してください。";
+    $("roomStatus").classList.add("error");
+  } finally {
+    enteringRoom = false;
+    fields.forEach(field => { field.disabled = false; });
+  }
 }
 function roomError(message){return Object.assign(new Error(message),{roomMessage:message})}
 async function createCoopRoom(){ await enterRoom(createRoom); }
 async function joinCoopRoom(){ await enterRoom(joinRoom); }
 
 async function createRoom(){
-  const code = $("roomInput").value.trim() || roomCode();
+  const code = roomCodeFrom("createRoomInput") || roomCode();
   const id = uid();
   const count = Number($("playerCount").value || 2);
   const ref = doc(db,"rooms",code);
@@ -1420,8 +1143,8 @@ async function createRoom(){
   listen(ref);
 }
 async function joinRoom(){
-  const code=$("roomInput").value.trim();
-  if(!code){ showToast("部屋IDを入力してください"); return; }
+  const code = roomCodeFrom("roomInput");
+  if (!code) throw roomError("部屋IDを入力してください。");
   const ref=doc(db,"rooms",code);
   const id=uid(),name=getPlayerName();
   await runTransaction(db,async tx=>{
@@ -1523,55 +1246,64 @@ function renderAll(){
     $("startBtn").textContent = !host ? "ホストの開始を待っています" : full ? "ゲーム開始" : "参加者を待っています";
     return;
   }
-  showScreen("playScreen");
   const mine = (isMyTurn() || localMode) && game.status==="playing";
   const turnName = game.players?.[game.currentPlayer]?.name || "?";
+  const active = document.activeElement;
+  const focusSelector = active.dataset.cardValue !== undefined
+    ? `[data-card-value="${active.dataset.cardValue}"]`
+    : active.dataset.pileNumber !== undefined
+      ? `[data-pile-number="${active.dataset.pileNumber}"]` : null;
   $("turnBanner").className = "turnBanner " + (mine ? "mine" : "other");
-  $("turnBanner").innerHTML = avatarHTML(turnName,30) + `<span>${mine ? "あなたのターン！" : escapeHtml(turnName) + " が考え中…"}</span>`;
-  $("playersRow").innerHTML = (game.turnOrder||[]).map(pid=>{
-    const nm = game.players?.[pid]?.name || pid;
-    return `<div class="playerChip ${pid===game.currentPlayer ? 'active' : ''}">
-      <div class="avatar">${avatarHTML(nm,24)}</div><div>${escapeHtml(nm)}</div>
-    </div>`;
+  const turnText = game.status === "ended" ? "対戦終了" : mine ? "あなたの手番" : turnName + " の手番";
+  if ($("turnBanner").textContent !== turnText) $("turnBanner").textContent = turnText;
+  $("playersRow").hidden = localMode;
+  $("playersRow").innerHTML = localMode ? "" : (game.turnOrder || []).map(pid => {
+    const name = escapeHtml(game.players?.[pid]?.name || pid);
+    return `<div class="playerChip${pid === game.currentPlayer ? " active" : ""}">${avatarHTML(game.players?.[pid]?.name || pid)}<span title="${name}">${name}</span></div>`;
   }).join("");
   $("deckCount").textContent = game.deck.length;
-  // 山札の残量ミニバー（全98枚が満タン）
   $("deckBarFill").style.width = Math.max(0, Math.min(100, game.deck.length / 98 * 100)) + "%";
-  $("scoreNow").textContent = totalScore(game);
+  $("scoreNow").textContent = totalScore(game).toLocaleString("ja-JP");
   $("back10Now").textContent = game.back10Total || 0;
-  $("turnPlayNow").textContent = game.playedThisTurn || 0;
-  const left=Math.max(0,minPlay(game)-(game.playedThisTurn||0));
-  $("endTurnBtn").disabled=!mine||left>0;
-  $("endTurnBtn").textContent=!mine?"相手の手番です":left?`あと${left}枚でターン終了`:"ターン終了";
-
-  $("piles").innerHTML = game.piles.map((p,i)=>`
-    <div class="pile ${p.type}" onclick="playPile(${i})">
-      <span class="pileMark pileMarkTop p${i+1}">${["A","B","C","D"][i]}</span>
-      <span class="pileArrow ${p.type === 'up' ? 'up' : 'down'}"></span>
-      <div class="pileValue p${i+1}">${p.value}</div>
-      <span class="pileMark pileMarkBottom p${i+1}">${["A","B","C","D"][i]}</span>
-    </div>
-  `).join("");
+  $("turnPlayNow").textContent = `${game.playedThisTurn || 0}枚`;
+  const left = Math.max(0, minPlay(game) - (game.playedThisTurn || 0));
+  $("endTurnBtn").disabled = !mine || left > 0;
+  $("endTurnBtn").textContent = !mine ? "相手の手番" : left ? `あと${left}枚で手番終了` : "手番を終える";
 
   const hand = game.hands?.[myId] || [];
-  const visibleSlots = Math.max(8, handSize(game.playerCount || 1));
-  $("hand").innerHTML = Array.from({length:visibleSlots},(_,i)=>{
-    if(i < hand.length){
-      const n = hand[i];
-      return `<div class="card ${selectedIndex===i ? 'selected' : ''} ${mine ? '' : 'locked'}" onclick="selectCard(${i})">${n}</div>`;
-    }
-    return `<div class="card cardEmpty" aria-hidden="true"></div>`;
+  const instruction = !mine ? "" : selectedIndex === null ? "出す手札を選んでください" : `${hand[selectedIndex]}を選択中。置く場を選んでください`;
+  if ($("handPrompt").textContent !== instruction) $("handPrompt").textContent = instruction;
+  $("piles").innerHTML = game.piles.map((pile, i) => {
+    const direction = pile.type === "up" ? "上り" : "下り";
+    const label = ["A","B","C","D"][i];
+    return `<button class="pile ${pile.type}" data-pile-number="${i}" onclick="playPile(${i})" type="button"
+      aria-label="場 ${label}、${direction}、${pile.value}" ${mine ? "" : "disabled"}>
+      <span class="pileMark" aria-hidden="true">${label}</span>
+      <span class="pileValue" aria-hidden="true">${pile.value}</span>
+      <span class="pileDir" aria-hidden="true"><span class="pileArrow"></span>${direction}</span>
+    </button>`;
   }).join("");
+  $("hand").innerHTML = Array.from({ length: Math.max(8, handSize(game.playerCount || 1)) }, (_, i) => {
+    if (i >= hand.length) return '<div class="card cardEmpty" aria-hidden="true"></div>';
+    const chosen = selectedIndex === i;
+    return `<button class="card ${chosen ? "selected" : ""} ${mine ? "" : "locked"}" data-card-value="${hand[i]}"
+      onclick="selectCard(${i})" type="button" aria-pressed="${chosen}" ${mine ? "" : "disabled"}>${hand[i]}</button>`;
+  }).join("");
+  showScreen("playScreen");
+  if (focusSelector) (document.querySelector(focusSelector + ":enabled") || $("turnBanner")).focus({ preventScroll: true });
 }
-function selectCard(i){
-  if(!isMyTurn() && !localMode) return;
-  selectedIndex=i;
+function selectCard(i) {
+  if (!game || game.status !== "playing" || (!isMyTurn() && !localMode)) return;
+  selectedIndex = selectedIndex === i ? null : i;
   renderAll();
 }
 async function playPile(i){
   if(!isMyTurn() && !localMode){ showToast("相手のターンです"); return; }
   if(!game || game.status!=="playing") return;
-  if(selectedIndex===null) return;
+  if(selectedIndex===null){
+    showToast("先に手札を1枚選んでください");
+    return;
+  }
   const card = game.hands[myId][selectedIndex];
   const pileBefore = game.piles[i];
 
@@ -1585,6 +1317,7 @@ async function playPile(i){
     playPenalty();
     showToast("MISS -50","miss");
     await saveGame(g);
+    animatePile(i, "miss");
     return;
   }
 
@@ -1612,6 +1345,11 @@ async function playPile(i){
   }
 
   await saveGame(g);
+  animatePile(i, back10 ? "back10" : "placed");
+}
+function animatePile(i, feedback) {
+  const pile = document.querySelector(`[data-pile-number="${i}"]`);
+  if (pile) pile.dataset.feedback = feedback;
 }
 function applyTurnScore(g,pid){
   const cards = g.turnCards || g.playedThisTurn || 0;
@@ -1631,6 +1369,7 @@ async function endTurn(){
   if(!isMyTurn() && !localMode){ showToast("今は自分のターンではありません"); return; }
   const need = minPlay(game);
   if(game.playedThisTurn < need){ showToast(`最低${need}枚出してください`); return; }
+  selectedIndex = null;
   const g = cloneGame(game);
   applyTurnScore(g,myId);
   while(g.hands[myId].length < handSize(g.playerCount) && g.deck.length>0){
@@ -1649,8 +1388,7 @@ async function endTurn(){
 }
 function openMenu(){
   if(!game || game.status!=="playing") return;
-  $("menuModal").style.display = "flex";
-  resumeAudio();
+  openModal("menuModal");
 }
 function forceGiveUp(){
   if(!game || game.status!=="playing") return;
@@ -1735,12 +1473,13 @@ function showResult(result){
   const canRestart=localMode||game?.hostId===myId;
   $("rematchBtn").disabled=!canRestart;
   $("rematchBtn").textContent=canRestart?"もう一回":"ホストの再戦を待っています";
+  if (!$("toast").className) $("toast").style.display = "none";
   $("resultOverlay").style.display="flex";
-  $("resultBig").textContent = result.clear ? "CLEAR!" : "TRY AGAIN";
+  $("resultBig").textContent = result.clear ? "クリア達成" : "クリアならず";
   $("resultBig").className = "resultBig " + (result.clear ? "clear" : "fail");
   $("resultDetail").textContent = result.clear ? "6000点突破！" : `あと ${Math.max(0,6000-result.score)} 点`;
   $("resultMsg").textContent = `${result.reason} / 基本点 ${result.scoreBase} + 終了ボーナス ${result.endBonus}`;
-  $("resScore").textContent = result.score;
+  $("resScore").textContent = result.score.toLocaleString("ja-JP");
   $("resRemain").textContent = result.remaining;
   $("resBack10").textContent = result.back10Total;
   $("resCombo").textContent = result.maxCombo;
@@ -1754,6 +1493,7 @@ function showResult(result){
   }).join("");
 
   document.body.dataset.resultShown="1";
+  $("resultBig").focus({ preventScroll: true });
   if(result.clear){ confetti(result.remaining===0 ? 120 : 70); playWin(); } else playLose();
 }
 async function resetSameRoom(){
@@ -1786,22 +1526,54 @@ async function leaveRoom(){
 function goHome(){
   if(unsub){ unsub(); unsub=null; }
   roomId=""; myId=""; game=null; selectedIndex=null; localMode=false;
-  $("coopSetup").style.display="none";
+  setCoopVisibility(false);
+  delete document.body.dataset.invited;
+  $("inviteFallback").hidden = true;
   $("resultOverlay").style.display="none";
   $("menuModal").style.display="none";
   document.body.dataset.resultShown="";
   showScreen("homeScreen");
   paintBestScore();
 }
-async function copyRoom(){
-  const code=roomId||game?.roomId;
-  if(!code)return;
-  try{await navigator.clipboard.writeText(code);showToast("部屋IDをコピーしました")}
-  catch{showToast(`部屋ID：${code}`)}
+async function copyRoom(link = false) {
+  const code = roomId || game?.roomId;
+  if (!code) return;
+  const invite = new URL(location.pathname, location.origin);
+  invite.searchParams.set("room", code);
+  const value = link ? invite.href : code;
+  try {
+    await navigator.clipboard.writeText(value);
+    showToast(link ? "招待リンクをコピーしました" : "部屋IDをコピーしました");
+  } catch {
+    const field = $("inviteFallback");
+    field.hidden = false;
+    field.value = value;
+    field.focus();
+    field.select();
+  }
 }
-function showRules(){ $("rulesModal").style.display="flex"; resumeAudio(); }
-function openRankings(){ $("rankingModal").style.display="flex"; loadRankings("solo","daily"); }
-function closeModal(id){ $(id).style.display="none"; resumeAudio(); }
+let modalTrigger;
+function openModal(id) {
+  modalTrigger = document.activeElement;
+  const modal = $(id);
+  modal.style.display = "flex";
+  $(modal.getAttribute("aria-labelledby")).focus();
+  resumeAudio();
+}
+function showRules() {
+  if ($("menuModal").style.display === "flex") closeModal("menuModal");
+  openModal("rulesModal");
+}
+function openRankings() {
+  openModal("rankingModal");
+  loadRankings("solo", "daily");
+}
+function closeModal(id) {
+  $(id).style.display = "none";
+  modalTrigger?.focus();
+  modalTrigger = null;
+  resumeAudio();
+}
 async function loadRankings(mode,period){
   const body = $("rankingBody");
   body.innerHTML="読み込み中...";
@@ -1850,8 +1622,10 @@ function playWin(){ [523,659,784,1046].forEach((f,i)=>setTimeout(()=>beep(f,.18,
 function playLose(){ [220,180,140].forEach((f,i)=>setTimeout(()=>beep(f,.25,"sawtooth",.065),i*160)); }
 function toggleBgm(){
   ensureAudio();
-  if(bgmOn){ clearInterval(bgmTimer); bgmOn=false; showToast("BGM OFF"); return; }
-  bgmOn=true; showToast("BGM ON");
+  bgmOn = !bgmOn;
+  document.querySelectorAll(".bgmButton").forEach(button => button.setAttribute("aria-pressed", String(bgmOn)));
+  if (!bgmOn) { clearInterval(bgmTimer); showToast("BGMをオフにしました"); return; }
+  showToast("BGMをオンにしました");
   const melody=[
     [523,.12],[659,.12],[784,.18],[659,.12],
     [587,.12],[659,.12],[880,.22],[659,.12],
@@ -1885,7 +1659,28 @@ function confetti(n){
   }
 }
 
-mountMascots();
+const invitedCode = new URLSearchParams(location.search).get("room");
+if (invitedCode) {
+  document.body.dataset.invited = "true";
+  $("roomInput").value = invitedCode;
+  $("roomForms").prepend($("joinForm"));
+  setCoopVisibility(true);
+}
+document.addEventListener("keydown", event => {
+  if (document.querySelector(".abcOv.show")) return;
+  const modal = [...document.querySelectorAll(".modalOverlay, #resultOverlay")].find(element => element.style.display === "flex");
+  if (!modal) return;
+  if (event.key === "Escape" && modal.id !== "resultOverlay") {
+    closeModal(modal.id);
+  } else if (event.key === "Tab") {
+    const buttons = [...modal.querySelectorAll("button:enabled")];
+    const boundary = event.shiftKey ? buttons[0] : buttons.at(-1);
+    if (!buttons.includes(document.activeElement) || document.activeElement === boundary) {
+      event.preventDefault();
+      (event.shiftKey ? buttons.at(-1) : buttons[0])?.focus();
+    }
+  }
+});
 paintBestScore();
 </script>
 </body>
